@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class MyDropdownMenu extends StatefulWidget {
+  const MyDropdownMenu({super.key});
+
   @override
   _MyDropdownMenuState createState() => _MyDropdownMenuState();
 }
@@ -32,13 +34,13 @@ class _MyDropdownMenuState extends State<MyDropdownMenu> {
           child: Row(
             children: [
               Icon(item['icon']),
-              SizedBox(width: 20), // Add some space between icon and name
+              const SizedBox(width: 20), // Add some space between icon and name
               Text(item['name']),
             ],
           ),
         );
       }).toList(),
-      hint: Text('Select an item'), // Optional hint text
+      hint: const Text('Select an item'), // Optional hint text
     );
   }
 }
