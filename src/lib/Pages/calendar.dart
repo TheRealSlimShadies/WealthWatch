@@ -7,7 +7,7 @@ class Calendar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      body: Center(child: Text("calendar")),
+      body: const Center(child: Text("calendar")),
     );
   }
 }

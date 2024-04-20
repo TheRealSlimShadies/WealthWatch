@@ -1,19 +1,17 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
-
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'dropDownMenu.dart';
 
 class addIncome extends StatelessWidget {
   addIncome({super.key});
-
+  List<String> categories = ['Food', 'Transportation'];
   @override
   Widget build(BuildContext context) {
-    final TextEditingController incomeAmountController = TextEditingController();
-    final TextEditingController incomeNumberController = TextEditingController();
+    final TextEditingController incomeAmountController =
+        TextEditingController();
+    final TextEditingController incomeNumberController =
+        TextEditingController();
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -32,7 +30,7 @@ class addIncome extends StatelessWidget {
             children: [
               Container(
                 margin: EdgeInsets.only(left: 20),
-                child: MyDropdownMenu(),
+                child: MyDropdownMenu(Categories),
               ),
               Expanded(
                 child: Container(
@@ -46,7 +44,8 @@ class addIncome extends StatelessWidget {
                     decoration: InputDecoration(
                       labelText: "Enter Expense Number",
                       labelStyle: TextStyle(fontSize: 14),
-                      contentPadding: EdgeInsets.only(left: 20, top: 15, bottom: 20),
+                      contentPadding:
+                          EdgeInsets.only(left: 20, top: 15, bottom: 20),
                       border: InputBorder.none,
                       prefixIcon: Icon(Icons.attach_money),
                     ),
@@ -58,17 +57,30 @@ class addIncome extends StatelessWidget {
         ],
       ),
       floatingActionButton: Row(
-        mainAxisAlignment: MainAxisAlignment.end, // Align the FloatingActionButton to the right
+        mainAxisAlignment: MainAxisAlignment
+            .end, // Align the FloatingActionButton to the right
         children: [
           FloatingActionButton(
             onPressed: () {},
             backgroundColor: Color.fromARGB(255, 78, 246, 80),
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-            child: Icon(Icons.save,
-            color: Colors.white,),
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+            child: Icon(
+              Icons.save,
+              color: Colors.white,
+            ),
           ),
         ],
       ),
     );
   }
+}
+
+enum Categories {
+  food('Food', Icons.food_bank),
+  transportation('Transportation', Icons.flight);
+
+  const Categories(this.label, this.icon);
+  final String label;
+  final IconData icon;
 }

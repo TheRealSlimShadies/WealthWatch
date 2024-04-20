@@ -7,7 +7,7 @@ class Statistics extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      body: Center(child: Text("stats")),
+      body: const Center(child: Text("stats")),
     );
   }
 }

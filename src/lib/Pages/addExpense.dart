@@ -1,19 +1,17 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
-
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'dropDownMenu.dart';
 
 class addExpense extends StatelessWidget {
-  addExpense({super.key});
+  const addExpense({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final TextEditingController expenseAmountController = TextEditingController();
-    final TextEditingController expenseNumberController = TextEditingController();
+    final TextEditingController expenseAmountController =
+        TextEditingController();
+    final TextEditingController expenseNumberController =
+        TextEditingController();
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -29,9 +27,10 @@ class addExpense extends StatelessWidget {
           TextFormField(
             controller: expenseAmountController,
             decoration: InputDecoration(
-              labelText: "Enter Expense Name",
-              contentPadding: EdgeInsets.only(left: 20, top: 15, bottom: 20),
-            ),
+                hintText: "Enter Expense Name",
+                contentPadding: EdgeInsets.only(left: 20, top: 15, bottom: 20),
+                enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.grey))),
             validator: (value) {
               if (value!.isEmpty) {
                 return "Enter Valid Name";
@@ -40,30 +39,30 @@ class addExpense extends StatelessWidget {
               }
             },
           ),
-          SizedBox(height: 30),
+          SizedBox(
+            height: 50,
+          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Container(
-                margin: EdgeInsets.only(left: 20),
-                child: MyDropdownMenu(),
+                child: MyDropdownMenu(Categories),
               ),
-              Expanded(
-                child: Container(
-                  margin: EdgeInsets.only(left: 40),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  child: TextFormField(
-                    controller: expenseNumberController,
-                    keyboardType: TextInputType.number,
-                    decoration: InputDecoration(
-                      labelText: "Enter Expense Number",
-                      labelStyle: TextStyle(fontSize: 14),
-                      contentPadding: EdgeInsets.only(left: 20, top: 15, bottom: 20),
-                      border: InputBorder.none,
-                      prefixIcon: Icon(Icons.attach_money),
-                    ),
+              Container(
+                margin: EdgeInsets.only(left: 40),
+                width: 150,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: TextFormField(
+                  controller: expenseNumberController,
+                  keyboardType: TextInputType.number,
+                  decoration: InputDecoration(
+                    labelText: "Enter Expense Number",
+                    labelStyle: TextStyle(fontSize: 14),
+                    enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.grey)),
+                    prefixIcon: Icon(Icons.attach_money),
                   ),
                 ),
               ),
@@ -72,17 +71,30 @@ class addExpense extends StatelessWidget {
         ],
       ),
       floatingActionButton: Row(
-        mainAxisAlignment: MainAxisAlignment.end, // Align the FloatingActionButton to the right
+        mainAxisAlignment: MainAxisAlignment
+            .end, // Align the FloatingActionButton to the right
         children: [
           FloatingActionButton(
             onPressed: () {},
             backgroundColor: Colors.red,
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-            child: Icon(Icons.save,
-            color: Colors.white,),
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+            child: Icon(
+              Icons.save,
+              color: Colors.white,
+            ),
           ),
         ],
       ),
     );
   }
+}
+
+enum Categories {
+  food('Food', Icons.food_bank),
+  transportation('Transportation', Icons.flight);
+
+  const Categories(this.label, this.icon);
+  final String label;
+  final IconData icon;
 }
