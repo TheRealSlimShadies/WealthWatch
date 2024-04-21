@@ -36,6 +36,10 @@ class Home extends StatelessWidget {
                   end: Alignment.topCenter,
                 )),
           ),
+          actions: [Padding(
+            padding: const EdgeInsets.only(right: 10),
+            child: Icon(Icons.logout_outlined),
+          )],
         ),
       drawer: Drawer(
         backgroundColor: Color.fromARGB(197, 255, 255, 255),
