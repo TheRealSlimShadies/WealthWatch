@@ -1,14 +1,13 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:wealthwatch/Graphs/bar_data.dart';
 
 class MyBarGraph extends StatelessWidget {
   final List<double> weeklySummary;
   const MyBarGraph({
-    Key? key,
+    super.key,
     required this.weeklySummary,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -26,9 +25,9 @@ class MyBarGraph extends StatelessWidget {
       BarChartData(
         maxY: 100,
         minY: 0,
-        gridData: FlGridData(show: false),
+        gridData: const FlGridData(show: false),
         borderData: FlBorderData(show: false),
-        titlesData: FlTitlesData(
+        titlesData: const FlTitlesData(
           show: true,
           topTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
           leftTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
@@ -98,5 +97,5 @@ Widget getBottomTitles(double value, TitleMeta meta) {
       text = const Text('', style: style);
       break;
   }
-  return SideTitleWidget(child: text, axisSide: meta.axisSide);
+  return SideTitleWidget(axisSide: meta.axisSide, child: text);
 }

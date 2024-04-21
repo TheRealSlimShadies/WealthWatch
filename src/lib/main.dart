@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:wealthwatch/Buttons/expenseButton.dart';
 import 'package:wealthwatch/Buttons/incomeButton.dart';
+import 'package:wealthwatch/Graphs/barChart.dart';
 import 'package:wealthwatch/Pages/addIncome.dart';
 import 'package:wealthwatch/Pages/calendar.dart';
 import 'package:wealthwatch/Pages/cofund.dart';
@@ -21,19 +22,20 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: const Home(),
-     routes: {
-      '/homepage':(context) => const Home(),
-      '/statistic':(context) => const Statistics(),
-      '/settings':(context) => const Settings(),
-      '/cofund':(context) => const coFund(),
-      '/calendar':(context) => const Calendar(),
-      '/expbutton':(context) => const expenseButton(),
-      '/incbutton':(context) => const incomeButton(),
-      '/addExpense':(context) => const addExpense(),
-      '/addIncome':(context) => const addIncome(),
-
-      
-     },
+      routes: {
+        '/homepage': (context) => const Home(),
+        '/statistic': (context) => const Statistics(),
+        '/settings': (context) => const Settings(),
+        '/cofund': (context) => const coFund(),
+        '/calendar': (context) => const Calendar(),
+        '/expbutton': (context) => const expenseButton(),
+        '/incbutton': (context) => const incomeButton(),
+        '/addExpense': (context) => const addExpense(),
+        '/addIncome': (context) => const addIncome(),
+        '/BarChart': (context) => const MyBarGraph(
+              weeklySummary: [],
+            ),
+      },
     );
   }
 }
