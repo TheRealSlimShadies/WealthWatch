@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:wealthwatch/Authentication/login.dart';
+import 'package:wealthwatch/Authentication/register.dart';
 import 'package:wealthwatch/Buttons/expenseButton.dart';
 import 'package:wealthwatch/Buttons/incomeButton.dart';
 import 'package:wealthwatch/Pages/addIncome.dart';
@@ -20,20 +22,20 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: const Home(),
-     routes: {
-      '/homepage':(context) => const Home(),
-      '/statistic':(context) => const Statistics(),
-      '/settings':(context) => const Settings(),
-      '/cofund':(context) => const coFund(),
-      '/calendar':(context) => const Calendar(),
-      '/expbutton':(context) => const expenseButton(),
-      '/incbutton':(context) => const incomeButton(),
-      '/addExpense':(context) => const addExpense(),
-      '/addIncome':(context) => addIncome(),
-
-      
-     },
+      home: Login(),
+      routes: {
+        '/homepage': (context) => const Home(),
+        '/statistic': (context) => const Statistics(),
+        '/settings': (context) => const Settings(),
+        '/cofund': (context) => const coFund(),
+        '/calendar': (context) => const Calendar(),
+        '/expbutton': (context) => const expenseButton(),
+        '/incbutton': (context) => const incomeButton(),
+        '/addExpense': (context) => const addExpense(),
+        '/addIncome': (context) => addIncome(),
+        '/login': (context) => Login(),
+        //'/register':(context) => Register(),
+      },
     );
   }
 }
