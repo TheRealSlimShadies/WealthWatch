@@ -1,7 +1,5 @@
 // ignore_for_file: sort_child_properties_last
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/widgets.dart';
 
 class incomeButton extends StatelessWidget {
   const incomeButton({super.key});
@@ -14,7 +12,7 @@ class incomeButton extends StatelessWidget {
         Navigator.pushNamed(context, '/addIncome');
       },
       backgroundColor: Colors.green[600],
-      child: Icon(Icons.add,color: Colors.white,),
+      child: const Icon(Icons.add,color: Colors.white,),
       heroTag: null,
       shape: const CircleBorder(),
     );

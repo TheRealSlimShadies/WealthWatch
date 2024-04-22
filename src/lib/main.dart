@@ -23,22 +23,19 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Login(),
-     routes: {
-      '/homepage':(context) => Home(),
-      '/statistic':(context) => Statistics(),
-      '/settings':(context) => Settings(),
-      '/cofund':(context) => coFund(),
-      '/calendar':(context) => Calendar(),
-      '/expbutton':(context) => expenseButton(),
-      '/incbutton':(context) => incomeButton(),
-      '/addExpense':(context) => addExpense(),
-      '/addIncome':(context) => addIncome(),
-      '/login':(context) => Login(),
-      //'/register':(context) => Register(),
-      
-
-      
-     },
+      routes: {
+        '/homepage': (context) => const Home(),
+        '/statistic': (context) => const Statistics(),
+        '/settings': (context) => const Settings(),
+        '/cofund': (context) => const coFund(),
+        '/calendar': (context) => const Calendar(),
+        '/expbutton': (context) => const expenseButton(),
+        '/incbutton': (context) => const incomeButton(),
+        '/addExpense': (context) => const addExpense(),
+        '/addIncome': (context) => addIncome(),
+        '/login': (context) => Login(),
+        //'/register':(context) => Register(),
+      },
     );
   }
 }

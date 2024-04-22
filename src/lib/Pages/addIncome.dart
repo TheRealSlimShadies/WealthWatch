@@ -1,19 +1,25 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors, unused_local_variable
 
-
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'dropDownMenu.dart';
+import 'dropDownMenuIncome.dart';
 
-class addIncome extends StatelessWidget {
+class addIncome extends StatefulWidget {
   addIncome({super.key});
 
   @override
+  State<addIncome> createState() => _addIncomeState();
+}
+
+class _addIncomeState extends State<addIncome> {
+  List<String> categories = ['Food', 'Transportation'];
+
+  @override
   Widget build(BuildContext context) {
-    final TextEditingController incomeAmountController = TextEditingController();
-    final TextEditingController incomeNumberController = TextEditingController();
+    // ignore: unused_local_variable
+    final TextEditingController incomeAmountController =
+        TextEditingController();
+    final TextEditingController incomeNumberController =
+        TextEditingController();
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -32,7 +38,7 @@ class addIncome extends StatelessWidget {
             children: [
               Container(
                 margin: EdgeInsets.only(left: 20),
-                child: MyDropdownMenu(),
+                child: MyDropdownMenuIncome(),
               ),
               Expanded(
                 child: Container(
@@ -46,7 +52,8 @@ class addIncome extends StatelessWidget {
                     decoration: InputDecoration(
                       labelText: "Enter Expense Number",
                       labelStyle: TextStyle(fontSize: 14),
-                      contentPadding: EdgeInsets.only(left: 20, top: 15, bottom: 20),
+                      contentPadding:
+                          EdgeInsets.only(left: 20, top: 15, bottom: 20),
                       border: InputBorder.none,
                       prefixIcon: Icon(Icons.attach_money),
                     ),
@@ -58,14 +65,18 @@ class addIncome extends StatelessWidget {
         ],
       ),
       floatingActionButton: Row(
-        mainAxisAlignment: MainAxisAlignment.end, // Align the FloatingActionButton to the right
+        mainAxisAlignment: MainAxisAlignment
+            .end, // Align the FloatingActionButton to the right
         children: [
           FloatingActionButton(
             onPressed: () {},
             backgroundColor: Color.fromARGB(255, 78, 246, 80),
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-            child: Icon(Icons.save,
-            color: Colors.white,),
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+            child: Icon(
+              Icons.save,
+              color: Colors.white,
+            ),
           ),
         ],
       ),
