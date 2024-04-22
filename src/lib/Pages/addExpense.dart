@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'dropDownMenu.dart';
+import 'dropDownMenuExpense.dart';
 
 class addExpense extends StatelessWidget {
   const addExpense({super.key});
@@ -46,7 +46,7 @@ class addExpense extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Container(
-                child: MyDropdownMenu(Categories),
+                child: MyDropdownMenuExpense(),
               ),
               Container(
                 margin: EdgeInsets.only(left: 40),
@@ -90,11 +90,11 @@ class addExpense extends StatelessWidget {
   }
 }
 
-enum Categories {
+enum expenseCategories {
   food('Food', Icons.food_bank),
   transportation('Transportation', Icons.flight);
 
-  const Categories(this.label, this.icon);
+  const expenseCategories(this.label, this.icon);
   final String label;
   final IconData icon;
 }

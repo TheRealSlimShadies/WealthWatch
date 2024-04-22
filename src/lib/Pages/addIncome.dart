@@ -1,13 +1,21 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'dropDownMenu.dart';
+import 'dropDownMenuIncome.dart';
 
-class addIncome extends StatelessWidget {
+class addIncome extends StatefulWidget {
   addIncome({super.key});
+
+  @override
+  State<addIncome> createState() => _addIncomeState();
+}
+
+class _addIncomeState extends State<addIncome> {
   List<String> categories = ['Food', 'Transportation'];
+
   @override
   Widget build(BuildContext context) {
+    // ignore: unused_local_variable
     final TextEditingController incomeAmountController =
         TextEditingController();
     final TextEditingController incomeNumberController =
@@ -30,7 +38,7 @@ class addIncome extends StatelessWidget {
             children: [
               Container(
                 margin: EdgeInsets.only(left: 20),
-                child: MyDropdownMenu(Categories),
+                child: MyDropdownMenuIncome(),
               ),
               Expanded(
                 child: Container(
@@ -74,13 +82,4 @@ class addIncome extends StatelessWidget {
       ),
     );
   }
-}
-
-enum Categories {
-  food('Food', Icons.food_bank),
-  transportation('Transportation', Icons.flight);
-
-  const Categories(this.label, this.icon);
-  final String label;
-  final IconData icon;
 }
