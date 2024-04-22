@@ -8,7 +8,7 @@ class Expense {
     name = '';
     expenseAmount = 0;
   }
-  addExpense(String x, int y) {
+  addExpenseItem(String x, int y) {
     name = x;
     expenseAmount = y;
   }
