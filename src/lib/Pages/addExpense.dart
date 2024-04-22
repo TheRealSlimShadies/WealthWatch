@@ -2,16 +2,20 @@
 
 import 'package:flutter/material.dart';
 import 'dropDownMenuExpense.dart';
+import 'dropDownMenuIncome.dart';
 
 class addExpense extends StatelessWidget {
-  const addExpense({super.key});
+  final TextEditingController expenseLabelController = TextEditingController();
+  final TextEditingController expenseNumberController = TextEditingController();
+  final categorySelection = TextEditingController();
+  addExpense({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
-    final TextEditingController expenseAmountController =
-        TextEditingController();
-    final TextEditingController expenseNumberController =
-        TextEditingController();
+    final categorySelection = TextEditingController();
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -25,7 +29,7 @@ class addExpense extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           TextFormField(
-            controller: expenseAmountController,
+            controller: expenseLabelController,
             decoration: InputDecoration(
                 hintText: "Enter Expense Name",
                 contentPadding: EdgeInsets.only(left: 20, top: 15, bottom: 20),
@@ -46,7 +50,9 @@ class addExpense extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Container(
-                child: MyDropdownMenuExpense(),
+                child: MyDropdownMenuExpense(
+                  controller: categorySelection,
+                ),
               ),
               Container(
                 margin: EdgeInsets.only(left: 40),
@@ -75,7 +81,16 @@ class addExpense extends StatelessWidget {
             .end, // Align the FloatingActionButton to the right
         children: [
           FloatingActionButton(
-            onPressed: () {},
+            onPressed: () {
+              String expenseLabel = expenseLabelController.text;
+              String expensenumbercontroller = expenseNumberController.text;
+              int expenseNumber = int.tryParse(expensenumbercontroller) ?? 0;
+              print(categorySelection.text);
+
+              // if () {
+
+              // }
+            },
             backgroundColor: Colors.red,
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
@@ -88,13 +103,4 @@ class addExpense extends StatelessWidget {
       ),
     );
   }
-}
-
-enum expenseCategories {
-  food('Food', Icons.food_bank),
-  transportation('Transportation', Icons.flight);
-
-  const expenseCategories(this.label, this.icon);
-  final String label;
-  final IconData icon;
 }
