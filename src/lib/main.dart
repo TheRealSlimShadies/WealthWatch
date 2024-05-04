@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:wealthwatch/Authentication/login.dart';
-import 'package:wealthwatch/Authentication/register.dart';
 import 'package:wealthwatch/Buttons/expenseButton.dart';
 import 'package:wealthwatch/Buttons/incomeButton.dart';
 import 'package:wealthwatch/Pages/addIncome.dart';

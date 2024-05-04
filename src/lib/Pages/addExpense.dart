@@ -1,16 +1,26 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:wealthwatch/data.dart/Expense.dart';
 import 'dropDownMenuExpense.dart';
 import 'dropDownMenuIncome.dart';
+import 'package:wealthwatch/Graphs/pieChart.dart';
 
-class addExpense extends StatelessWidget {
-  final TextEditingController expenseLabelController = TextEditingController();
-  final TextEditingController expenseNumberController = TextEditingController();
-  final categorySelection = TextEditingController();
+class addExpense extends StatefulWidget {
   addExpense({
     super.key,
   });
+
+  @override
+  State<addExpense> createState() => _addExpenseState();
+}
+
+class _addExpenseState extends State<addExpense> {
+  final TextEditingController expenseLabelController = TextEditingController();
+
+  final TextEditingController expenseNumberController = TextEditingController();
+
+  final categorySelection = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -85,11 +95,16 @@ class addExpense extends StatelessWidget {
               String expenseLabel = expenseLabelController.text;
               String expensenumbercontroller = expenseNumberController.text;
               int expenseNumber = int.tryParse(expensenumbercontroller) ?? 0;
-              print(categorySelection.text);
+              switch (categorySelection.text) {
+                case 'Food':
+                  catFood.addExpenseToList(Expense(
+                      name: expenseLabel, expenseAmount: expenseNumber));
+                case 'Transportation':
+                  catTransportation.addExpenseToList(Expense(
+                      name: expenseLabel, expenseAmount: expenseNumber));
+              }
 
-              // if () {
-
-              // }
+              Navigator.popAndPushNamed(context, '/homepage');
             },
             backgroundColor: Colors.red,
             shape:
