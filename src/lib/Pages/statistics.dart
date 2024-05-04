@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:wealthwatch/Graphs/barChart.dart';
+import 'package:wealthwatch/Graphs/bar_chart.dart';
 
 class Statistics extends StatefulWidget {
   const Statistics({super.key});
@@ -18,9 +18,13 @@ class _StatisticsState extends State<Statistics> {
     98.98,
     88.4,
   ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.grey[300],
+      ),
       backgroundColor: Colors.grey[300],
       body: Center(
         child: SizedBox(

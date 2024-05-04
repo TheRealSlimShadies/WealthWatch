@@ -1,7 +1,5 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
-
-
 import 'package:flutter/material.dart';
 import 'dropDownMenu.dart';
 
@@ -10,8 +8,10 @@ class addExpense extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final TextEditingController expenseAmountController = TextEditingController();
-    final TextEditingController expenseNumberController = TextEditingController();
+    final TextEditingController expenseAmountController =
+        TextEditingController();
+    final TextEditingController expenseNumberController =
+        TextEditingController();
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -58,7 +58,8 @@ class addExpense extends StatelessWidget {
                     decoration: InputDecoration(
                       labelText: "Enter Expense Number",
                       labelStyle: TextStyle(fontSize: 14),
-                      contentPadding: EdgeInsets.only(left: 20, top: 15, bottom: 20),
+                      contentPadding:
+                          EdgeInsets.only(left: 20, top: 15, bottom: 20),
                       border: InputBorder.none,
                       prefixIcon: Icon(Icons.attach_money),
                     ),
@@ -70,14 +71,18 @@ class addExpense extends StatelessWidget {
         ],
       ),
       floatingActionButton: Row(
-        mainAxisAlignment: MainAxisAlignment.end, // Align the FloatingActionButton to the right
+        mainAxisAlignment: MainAxisAlignment
+            .end, // Align the FloatingActionButton to the right
         children: [
           FloatingActionButton(
             onPressed: () {},
             backgroundColor: Colors.red,
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-            child: Icon(Icons.save,
-            color: Colors.white,),
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+            child: Icon(
+              Icons.save,
+              color: Colors.white,
+            ),
           ),
         ],
       ),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:wealthwatch/Buttons/expenseButton.dart';
 import 'package:wealthwatch/Buttons/incomeButton.dart';
-import 'package:wealthwatch/Graphs/barChart.dart';
+import 'package:wealthwatch/Graphs/bar_chart.dart';
 import 'package:wealthwatch/Pages/addIncome.dart';
 import 'package:wealthwatch/Pages/calendar.dart';
 import 'package:wealthwatch/Pages/cofund.dart';
@@ -21,9 +21,13 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: const Home(),
+      home: const Home(
+        title: '',
+      ),
       routes: {
-        '/homepage': (context) => const Home(),
+        '/homepage': (context) => const Home(
+              title: '',
+            ),
         '/statistic': (context) => const Statistics(),
         '/settings': (context) => const Settings(),
         '/cofund': (context) => const coFund(),

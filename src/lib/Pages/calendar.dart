@@ -57,7 +57,7 @@ class _CalendarState extends State<Calendar> {
               _endSelectedDay = null;
             });
           },
-          child: Text('Clear Selection'),
+          child: const Text('Clear Selection'),
         ),
         const SizedBox(height: 20),
 

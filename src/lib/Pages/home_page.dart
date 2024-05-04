@@ -6,7 +6,7 @@ import 'package:wealthwatch/Buttons/incomeButton.dart';
 import 'package:wealthwatch/Graphs/pieChart.dart';
 
 class Home extends StatelessWidget {
-  const Home({super.key});
+  const Home({super.key, required String title});
 
   @override
   Widget build(BuildContext context) {
