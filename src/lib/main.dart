@@ -10,6 +10,8 @@ import 'package:wealthwatch/Pages/home_page.dart';
 import 'package:wealthwatch/Pages/settings.dart';
 import 'package:wealthwatch/Pages/statistics.dart';
 import 'package:wealthwatch/Pages/addExpense.dart';
+import 'package:wealthwatch/Theme/dark_theme.dart';
+import 'package:wealthwatch/Theme/light_theme.dart';
 
 void main() {
   runApp(const MyApp());
@@ -22,6 +24,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      theme: lightTheme,
+      darkTheme: darkTheme,
       home: Login(),
       routes: {
         '/homepage': (context) => Home(),
