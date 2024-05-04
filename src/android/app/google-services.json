@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "64589821414",
+    "project_id": "wealthwatch-3bdc5",
+    "storage_bucket": "wealthwatch-3bdc5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:64589821414:android:895f15a7b15cfa43bed227",
+        "android_client_info": {
+          "package_name": "com.example.wealthwatch"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBrELUxX1fR7QGhh36oW_w60BCH5fMY5BM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
