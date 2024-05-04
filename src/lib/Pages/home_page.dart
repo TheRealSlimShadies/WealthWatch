@@ -5,59 +5,65 @@ import 'package:wealthwatch/Buttons/expenseButton.dart';
 import 'package:wealthwatch/Buttons/incomeButton.dart';
 import 'package:wealthwatch/Graphs/pieChart.dart';
 
-class Home extends StatelessWidget {
+class Home extends StatefulWidget {
   const Home({super.key});
 
+  @override
+  State<Home> createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          backgroundColor: Colors.transparent,
-          toolbarHeight: 60,
-          title: Text(
-            "My Wallet",
-            style: TextStyle(
-                fontFamily: 'MVBoli',
-                fontSize: 25,
-                fontWeight: FontWeight.w600,
-                color: Colors.white),
-          ),
-          centerTitle: true,
-          iconTheme: IconThemeData(color: Colors.white),
-          flexibleSpace: Container(
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(15),
-                  bottomRight: Radius.circular(15),
-                ),
-                gradient: LinearGradient(
-                  colors: [Color(0xFF4CA9DF), Color(0xFF292E91)],
-                  begin: Alignment.bottomCenter,
-                  end: Alignment.topCenter,
-                )),
-          ),
-          actions: [Padding(
+        backgroundColor: Colors.transparent,
+        toolbarHeight: 60,
+        title: Text(
+          "My Wallet",
+          style: TextStyle(
+              fontFamily: 'MVBoli',
+              fontSize: 25,
+              fontWeight: FontWeight.w600,
+              color: Colors.white),
+        ),
+        centerTitle: true,
+        iconTheme: IconThemeData(color: Colors.white),
+        flexibleSpace: Container(
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(15),
+                bottomRight: Radius.circular(15),
+              ),
+              gradient: LinearGradient(
+                colors: [Color(0xFF4CA9DF), Color(0xFF292E91)],
+                begin: Alignment.bottomCenter,
+                end: Alignment.topCenter,
+              )),
+        ),
+        actions: [
+          Padding(
             padding: const EdgeInsets.only(right: 10),
             child: Icon(Icons.logout_outlined),
-          )],
-        ),
+          )
+        ],
+      ),
       drawer: Drawer(
         backgroundColor: Color.fromARGB(197, 255, 255, 255),
         child: Center(
-          child: Column(children: [
-          
-            DrawerHeader(
-                  child: Icon(
-                    Icons.account_circle_sharp,
-                    size: 70,
-                  ),
+          child: Column(
+            children: [
+              DrawerHeader(
+                child: Icon(
+                  Icons.account_circle_sharp,
+                  size: 70,
                 ),
-            Text(
-                  "Profile",
-                  style: TextStyle(fontSize: 20, fontFamily: "Arial"),
-                ),
-            
-            ListTile(
+              ),
+              Text(
+                "Profile",
+                style: TextStyle(fontSize: 20, fontFamily: "Arial"),
+              ),
+              ListTile(
                   contentPadding: EdgeInsets.only(left: 40, top: 70),
                   leading: Icon(Icons.account_balance_wallet, size: 30),
                   title: Text(
@@ -67,9 +73,8 @@ class Home extends StatelessWidget {
                   onTap: () {
                     Navigator.pop(context);
                     Navigator.pushNamed(context, '/statistic');
-                  }
-                ),
-            ListTile(
+                  }),
+              ListTile(
                   contentPadding: EdgeInsets.only(left: 40, top: 70),
                   leading: Icon(Icons.account_balance_wallet, size: 30),
                   title: Text(
@@ -79,9 +84,8 @@ class Home extends StatelessWidget {
                   onTap: () {
                     Navigator.pop(context);
                     Navigator.pushNamed(context, '/cofund');
-                  }
-                ),
-            ListTile(
+                  }),
+              ListTile(
                   contentPadding: EdgeInsets.only(left: 40, top: 70),
                   leading: Icon(Icons.account_balance_wallet, size: 30),
                   title: Text(
@@ -91,9 +95,8 @@ class Home extends StatelessWidget {
                   onTap: () {
                     Navigator.pop(context);
                     Navigator.pushNamed(context, '/calendar');
-                  }
-                ),
-            ListTile(
+                  }),
+              ListTile(
                   contentPadding: EdgeInsets.only(left: 40, top: 70),
                   leading: Icon(Icons.account_balance_wallet, size: 30),
                   title: Text(
@@ -103,34 +106,33 @@ class Home extends StatelessWidget {
                   onTap: () {
                     Navigator.pop(context);
                     Navigator.pushNamed(context, '/settings');
-                  }
-                ),
-          ],),
+                  }),
+            ],
+          ),
         ),
-        ),
-        body: Column(
-          children: [
-            Expanded(
-              child: pieChart(),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Expanded(
-                    child: Padding(
-                  padding: EdgeInsets.all(30),
-                  child: expenseButton(),
-                )),
-                Expanded(
-                    child: Padding(
-                  padding: EdgeInsets.all(30),
-                  child: incomeButton(),
-                ))
-              ],
-            ),
-          ],
-        )
-
+      ),
+      body: Column(
+        children: [
+          Expanded(
+            child: pieChart(),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Expanded(
+                  child: Padding(
+                padding: EdgeInsets.all(30),
+                child: expenseButton(),
+              )),
+              Expanded(
+                  child: Padding(
+                padding: EdgeInsets.all(30),
+                child: incomeButton(),
+              ))
+            ],
+          ),
+        ],
+      ),
     );
   }
 }
