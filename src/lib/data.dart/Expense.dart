@@ -1,17 +1,10 @@
+import 'package:flutter/material.dart';
 import 'package:wealthwatch/Pages/addExpense.dart';
 
 class Expense {
-  late String name;
-  late int expenseAmount;
-
-  Expense() {
-    name = '';
-    expenseAmount = 0;
-  }
-  addExpenseItem(String x, int y) {
-    name = x;
-    expenseAmount = y;
-  }
+  String name;
+  int expenseAmount;
+  Expense({required this.name, required this.expenseAmount});
 }
 
 class ExpenseList {
@@ -20,4 +13,17 @@ class ExpenseList {
   addExpenseToList(Expense expense) {
     expenseListItems.add(expense);
   }
+
+  List<int> getExpenseNumber() {
+    return expenseListItems.map((expense) => expense.expenseAmount).toList();
+  }
+
+  int getTotalExpenseAmount() {
+    List<int> expenseAmounts = getExpenseNumber();
+    return expenseAmounts.fold(
+        0, (previousValue, element) => previousValue + element);
+  }
 }
+
+final catFood = ExpenseList();
+final catTransportation = ExpenseList();
