@@ -4,11 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:wealthwatch/data.dart/Expense.dart';
 import 'dropDownMenuExpense.dart';
 import 'dropDownMenuIncome.dart';
-import 'package:wealthwatch/Graphs/pieChart.dart';
 
 class addExpense extends StatefulWidget {
+   
+   final VoidCallback? refreshCallback;
+
   addExpense({
-    super.key,
+    super.key, this.refreshCallback,
   });
 
   @override
@@ -48,7 +50,8 @@ class _addExpenseState extends State<addExpense> {
             validator: (value) {
               if (value!.isEmpty) {
                 return "Enter Valid Name";
-              } else {
+              } 
+              else {
                 return null;
               }
             },
@@ -87,8 +90,7 @@ class _addExpenseState extends State<addExpense> {
         ],
       ),
       floatingActionButton: Row(
-        mainAxisAlignment: MainAxisAlignment
-            .end, // Align the FloatingActionButton to the right
+        mainAxisAlignment: MainAxisAlignment.end, // Align the FloatingActionButton to the right
         children: [
           FloatingActionButton(
             onPressed: () {
@@ -103,8 +105,8 @@ class _addExpenseState extends State<addExpense> {
                   catTransportation.addExpenseToList(Expense(
                       name: expenseLabel, expenseAmount: expenseNumber));
               }
-
-              Navigator.popAndPushNamed(context, '/homepage');
+              widget.refreshCallback!();
+              Navigator.pop(context);
             },
             backgroundColor: Colors.red,
             shape:

@@ -5,8 +5,9 @@ import "package:flutter/material.dart";
 class MyButton extends StatelessWidget {
 
 final Function()? onTap;
+final String word;
 
-  const MyButton({super.key, required this.onTap,});
+  const MyButton({super.key, required this.onTap, required this.word});
 
 
   @override
@@ -22,7 +23,7 @@ final Function()? onTap;
             borderRadius: BorderRadius.circular(10),
             ),
           child: Center(
-            child: Text("Sign In",
+            child: Text(word,
             style: TextStyle(color: Colors.white,
             fontWeight:FontWeight.normal,
             fontSize: 16 ))

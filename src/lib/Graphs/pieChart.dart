@@ -3,14 +3,18 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:wealthwatch/data.dart/Expense.dart';
 
+
+
 class pieChart extends StatefulWidget {
   const pieChart({super.key});
 
+  
   @override
   State<pieChart> createState() => _pieChartState();
 }
 
 class _pieChartState extends State<pieChart> {
+ 
   late var randomvariable = 0;
   final catFoodupdater = catFood;
   final catTransportationupdater = catTransportation;
@@ -18,11 +22,13 @@ class _pieChartState extends State<pieChart> {
   @override
   Widget build(BuildContext context) {
     return PieChart(
+      
       swapAnimationDuration: Duration(seconds: 2),
       swapAnimationCurve: Curves.easeIn,
       PieChartData(
         sections: [
           PieChartSectionData(
+            
             value: catFoodupdater.getTotalExpenseAmount().toDouble(),
             color: Colors.blue,
             radius: 180,

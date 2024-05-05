@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wealthwatch/Authentication/auth.dart';
 import 'package:wealthwatch/Authentication/login.dart';
 import 'package:wealthwatch/Buttons/expenseButton.dart';
 import 'package:wealthwatch/Buttons/incomeButton.dart';
@@ -28,7 +29,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Login(),
+      home: AuthPage(),
       routes: {
         '/homepage': (context) => Home(),
         '/statistic': (context) => Statistics(),
@@ -39,7 +40,7 @@ class MyApp extends StatelessWidget {
         '/incbutton': (context) => incomeButton(),
         '/addExpense': (context) => addExpense(),
         '/addIncome': (context) => addIncome(),
-        '/login': (context) => Login(),
+        //'/login': (context) => Login(),
         //'/register':(context) => Register(),
       },
     );
