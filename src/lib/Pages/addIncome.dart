@@ -15,7 +15,7 @@ class _addIncomeState extends State<addIncome> {
 
   @override
   Widget build(BuildContext context) {
-    // ignore: unused_local_variable
+
     final TextEditingController incomeAmountController =
         TextEditingController();
     final TextEditingController incomeNumberController =

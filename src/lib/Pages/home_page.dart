@@ -1,21 +1,33 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:wealthwatch/Buttons/expenseButton.dart';
 import 'package:wealthwatch/Buttons/incomeButton.dart';
 import 'package:wealthwatch/Graphs/pieChart.dart';
 
 class Home extends StatefulWidget {
-  const Home({super.key});
+   Home({super.key});
+
+  final user = FirebaseAuth.instance.currentUser!;
+  
 
   @override
   State<Home> createState() => _HomeState();
 }
 
+
 class _HomeState extends State<Home> {
+
+void signUserOut(){
+  FirebaseAuth.instance.signOut();
+}
+
   @override
+  
   Widget build(BuildContext context) {
     return Scaffold(
+      
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         toolbarHeight: 60,
@@ -42,10 +54,8 @@ class _HomeState extends State<Home> {
               )),
         ),
         actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 10),
-            child: Icon(Icons.logout_outlined),
-          )
+            IconButton(onPressed: signUserOut ,icon: Icon(Icons.logout_outlined)),
+          
         ],
       ),
       drawer: Drawer(
@@ -122,7 +132,7 @@ class _HomeState extends State<Home> {
               Expanded(
                   child: Padding(
                 padding: EdgeInsets.all(30),
-                child: expenseButton(),
+                child: expenseButton(refreshCallback1: refresh,),
               )),
               Expanded(
                   child: Padding(
@@ -135,4 +145,8 @@ class _HomeState extends State<Home> {
       ),
     );
   }
+  void refresh() {
+    setState(() {});
+  }
 }
+
