@@ -16,10 +16,8 @@ class _addIncomeState extends State<addIncome> {
   @override
   Widget build(BuildContext context) {
 
-    final TextEditingController incomeAmountController =
-        TextEditingController();
-    final TextEditingController incomeNumberController =
-        TextEditingController();
+    final TextEditingController incomeAmountController = TextEditingController();
+    final TextEditingController incomeNumberController = TextEditingController();
     return Scaffold(
       appBar: AppBar(
         title: Text(

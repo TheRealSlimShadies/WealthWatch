@@ -27,3 +27,8 @@ class ExpenseList {
 
 final catFood = ExpenseList();
 final catTransportation = ExpenseList();
+final catEducation = ExpenseList();
+final catMiscellaneous = ExpenseList();
+final catHealth = ExpenseList();
+final catEntertainment = ExpenseList();
+final catHousing = ExpenseList();

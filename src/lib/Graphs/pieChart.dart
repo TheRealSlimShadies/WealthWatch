@@ -14,9 +14,7 @@ class pieChart extends StatefulWidget {
 }
 
 class _pieChartState extends State<pieChart> {
- 
-  late var randomvariable = 0;
-  final catFoodupdater = catFood;
+   final catFoodupdater = catFood;
   final catTransportationupdater = catTransportation;
 
   @override
@@ -24,25 +22,46 @@ class _pieChartState extends State<pieChart> {
     return PieChart(
       
       swapAnimationDuration: Duration(seconds: 2),
-      swapAnimationCurve: Curves.easeIn,
+      swapAnimationCurve: Curves.linear,
       PieChartData(
         sections: [
           PieChartSectionData(
             
-            value: catFoodupdater.getTotalExpenseAmount().toDouble(),
+            value: catFood.getTotalExpenseAmount().toDouble(),
             color: Colors.blue,
             radius: 180,
           ),
           PieChartSectionData(
-            value: catTransportationupdater.getTotalExpenseAmount().toDouble(),
+            value: catTransportation.getTotalExpenseAmount().toDouble(),
             color: const Color.fromARGB(255, 72, 243, 33),
             radius: 180,
           ),
           PieChartSectionData(
-            value: 0,
+            value: catHousing.getTotalExpenseAmount().toDouble(),
             color: Color.fromARGB(255, 227, 85, 24),
             radius: 180,
-          )
+          ),
+          PieChartSectionData(
+            value: catEntertainment.getTotalExpenseAmount().toDouble(),
+            color: Color.fromARGB(255, 184, 242, 12),
+            radius: 180,
+          ),
+          PieChartSectionData(
+            value: catEducation.getTotalExpenseAmount().toDouble(),
+            color: Color.fromARGB(255, 251, 0, 255),
+            radius: 180,
+          ),
+          PieChartSectionData(
+            value: catMiscellaneous.getTotalExpenseAmount().toDouble(),
+            color: Color.fromARGB(255, 137, 0, 43),
+            radius: 180,
+          ),
+          PieChartSectionData(
+            value: catHealth.getTotalExpenseAmount().toDouble(),
+            color: Color.fromARGB(255, 247, 2, 2),
+            radius: 180,
+          ),
+
         ],
         sectionsSpace: 0,
         centerSpaceRadius: 0,

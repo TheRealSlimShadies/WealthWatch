@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:wealthwatch/Authentication/auth.dart';
+import 'package:wealthwatch/Authentication/forgotPassword.dart';
 import 'package:wealthwatch/Authentication/login.dart';
 import 'package:wealthwatch/Buttons/expenseButton.dart';
 import 'package:wealthwatch/Buttons/incomeButton.dart';
 import 'package:wealthwatch/Pages/addIncome.dart';
+import 'package:wealthwatch/Pages/addPeople.dart';
 import 'package:wealthwatch/Pages/calendar.dart';
 import 'package:wealthwatch/Pages/cofund.dart';
 import 'package:wealthwatch/Pages/home_page.dart';
@@ -40,6 +42,8 @@ class MyApp extends StatelessWidget {
         '/incbutton': (context) => incomeButton(),
         '/addExpense': (context) => addExpense(),
         '/addIncome': (context) => addIncome(),
+        '/addPeople':(context) => addPeople(),
+        '/forgotPassword':(context) => forgotPassword(),
         //'/login': (context) => Login(),
         //'/register':(context) => Register(),
       },
