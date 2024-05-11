@@ -44,49 +44,38 @@ class _LoginState extends State<Login> {
     //pop buffer circle
     Navigator.pop(context);
 
-    // //wrong email
-    // if (e.code == 'user-not-found')
-    // {
-    // print("user not found");
-    // //wrongEmailMessage();
-    // }
-    // //wrong password
-    // else if (e.code == 'wrong-password')
-    // {
-    // print("wrong password");
-    // //wrongPasswordMessage();
-    // }
-    // else
+    //wrong email
+    if (e.code == 'user-not-found')
+    {
+    print("user not found");
+    errorPopped(e.code);
+    //wrongEmailMessage();
+    }
+    //wrong password
+    else if (e.code == 'wrong-password')
+    {
+    print("wrong password");
+    errorPopped(e.code);
+    //wrongPasswordMessage();
+    }
+    else
     print("Error Logging in! Check if you've entered correct credentials!");
-    errorPopped();
+    //errorPopped("Check if you've entered correct credentials!");
     
    }
 
   }
 
 
-void errorPopped()
+void errorPopped(String word)
 {
   showDialog(context: context, builder: (context) {
-      return const AlertDialog(title:Text('Incorrect Credentials'),);
+      return AlertDialog(title:Text(word),);
     },);
 }
 //Google has added email enumeration protection, which you will need to turn off (Not recommended),
 //because attackers may try to see if your app has that email address associated with your app.
 
-//   //wrong email message method
-//   void wrongEmailMessage(){
-//     showDialog(context: context, builder: (context) {
-//       return const AlertDialog(title:Text('Incorrect Email'),);
-//     },);
-//   }
-
-// //wrong password message method
-//   void wrongPasswordMessage(){
-//     showDialog(context: context, builder: (context) {
-//       return const AlertDialog(title:Text('Incorrect Password'),);
-//     },);
-//   }
 
   @override
   Widget build(BuildContext context) {
@@ -124,8 +113,13 @@ void errorPopped()
                       mainAxisAlignment: MainAxisAlignment.end,
                       
                       children: [
-                        Text("Forgot Password?",
-                        style: TextStyle(color: Color.fromARGB(255, 76, 75, 75)),),
+                        GestureDetector(
+                          onTap:() {
+                            Navigator.pushNamed(context, '/forgotPassword');
+                          },
+                          child: Text("Forgot Password?",
+                          style: TextStyle(color: Color.fromARGB(255, 76, 75, 75)),),
+                        ),
                       ],
                     ),
                   ),

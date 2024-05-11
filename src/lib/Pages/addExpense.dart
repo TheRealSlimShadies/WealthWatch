@@ -104,6 +104,22 @@ class _addExpenseState extends State<addExpense> {
                 case 'Transportation':
                   catTransportation.addExpenseToList(Expense(
                       name: expenseLabel, expenseAmount: expenseNumber));
+                case 'Housing':
+                  catHousing.addExpenseToList(Expense(
+                      name: expenseLabel, expenseAmount: expenseNumber));
+                case 'Entertainment':
+                  catEntertainment.addExpenseToList(Expense(
+                      name: expenseLabel, expenseAmount: expenseNumber));
+                case 'Health':
+                    catHealth.addExpenseToList(Expense(
+                      name: expenseLabel, expenseAmount: expenseNumber));
+                case 'Education':
+                    catEducation.addExpenseToList(Expense(
+                      name: expenseLabel, expenseAmount: expenseNumber));
+                case 'Miscellaneous':
+                    catMiscellaneous.addExpenseToList(Expense(
+                        name: expenseLabel, expenseAmount: expenseNumber));
+
               }
               widget.refreshCallback!();
               Navigator.pop(context);

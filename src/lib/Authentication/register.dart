@@ -40,24 +40,25 @@ class _RegisterState extends State<Register> {
       await FirebaseAuth.instance.createUserWithEmailAndPassword(
       email: emailController.text,
       password: passwordController.text
-    );
+      );
       }
       else
       {
       //error message for when passwords don't match
       errorPopped("Passwords do not match");
-
+      return;
       }
-    //pop buffer circle
+
+       Navigator.pop(context);
+
+    }on FirebaseAuthException catch (e){
+   
+
     Navigator.pop(context);
 
-    }on FirebaseAuthException {
-    //pop buffer circle
-    Navigator.pop(context);
-
-    print("Error Logging in! Check if you've entered correct credentials!");
-    errorPopped("Invalid Credentials");
-    
+    if (e.code == 'invalid-email') {
+      errorPopped(e.code);
+    }
    }
 
   }
