@@ -12,7 +12,7 @@ import 'package:wealthwatch/Pages/statistics.dart';
 import 'package:wealthwatch/Pages/addExpense.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
-
+import 'package:wealthwatch/Components/expenseWindow.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -40,6 +40,10 @@ class MyApp extends StatelessWidget {
         '/incbutton': (context) => incomeButton(),
         '/addExpense': (context) => addExpense(),
         '/addIncome': (context) => addIncome(),
+        '/expenseWindow': (context) => expenseWindow(
+              listedExpense: [],
+              refreshCallback2: () => {},
+            ),
         //'/login': (context) => Login(),
         //'/register':(context) => Register(),
       },

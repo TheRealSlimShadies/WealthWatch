@@ -6,11 +6,11 @@ import 'dropDownMenuExpense.dart';
 import 'dropDownMenuIncome.dart';
 
 class addExpense extends StatefulWidget {
-   
-   final VoidCallback? refreshCallback;
+  final VoidCallback? refreshCallback;
 
   addExpense({
-    super.key, this.refreshCallback,
+    super.key,
+    this.refreshCallback,
   });
 
   @override
@@ -50,8 +50,7 @@ class _addExpenseState extends State<addExpense> {
             validator: (value) {
               if (value!.isEmpty) {
                 return "Enter Valid Name";
-              } 
-              else {
+              } else {
                 return null;
               }
             },
@@ -90,7 +89,8 @@ class _addExpenseState extends State<addExpense> {
         ],
       ),
       floatingActionButton: Row(
-        mainAxisAlignment: MainAxisAlignment.end, // Align the FloatingActionButton to the right
+        mainAxisAlignment: MainAxisAlignment
+            .end, // Align the FloatingActionButton to the right
         children: [
           FloatingActionButton(
             onPressed: () {
@@ -103,6 +103,21 @@ class _addExpenseState extends State<addExpense> {
                       name: expenseLabel, expenseAmount: expenseNumber));
                 case 'Transportation':
                   catTransportation.addExpenseToList(Expense(
+                      name: expenseLabel, expenseAmount: expenseNumber));
+                case 'Health':
+                  catHealth.addExpenseToList(Expense(
+                      name: expenseLabel, expenseAmount: expenseNumber));
+                case 'Entertainment':
+                  catEntertainment.addExpenseToList(Expense(
+                      name: expenseLabel, expenseAmount: expenseNumber));
+                case 'Miscellaneous':
+                  catMiscellaneous.addExpenseToList(Expense(
+                      name: expenseLabel, expenseAmount: expenseNumber));
+                case 'Education':
+                  catEducation.addExpenseToList(Expense(
+                      name: expenseLabel, expenseAmount: expenseNumber));
+                case 'Housing':
+                  catHousing.addExpenseToList(Expense(
                       name: expenseLabel, expenseAmount: expenseNumber));
               }
               widget.refreshCallback!();

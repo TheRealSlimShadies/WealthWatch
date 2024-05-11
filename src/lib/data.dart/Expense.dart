@@ -14,6 +14,10 @@ class ExpenseList {
     expenseListItems.add(expense);
   }
 
+  deleteExpenseFromList(Expense expense) {
+    expenseListItems.remove(expense);
+  }
+
   List<int> getExpenseNumber() {
     return expenseListItems.map((expense) => expense.expenseAmount).toList();
   }
@@ -27,3 +31,8 @@ class ExpenseList {
 
 final catFood = ExpenseList();
 final catTransportation = ExpenseList();
+final catEntertainment = ExpenseList();
+final catHousing = ExpenseList();
+final catMiscellaneous = ExpenseList();
+final catHealth = ExpenseList();
+final catEducation = ExpenseList();

@@ -7,27 +7,22 @@ import 'package:wealthwatch/Buttons/incomeButton.dart';
 import 'package:wealthwatch/Graphs/pieChart.dart';
 
 class Home extends StatefulWidget {
-   Home({super.key});
+  Home({super.key});
 
   final user = FirebaseAuth.instance.currentUser!;
-  
 
   @override
   State<Home> createState() => _HomeState();
 }
 
-
 class _HomeState extends State<Home> {
-
-void signUserOut(){
-  FirebaseAuth.instance.signOut();
-}
+  void signUserOut() {
+    FirebaseAuth.instance.signOut();
+  }
 
   @override
-  
   Widget build(BuildContext context) {
     return Scaffold(
-      
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         toolbarHeight: 60,
@@ -54,8 +49,7 @@ void signUserOut(){
               )),
         ),
         actions: [
-            IconButton(onPressed: signUserOut ,icon: Icon(Icons.logout_outlined)),
-          
+          IconButton(onPressed: signUserOut, icon: Icon(Icons.logout_outlined)),
         ],
       ),
       drawer: Drawer(
@@ -132,7 +126,9 @@ void signUserOut(){
               Expanded(
                   child: Padding(
                 padding: EdgeInsets.all(30),
-                child: expenseButton(refreshCallback1: refresh,),
+                child: expenseButton(
+                  refreshCallback1: refresh,
+                ),
               )),
               Expanded(
                   child: Padding(
@@ -145,8 +141,8 @@ void signUserOut(){
       ),
     );
   }
+
   void refresh() {
     setState(() {});
   }
 }
-
