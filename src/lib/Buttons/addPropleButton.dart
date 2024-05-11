@@ -1,15 +1,15 @@
 // ignore_for_file: sort_child_properties_last
 import 'package:flutter/material.dart';
 
-class incomeButton extends StatelessWidget {
-  const incomeButton({super.key});
+class addPeopleButton extends StatelessWidget {
+  const addPeopleButton({super.key});
 
   @override
   Widget build(BuildContext context) {
     return FloatingActionButton(
       
       onPressed: () {
-        Navigator.pushNamed(context, '/addIncome');
+        Navigator.pushNamed(context, '/addPeople');
         
       },
       backgroundColor: Colors.green[600],

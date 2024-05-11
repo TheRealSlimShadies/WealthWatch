@@ -16,6 +16,8 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  final user = FirebaseAuth.instance.currentUser!;
+
   void signUserOut() {
     FirebaseAuth.instance.signOut();
   }
@@ -64,7 +66,7 @@ class _HomeState extends State<Home> {
                 ),
               ),
               Text(
-                "Profile",
+                user.email!,
                 style: TextStyle(fontSize: 20, fontFamily: "Arial"),
               ),
               ListTile(
