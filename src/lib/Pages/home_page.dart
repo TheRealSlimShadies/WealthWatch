@@ -11,7 +11,7 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
+        appBar: AppBar(
           backgroundColor: Colors.transparent,
           toolbarHeight: 60,
           title: Text(
@@ -37,72 +37,68 @@ class Home extends StatelessWidget {
                 )),
           ),
         ),
-      drawer: Drawer(
-        backgroundColor: Color.fromARGB(197, 255, 255, 255),
-        child: Center(
-          child: Column(children: [
-          
-            DrawerHeader(
+        drawer: Drawer(
+          backgroundColor: Color.fromARGB(197, 255, 255, 255),
+          child: Center(
+            child: Column(
+              children: [
+                DrawerHeader(
                   child: Icon(
                     Icons.account_circle_sharp,
                     size: 70,
                   ),
                 ),
-            Text(
+                Text(
                   "Profile",
                   style: TextStyle(fontSize: 20, fontFamily: "Arial"),
                 ),
-            
-            ListTile(
-                  contentPadding: EdgeInsets.only(left: 40, top: 70),
-                  leading: Icon(Icons.account_balance_wallet, size: 30),
-                  title: Text(
-                    'Statistics',
-                    style: TextStyle(fontSize: 17),
-                  ),
-                  onTap: () {
-                    Navigator.pop(context);
-                    Navigator.pushNamed(context, '/statistic');
-                  }
-                ),
-            ListTile(
-                  contentPadding: EdgeInsets.only(left: 40, top: 70),
-                  leading: Icon(Icons.account_balance_wallet, size: 30),
-                  title: Text(
-                    'Co-Fund',
-                    style: TextStyle(fontSize: 17),
-                  ),
-                  onTap: () {
-                    Navigator.pop(context);
-                    Navigator.pushNamed(context, '/cofund');
-                  }
-                ),
-            ListTile(
-                  contentPadding: EdgeInsets.only(left: 40, top: 70),
-                  leading: Icon(Icons.account_balance_wallet, size: 30),
-                  title: Text(
-                    'Calendar',
-                    style: TextStyle(fontSize: 17),
-                  ),
-                  onTap: () {
-                    Navigator.pop(context);
-                    Navigator.pushNamed(context, '/calendar');
-                  }
-                ),
-            ListTile(
-                  contentPadding: EdgeInsets.only(left: 40, top: 70),
-                  leading: Icon(Icons.account_balance_wallet, size: 30),
-                  title: Text(
-                    'Settings',
-                    style: TextStyle(fontSize: 17),
-                  ),
-                  onTap: () {
-                    Navigator.pop(context);
-                    Navigator.pushNamed(context, '/settings');
-                  }
-                ),
-          ],),
-        ),
+                ListTile(
+                    contentPadding: EdgeInsets.only(left: 40, top: 70),
+                    leading: Icon(Icons.account_balance_wallet, size: 30),
+                    title: Text(
+                      'Statistics',
+                      style: TextStyle(fontSize: 17),
+                    ),
+                    onTap: () {
+                      Navigator.pop(context);
+                      Navigator.pushNamed(context, '/statistic');
+                    }),
+                ListTile(
+                    contentPadding: EdgeInsets.only(left: 40, top: 70),
+                    leading: Icon(Icons.account_balance_wallet, size: 30),
+                    title: Text(
+                      'Co-Fund',
+                      style: TextStyle(fontSize: 17),
+                    ),
+                    onTap: () {
+                      Navigator.pop(context);
+                      Navigator.pushNamed(context, '/cofund');
+                    }),
+                ListTile(
+                    contentPadding: EdgeInsets.only(left: 40, top: 70),
+                    leading: Icon(Icons.account_balance_wallet, size: 30),
+                    title: Text(
+                      'Calendar',
+                      style: TextStyle(fontSize: 17),
+                    ),
+                    onTap: () {
+                      Navigator.pop(context);
+                      Navigator.pushNamed(context, '/calendar');
+                    }),
+                ListTile(
+                    contentPadding: EdgeInsets.only(left: 40, top: 70),
+                    leading: Icon(Icons.account_balance_wallet, size: 30),
+                    title: Text(
+                      'Settings',
+                      style: TextStyle(fontSize: 17),
+                    ),
+                    onTap: () {
+                      Navigator.pop(context);
+                      Navigator.pushNamed(context, '/settings');
+                    }),
+              ],
+            ),
+          ),
         ),
         body: Column(
           children: [
@@ -125,8 +121,6 @@ class Home extends StatelessWidget {
               ],
             ),
           ],
-        )
-
-    );
+        ));
   }
 }

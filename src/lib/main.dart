@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:wealthwatch/Buttons/expenseButton.dart';
 import 'package:wealthwatch/Buttons/incomeButton.dart';
 import 'package:wealthwatch/Graphs/bar_chart.dart';
@@ -9,9 +10,15 @@ import 'package:wealthwatch/Pages/home_page.dart';
 import 'package:wealthwatch/Pages/settings.dart';
 import 'package:wealthwatch/Pages/statistics.dart';
 import 'package:wealthwatch/Pages/addExpense.dart';
+import 'package:wealthwatch/themes/theme_provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => ThemeProvider(),
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -24,6 +31,7 @@ class MyApp extends StatelessWidget {
       home: const Home(
         title: '',
       ),
+      theme: Provider.of<ThemeProvider>(context).themeData,
       routes: {
         '/homepage': (context) => const Home(
               title: '',
