@@ -1,5 +1,6 @@
   // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, use_build_context_synchronously
 
+import "package:cloud_firestore/cloud_firestore.dart";
 import "package:firebase_auth/firebase_auth.dart";
 import "package:flutter/cupertino.dart";
 import "package:flutter/material.dart";
@@ -18,14 +19,30 @@ import "package:wealthwatch/Components/mytextfield.dart";
 
 class _RegisterState extends State<Register> {
   //text editing controllers
+  final firstNameController = TextEditingController();
+
+  final lastNameController = TextEditingController();
+
   final emailController= TextEditingController();
 
   final passwordController= TextEditingController();
 
   final confirmpasswordController = TextEditingController();
 
+
+  @override
+  void dispose() {
+    //TODO: implement dispose
+    firstNameController.dispose();
+    lastNameController.dispose();
+    emailController.dispose();
+    passwordController.dispose();
+    confirmpasswordController.dispose();
+    super.dispose();
+  }
+
   //sign user up
-  void signUserUp() async
+  Future signUserUp() async
   {
     //buffer circle
     showDialog(context: context, builder: (context) {
@@ -37,10 +54,15 @@ class _RegisterState extends State<Register> {
     try{
       if(passwordController.text == confirmpasswordController.text)
       {
+      //create the user
       await FirebaseAuth.instance.createUserWithEmailAndPassword(
       email: emailController.text,
       password: passwordController.text
       );
+
+      //add the user details
+      addUserDetail(firstNameController.text, lastNameController.text, emailController.text);
+
       }
       else
       {
@@ -63,6 +85,15 @@ class _RegisterState extends State<Register> {
 
   }
 
+  Future addUserDetail(String firstName, String lastName, String email) async
+  {
+    await FirebaseFirestore.instance.collection('users').add({
+      'first name': firstName ,
+      'last name' : lastName ,
+      'email' : email
+    });
+  }
+
 
 // Function to show error dialog
 void errorPopped(String word)
@@ -71,6 +102,7 @@ void errorPopped(String word)
       return AlertDialog(title:Text(word),);
     },);
 }
+
 
 
   @override
@@ -95,7 +127,15 @@ void errorPopped(String word)
                   
                   SizedBox(height: 40,),
               
-                  MyTextField(controller:emailController,hintText: "Username", obscureText: false),
+                  MyTextField(controller:firstNameController,hintText: "First Name", obscureText: false),
+              
+                  SizedBox(height: 15,),
+
+                  MyTextField(controller:lastNameController,hintText: "Last Name", obscureText: false),
+              
+                  SizedBox(height: 15,),
+              
+                  MyTextField(controller:emailController,hintText: "User Name", obscureText: false),
               
                   SizedBox(height: 15),
               

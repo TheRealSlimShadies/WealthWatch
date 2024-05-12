@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:wealthwatch/Buttons/expenseButton.dart';
@@ -9,7 +10,7 @@ import 'package:wealthwatch/Graphs/pieChart.dart';
 class Home extends StatefulWidget {
    Home({super.key});
 
-  final user = FirebaseAuth.instance.currentUser!;
+  //final user = FirebaseAuth.instance.currentUser!;
   
 
   @override
@@ -20,6 +21,8 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
 
   final user = FirebaseAuth.instance.currentUser!;
+ 
+
 
 void signUserOut(){
   FirebaseAuth.instance.signOut();
@@ -28,6 +31,8 @@ void signUserOut(){
   @override
   
   Widget build(BuildContext context) {
+
+    
     return Scaffold(
       
       appBar: AppBar(
