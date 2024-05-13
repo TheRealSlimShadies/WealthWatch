@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:wealthwatch/data.dart/Expense.dart';
+import 'package:wealthwatch/Data/Expense.dart';
 
 class expenseWindow extends StatefulWidget {
   final List<Expense> listedExpense;

@@ -13,7 +13,7 @@ final String word;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: onTap,
+      onTap:onTap,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 70),
         child: Container(

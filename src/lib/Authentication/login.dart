@@ -22,6 +22,17 @@ class _LoginState extends State<Login> {
 
   final passwordController= TextEditingController();
 
+
+  
+  @override
+  void dispose() {
+      // TODO: implement dispose
+      emailController.dispose();
+      passwordController.dispose();
+      super.dispose();
+    }
+
+
   //sign user in
   void signUserIn() async
   {
