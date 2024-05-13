@@ -3,10 +3,11 @@ import 'package:wealthwatch/data.dart/Expense.dart';
 
 class expenseWindow extends StatefulWidget {
   final List<Expense> listedExpense;
-  final VoidCallback? refreshCallback2;
 
-  const expenseWindow(
-      {super.key, required this.listedExpense, required this.refreshCallback2});
+  const expenseWindow({
+    super.key,
+    required this.listedExpense,
+  });
   @override
   State<expenseWindow> createState() => _expenseWindowState();
 }
@@ -26,7 +27,7 @@ class _expenseWindowState extends State<expenseWindow> {
             icon: Icon(Icons.arrow_back),
             color: Colors.white,
             onPressed: () {
-              Navigator.pop(context);
+              Navigator.popAndPushNamed(context, '/homepage');
             },
           ),
         ),
@@ -38,7 +39,6 @@ class _expenseWindowState extends State<expenseWindow> {
               onLongPress: () {
                 setState(() {
                   widget.listedExpense.remove(expense);
-                  widget.refreshCallback2?.call();
                 });
               },
             );

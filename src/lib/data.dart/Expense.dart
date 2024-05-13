@@ -36,3 +36,34 @@ final catMiscellaneous = ExpenseList();
 final catHealth = ExpenseList();
 final catEntertainment = ExpenseList();
 final catHousing = ExpenseList();
+
+class Income {
+  int incomeAmount;
+  Income({required this.incomeAmount});
+}
+
+class IncomeList {
+  List<Income> incomeListItems = [];
+
+  addIncomeToList(Income income) {
+    incomeListItems.add(income);
+  }
+
+  deleteIncomeFromList(Income income) {
+    incomeListItems.remove(income);
+  }
+
+  List<int> getIncomeNumber() {
+    return incomeListItems.map((income) => income.incomeAmount).toList();
+  }
+
+  int getTotalIncomeAmount() {
+    List<int> incomeAmounts = getIncomeNumber();
+    return incomeAmounts.fold(
+        0, (previousValue, element) => previousValue + element);
+  }
+}
+
+final catDeposit = IncomeList();
+final catRent = IncomeList();
+final catSalary = IncomeList();

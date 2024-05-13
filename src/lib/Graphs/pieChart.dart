@@ -36,16 +36,13 @@ class _pieChartState extends State<pieChart> {
                   pieTouchResponse!.touchedSection!.touchedSection;
               String caseTitle = sectionIndex!.title;
               List<Expense>? the_list = getExpenseListForSection(caseTitle);
-              print(sectionIndex);
+
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => expenseWindow(
-                        listedExpense: the_list!,
-                        refreshCallback2: () {
-                          setState(() {});
-                        }),
-                  ));
+                      builder: (context) => expenseWindow(
+                            listedExpense: the_list!,
+                          )));
             }),
         sections: [
           PieChartSectionData(
