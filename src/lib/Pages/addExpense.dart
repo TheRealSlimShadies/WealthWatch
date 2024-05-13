@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'package:wealthwatch/data.dart/Expense.dart';
+import 'package:wealthwatch/Data/Expense.dart';
 import 'dropDownMenuExpense.dart';
 import 'dropDownMenuIncome.dart';
 
@@ -24,6 +24,52 @@ class _addExpenseState extends State<addExpense> {
 
   final categorySelection = TextEditingController();
 
+  final GlobalKey<FormState> formkey= GlobalKey<FormState>();
+
+
+  // void validateField(){
+  //   if(formkey.currentState!.validate()){
+  //     {       
+  //     addOperation();        
+  //     }
+            
+  //   }
+  //   else{
+  //     print("enpty field...");
+  //   }
+  // }
+
+  // void addOperation(){
+  //   String expenseLabel = expenseLabelController.text;
+  //             String expensenumbercontroller = expenseNumberController.text;
+  //             int expenseNumber = int.tryParse(expensenumbercontroller) ?? 0;
+  //             switch (categorySelection.text) {
+  //               case 'Food':
+  //                 catFood.addExpenseToList(Expense(
+  //                     name: expenseLabel, expenseAmount: expenseNumber));
+  //               case 'Transportation':
+  //                 catTransportation.addExpenseToList(Expense(
+  //                     name: expenseLabel, expenseAmount: expenseNumber));
+  //               case 'Health':
+  //                 catHealth.addExpenseToList(Expense(
+  //                     name: expenseLabel, expenseAmount: expenseNumber));
+  //               case 'Entertainment':
+  //                 catEntertainment.addExpenseToList(Expense(
+  //                     name: expenseLabel, expenseAmount: expenseNumber));
+  //               case 'Miscellaneous':
+  //                 catMiscellaneous.addExpenseToList(Expense(
+  //                     name: expenseLabel, expenseAmount: expenseNumber));
+  //               case 'Education':
+  //                 catEducation.addExpenseToList(Expense(
+  //                     name: expenseLabel, expenseAmount: expenseNumber));
+  //               case 'Housing':
+  //                 catHousing.addExpenseToList(Expense(
+  //                     name: expenseLabel, expenseAmount: expenseNumber));
+  //             }
+  //             widget.refreshCallback!();
+  //             Navigator.pop(context);
+  // }
+
   @override
   Widget build(BuildContext context) {
     final categorySelection = TextEditingController();
@@ -37,63 +83,67 @@ class _addExpenseState extends State<addExpense> {
         backgroundColor: Colors.red[500],
         centerTitle: true,
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          TextFormField(
-            controller: expenseLabelController,
-            decoration: InputDecoration(
-                hintText: "Enter Expense Name",
-                contentPadding: EdgeInsets.only(left: 20, top: 15, bottom: 20),
-                enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.grey))),
-            validator: (value) {
-              if (value!.isEmpty) {
-                return "Enter Valid Name";
-              } else {
-                return null;
-              }
-            },
-          ),
-          SizedBox(
-            height: 50,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Container(
-                child: MyDropdownMenuExpense(
-                  controller: categorySelection,
-                ),
-              ),
-              Container(
-                margin: EdgeInsets.only(left: 40),
-                width: 150,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                child: TextFormField(
-                  controller: expenseNumberController,
-                  keyboardType: TextInputType.number,
-                  decoration: InputDecoration(
-                    labelText: "Enter Expense Number",
-                    labelStyle: TextStyle(fontSize: 14),
-                    enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.grey)),
-                    prefixIcon: Icon(Icons.attach_money),
+      body: Form(
+        key: formkey,
+        autovalidateMode: AutovalidateMode.always,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            TextFormField(
+              controller: expenseLabelController,
+              decoration: InputDecoration(
+                  hintText: "Enter Expense Name",
+                  contentPadding: EdgeInsets.only(left: 20, top: 15, bottom: 20),
+                  enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.grey))),
+              validator: (value) {
+                if (value!.isEmpty) {
+                  return "Enter the name of the item for better history log.";
+                } else {
+                  return null;
+                }
+              },
+            ),
+            SizedBox(
+              height: 50,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Container(
+                  child: MyDropdownMenuExpense(
+                    controller: categorySelection,
                   ),
                 ),
-              ),
-            ],
-          ),
-        ],
+                Container(
+                  margin: EdgeInsets.only(left: 40),
+                  width: 150,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: TextFormField(
+                    controller: expenseNumberController,
+                    keyboardType: TextInputType.number,
+                    decoration: InputDecoration(
+                      labelText: "Enter Expense Number",
+                      labelStyle: TextStyle(fontSize: 14),
+                      enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.grey)),
+                      prefixIcon: Icon(Icons.attach_money),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
       floatingActionButton: Row(
         mainAxisAlignment: MainAxisAlignment
             .end, // Align the FloatingActionButton to the right
         children: [
           FloatingActionButton(
-            onPressed: () {
+            onPressed:(){
               String expenseLabel = expenseLabelController.text;
               String expensenumbercontroller = expenseNumberController.text;
               int expenseNumber = int.tryParse(expensenumbercontroller) ?? 0;
@@ -122,6 +172,7 @@ class _addExpenseState extends State<addExpense> {
               }
               widget.refreshCallback!();
               Navigator.pop(context);
+
             },
             backgroundColor: Colors.red,
             shape:

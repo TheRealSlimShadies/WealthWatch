@@ -41,16 +41,6 @@ class _forgotPasswordState extends State<forgotPassword> {
     {
     print(e);
     
-    // Checking the error code to display appropriate error message
-    // if (e.code == 'invalid-email')
-    // {
-    //   errorPopped("Badly formatted email.");
-    // } 
-    // else if (e.code == 'user-not-found')
-    // {
-    //   errorPopped('An error occured. The entered Email is not registered.');
-    // }
-
     showDialog(
       context: context,
       builder: (context) {
@@ -61,13 +51,6 @@ class _forgotPasswordState extends State<forgotPassword> {
     );
   }
 }
-
-// void errorPopped(String word)
-// {
-//   showDialog(context: context, builder: (context) {
-//       return AlertDialog(title:Text(word),);
-//     },);
-// }
 
   @override
   Widget build(BuildContext context) {

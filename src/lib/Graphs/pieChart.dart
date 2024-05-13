@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:wealthwatch/data.dart/Expense.dart';
+import 'package:wealthwatch/Data/Expense.dart';
 import 'package:wealthwatch/Components/expenseWindow.dart';
 
 class pieChart extends StatefulWidget {

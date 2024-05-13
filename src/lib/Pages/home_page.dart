@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -21,8 +22,36 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   final user = FirebaseAuth.instance.currentUser!;
-  void signUserOut() {
-    FirebaseAuth.instance.signOut();
+
+  //final userData= FirebaseFirestore.instance.collection('users').get().then
+
+  void signUserOut() async {
+    await FirebaseAuth.instance.signOut();
+  }
+
+  void signUserOutPopUpBox() {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+              title: Text("Logging Out..."),
+              content: Text("Do you want to log out?"),
+              actions: [
+                TextButton(
+                    onPressed: () {
+                      signUserOut();
+                      Navigator.pop(context);
+                    },
+                    child: Text('Yes')),
+                TextButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: Text("No")),
+              ]
+              //FirebaseAuth.instance.signOut();
+              );
+        });
   }
 
   @override
@@ -54,7 +83,9 @@ class _HomeState extends State<Home> {
               )),
         ),
         actions: [
-          IconButton(onPressed: signUserOut, icon: Icon(Icons.logout_outlined)),
+          IconButton(
+              onPressed: signUserOutPopUpBox,
+              icon: Icon(Icons.logout_outlined)),
         ],
       ),
       drawer: Drawer(
