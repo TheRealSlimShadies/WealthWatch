@@ -1,17 +1,21 @@
 import 'package:flutter/material.dart';
 
 class MyDropdownMenuIncome extends StatefulWidget {
-  const MyDropdownMenuIncome();
+  final controller;
+  MyDropdownMenuIncome({super.key, required this.controller});
 
   @override
   State<MyDropdownMenuIncome> createState() => _MyDropdownMenuState();
 }
 
+final controller = TextEditingController();
+
 class _MyDropdownMenuState extends State<MyDropdownMenuIncome> {
   Widget build(BuildContext context) {
     return DropdownMenu(
-        label: const Text('Expense Name'),
+        label: const Text('Income Name'),
         width: 180,
+        controller: widget.controller,
         dropdownMenuEntries: incomeCategories.values
             .map((incomeCategories) => DropdownMenuEntry(
                 value: incomeCategories,

@@ -3,13 +3,17 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:wealthwatch/Buttons/expenseButton.dart';
 import 'package:wealthwatch/Buttons/incomeButton.dart';
+import 'package:wealthwatch/Components/amountDisplayer.dart';
+import 'package:wealthwatch/Components/displaywidget.dart';
+import 'package:wealthwatch/Components/progressBar.dart';
 import 'package:wealthwatch/Graphs/pieChart.dart';
+import 'package:wealthwatch/data.dart/Expense.dart';
 
 class Home extends StatefulWidget {
   Home({super.key});
-
   final user = FirebaseAuth.instance.currentUser!;
 
   @override
@@ -21,44 +25,37 @@ class _HomeState extends State<Home> {
 
   //final userData= FirebaseFirestore.instance.collection('users').get().then
 
-  void signUserOut () async
-  {
-      await FirebaseAuth.instance.signOut();
+  void signUserOut() async {
+    await FirebaseAuth.instance.signOut();
   }
-  
 
   void signUserOutPopUpBox() {
-      showDialog(
+    showDialog(
         context: context,
         builder: (BuildContext context) {
-         return AlertDialog(
-        title: Text("Logging Out..."),
-        content: Text("Do you want to log out?"),
-        actions: [
-          TextButton(
-            onPressed: (){
-              signUserOut();
-              Navigator.pop(context);
-              },
-            child: Text('Yes')),
-          TextButton(
-            onPressed:(){
-              Navigator.pop(context);
-              }, 
-            child: Text("No")),
-
-        ]
-        //FirebaseAuth.instance.signOut();
-        );   
-        }
-      );
-
+          return AlertDialog(
+              title: Text("Logging Out..."),
+              content: Text("Do you want to log out?"),
+              actions: [
+                TextButton(
+                    onPressed: () {
+                      signUserOut();
+                      Navigator.pop(context);
+                    },
+                    child: Text('Yes')),
+                TextButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: Text("No")),
+              ]
+              //FirebaseAuth.instance.signOut();
+              );
+        });
   }
 
   @override
   Widget build(BuildContext context) {
-
-    
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -86,7 +83,9 @@ class _HomeState extends State<Home> {
               )),
         ),
         actions: [
-          IconButton(onPressed: signUserOutPopUpBox, icon: Icon(Icons.logout_outlined)),
+          IconButton(
+              onPressed: signUserOutPopUpBox,
+              icon: Icon(Icons.logout_outlined)),
         ],
       ),
       drawer: Drawer(
@@ -154,24 +153,69 @@ class _HomeState extends State<Home> {
       ),
       body: Column(
         children: [
-          Expanded(
-            child: pieChart(),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              displaywidget(
+                amount: catEducation.getTotalExpenseAmount() +
+                    catEntertainment.getTotalExpenseAmount() +
+                    catFood.getTotalExpenseAmount() +
+                    catHealth.getTotalExpenseAmount() +
+                    catHousing.getTotalExpenseAmount() +
+                    catMiscellaneous.getTotalExpenseAmount() +
+                    catTransportation.getTotalExpenseAmount(),
+                name: 'Expense',
+              ),
+              displaywidget(
+                amount: catRent.getTotalIncomeAmount() +
+                    catSalary.getTotalIncomeAmount() +
+                    catDeposit.getTotalIncomeAmount(),
+                name: 'Income',
+              )
+            ],
+          ),
+          Expanded(child: pieChart()),
+          Padding(
+              padding: EdgeInsets.all(5),
+              child: amountDisplayer(
+                  amount1: (catRent.getTotalIncomeAmount() +
+                          catSalary.getTotalIncomeAmount() +
+                          catDeposit.getTotalIncomeAmount()) -
+                      (catEducation.getTotalExpenseAmount() +
+                          catEntertainment.getTotalExpenseAmount() +
+                          catFood.getTotalExpenseAmount() +
+                          catHealth.getTotalExpenseAmount() +
+                          catHousing.getTotalExpenseAmount() +
+                          catMiscellaneous.getTotalExpenseAmount() +
+                          catTransportation.getTotalExpenseAmount()))),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10),
+            child: progressBar(
+              totalExpense: catEducation.getTotalExpenseAmount() +
+                  catEntertainment.getTotalExpenseAmount() +
+                  catFood.getTotalExpenseAmount() +
+                  catHealth.getTotalExpenseAmount() +
+                  catHousing.getTotalExpenseAmount() +
+                  catMiscellaneous.getTotalExpenseAmount() +
+                  catTransportation.getTotalExpenseAmount(),
+              totalIncome: catRent.getTotalIncomeAmount() +
+                  catSalary.getTotalIncomeAmount() +
+                  catDeposit.getTotalIncomeAmount(),
+            ),
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              Expanded(
-                  child: Padding(
+              Padding(
                 padding: EdgeInsets.all(30),
                 child: expenseButton(
                   refreshCallback1: refresh,
                 ),
-              )),
-              Expanded(
-                  child: Padding(
+              ),
+              Padding(
                 padding: EdgeInsets.all(30),
-                child: incomeButton(),
-              ))
+                child: incomeButton(refreshCallback4: refresh),
+              )
             ],
           ),
         ],
