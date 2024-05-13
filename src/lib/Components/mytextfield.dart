@@ -2,6 +2,8 @@
 
 
 import "package:flutter/material.dart";
+import "package:wealthwatch/Authentication/register.dart";
+
 
 class MyTextField extends StatelessWidget {
   final controller;
@@ -21,7 +23,15 @@ class MyTextField extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
                 padding: EdgeInsets.symmetric(horizontal: 15),
-                child: TextField(
+                child: TextFormField(
+                  validator: (value) {
+                    if(value!.isEmpty){
+                      return "Required";
+                    }else
+                    {
+                      return null;
+                    }
+                  },
                   controller: controller,
                   obscureText: obscureText,
                   decoration: InputDecoration(

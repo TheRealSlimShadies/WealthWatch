@@ -19,8 +19,40 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   final user = FirebaseAuth.instance.currentUser!;
 
-  void signUserOut() {
-    FirebaseAuth.instance.signOut();
+  //final userData= FirebaseFirestore.instance.collection('users').get().then
+
+  void signUserOut () async
+  {
+      await FirebaseAuth.instance.signOut();
+  }
+  
+
+  void signUserOutPopUpBox() {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+         return AlertDialog(
+        title: Text("Logging Out..."),
+        content: Text("Do you want to log out?"),
+        actions: [
+          TextButton(
+            onPressed: (){
+              signUserOut();
+              Navigator.pop(context);
+              },
+            child: Text('Yes')),
+          TextButton(
+            onPressed:(){
+              Navigator.pop(context);
+              }, 
+            child: Text("No")),
+
+        ]
+        //FirebaseAuth.instance.signOut();
+        );   
+        }
+      );
+
   }
 
   @override
@@ -54,7 +86,7 @@ class _HomeState extends State<Home> {
               )),
         ),
         actions: [
-          IconButton(onPressed: signUserOut, icon: Icon(Icons.logout_outlined)),
+          IconButton(onPressed: signUserOutPopUpBox, icon: Icon(Icons.logout_outlined)),
         ],
       ),
       drawer: Drawer(

@@ -8,14 +8,18 @@ import "package:flutter/services.dart";
 import "package:flutter/widgets.dart";
 import "package:wealthwatch/Components/mybutton.dart";
 import "package:wealthwatch/Components/mytextfield.dart";
+import "package:wealthwatch/Data/Expense.dart";
 
   class Register extends StatefulWidget {
   final Function()? onTap;
+  
   const Register({super.key, required this.onTap});
+
 
   @override
   State<Register> createState() => _RegisterState();
 }
+
 
 class _RegisterState extends State<Register> {
   //text editing controllers
@@ -29,6 +33,8 @@ class _RegisterState extends State<Register> {
 
   final confirmpasswordController = TextEditingController();
 
+  
+  final GlobalKey<FormState> _formkey= GlobalKey<FormState>();
 
   @override
   void dispose() {
@@ -40,6 +46,22 @@ class _RegisterState extends State<Register> {
     confirmpasswordController.dispose();
     super.dispose();
   }
+
+  //validate the input field
+  void validateField(){
+  if(_formkey.currentState!.validate()){
+    print("Validated correctly.....");
+  //sign user up
+    signUserUp();
+
+  }
+  else{
+    
+  print("Empty field..."); 
+      
+  }
+  }
+
 
   //sign user up
   Future signUserUp() async
@@ -61,8 +83,9 @@ class _RegisterState extends State<Register> {
       );
 
       //add the user details
-      addUserDetail(firstNameController.text, lastNameController.text, emailController.text);
+      addUserDetail(firstNameController.text, lastNameController.text, emailController.text,);
 
+ 
       }
       else
       {
@@ -113,59 +136,63 @@ void errorPopped(String word)
           child:Center(
             child: SingleChildScrollView(
               physics:ClampingScrollPhysics(),
-              child: Column(
-                children: [
-                  //SizedBox(height: 20),
-                  
-                  Icon(Icons.home,
-                  size:70,),
-              
-                  SizedBox(height: 50),
-
-                  Text("Create Your Account",
-                  style: TextStyle(fontSize: 20,color: const Color.fromARGB(255, 74, 74, 72)),),
-                  
-                  SizedBox(height: 40,),
-              
-                  MyTextField(controller:firstNameController,hintText: "First Name", obscureText: false),
-              
-                  SizedBox(height: 15,),
-
-                  MyTextField(controller:lastNameController,hintText: "Last Name", obscureText: false),
-              
-                  SizedBox(height: 15,),
-              
-                  MyTextField(controller:emailController,hintText: "User Name", obscureText: false),
-              
-                  SizedBox(height: 15),
-              
-                  MyTextField(controller:passwordController,hintText: "Password", obscureText: true),
-              
-                  SizedBox(height: 15 ),
-
-                  MyTextField(controller:confirmpasswordController,hintText: "Confirm Password", obscureText: true),
-              
-                  SizedBox(height: 60),
-              
-                  MyButton(onTap: signUserUp, word: "Sign Up",),
-              
-                  SizedBox(height: 80),
-              
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text("Already have an account?"),
-                      GestureDetector(
-                        onTap: widget.onTap,
-                        child: Text("Sign In", style: TextStyle(color: const Color.fromARGB(255, 49, 68, 78)),))
-                    ],
-                  ),
-
-                  SizedBox(height: 20,)
-
-                  
-              
-                ],
+              child: Form(
+                autovalidateMode: AutovalidateMode.onUserInteraction,
+                key: _formkey,
+                child: Column(
+                  children: [
+                    //SizedBox(height: 20),
+                    
+                    Icon(Icons.home,
+                    size:70,),
+                
+                    SizedBox(height: 50),
+                
+                    Text("Create Your Account",
+                    style: TextStyle(fontSize: 20,color: const Color.fromARGB(255, 74, 74, 72)),),
+                    
+                    SizedBox(height: 40,),
+                
+                    MyTextField(controller:firstNameController,hintText: "First Name", obscureText: false),
+                
+                    SizedBox(height: 15,),
+                
+                    MyTextField(controller:lastNameController,hintText: "Last Name", obscureText: false),
+                
+                    SizedBox(height: 15,),
+                
+                    MyTextField(controller:emailController,hintText: "User Name", obscureText: false),
+                
+                    SizedBox(height: 15),
+                
+                    MyTextField(controller:passwordController,hintText: "Password", obscureText: true),
+                
+                    SizedBox(height: 15 ),
+                
+                    MyTextField(controller:confirmpasswordController,hintText: "Confirm Password", obscureText: true),
+                
+                    SizedBox(height: 60),
+                
+                    MyButton(onTap:validateField, word: "Sign Up",),
+                
+                    SizedBox(height: 80),
+                
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text("Already have an account?"),
+                        GestureDetector(
+                          onTap: widget.onTap,
+                          child: Text("Sign In", style: TextStyle(color: const Color.fromARGB(255, 49, 68, 78)),))
+                      ],
+                    ),
+                
+                    SizedBox(height: 20,)
+                
+                    
+                
+                  ],
+                ),
               ),
             ),
           )
