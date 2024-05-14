@@ -47,6 +47,8 @@ class _RegisterState extends State<Register> {
     super.dispose();
   }
 
+  
+
   //validate the input field
   void validateField(){
   if(_formkey.currentState!.validate()){
@@ -82,8 +84,20 @@ class _RegisterState extends State<Register> {
       password: passwordController.text
       );
 
+      String uid=FirebaseAuth.instance.currentUser!.uid;
       //add the user details
-      addUserDetail(firstNameController.text, lastNameController.text, emailController.text,);
+      addUserDetail(
+        firstNameController.text,
+        lastNameController.text,
+        emailController.text,
+        catFood.expenseListItems,
+        catTransportation.expenseListItems,
+        catEducation.expenseListItems,
+        catMiscellaneous.expenseListItems,
+        catHealth.expenseListItems,
+        catEntertainment.expenseListItems,
+        catHousing.expenseListItems,
+        uid);
 
  
       }
@@ -108,14 +122,28 @@ class _RegisterState extends State<Register> {
 
   }
 
-  Future addUserDetail(String firstName, String lastName, String email) async
+  Future addUserDetail(String firstName, String lastName, String email, List catfood, List cattransportation,
+  List cateducation, List catmiscellaneous, List cathealth, List catentertainment, List cathousing, String uid) async
   {
-    await FirebaseFirestore.instance.collection('users').add({
-      'first name': firstName ,
-      'last name' : lastName ,
-      'email' : email
+    
+    DocumentReference userRef= await FirebaseFirestore.instance.collection('users').add({
+    'first name': firstName ,
+    'last name' : lastName ,
+    'email' : email,
+    'auth id' : uid,
     });
+  await userRef.collection('categories').add({
+    'food': catfood,
+    'transportation': cattransportation,
+    'education': cateducation,
+    'miscellaneous': catmiscellaneous,
+    'health': cathealth,
+    'entertainment': catentertainment,
+    'housing': cathousing
+
+  });
   }
+  
 
 
 // Function to show error dialog

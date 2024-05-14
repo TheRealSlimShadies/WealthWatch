@@ -26,7 +26,7 @@ class MyTextField extends StatelessWidget {
                 child: TextFormField(
                   validator: (value) {
                     if(value!.isEmpty){
-                      return "Required";
+                      return "*Required";
                     }else
                     {
                       return null;
