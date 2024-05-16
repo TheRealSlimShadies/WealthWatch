@@ -2,27 +2,26 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:wealthwatch/Buttons/expenseButton.dart';
 import 'package:wealthwatch/Buttons/incomeButton.dart';
 import 'package:wealthwatch/Components/amountDisplayer.dart';
 import 'package:wealthwatch/Components/displaywidget.dart';
 import 'package:wealthwatch/Components/progressBar.dart';
+import 'package:wealthwatch/Data/Expense.dart';
 import 'package:wealthwatch/Graphs/pieChart.dart';
-import 'package:wealthwatch/data.dart/Expense.dart';
 
 class Home extends StatefulWidget {
   Home({super.key});
   final user = FirebaseAuth.instance.currentUser!;
-
   @override
   State<Home> createState() => _HomeState();
 }
 
 class _HomeState extends State<Home> {
   final user = FirebaseAuth.instance.currentUser!;
-
   //final userData= FirebaseFirestore.instance.collection('users').get().then
 
   void signUserOut() async {
@@ -39,8 +38,8 @@ class _HomeState extends State<Home> {
               actions: [
                 TextButton(
                     onPressed: () {
-                      signUserOut();
                       Navigator.pop(context);
+                      signUserOut();
                     },
                     child: Text('Yes')),
                 TextButton(
@@ -174,7 +173,13 @@ class _HomeState extends State<Home> {
               )
             ],
           ),
-          Expanded(child: pieChart()),
+          Expanded(
+              child: Container(
+            decoration: BoxDecoration(),
+            child: pieChart(
+              refreshCallBack10: refresh,
+            ),
+          )),
           Padding(
               padding: EdgeInsets.all(5),
               child: amountDisplayer(
