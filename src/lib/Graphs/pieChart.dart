@@ -6,7 +6,8 @@ import 'package:wealthwatch/Data/Expense.dart';
 import 'package:wealthwatch/Components/expenseWindow.dart';
 
 class pieChart extends StatefulWidget {
-  const pieChart({super.key});
+  final VoidCallback? refreshCallBack10;
+  const pieChart({super.key, required this.refreshCallBack10});
 
   @override
   State<pieChart> createState() => _pieChartState();
@@ -32,17 +33,22 @@ class _pieChartState extends State<pieChart> {
             enabled: true,
             touchCallback:
                 (FlTouchEvent event, PieTouchResponse? pieTouchResponse) {
-              PieChartSectionData? sectionIndex =
-                  pieTouchResponse!.touchedSection!.touchedSection;
-              String caseTitle = sectionIndex!.title;
-              List<Expense>? the_list = getExpenseListForSection(caseTitle);
-
-              Navigator.push(
+              final PieChartSectionData? sectionIndex =
+                  pieTouchResponse?.touchedSection?.touchedSection;
+              if (sectionIndex != null) {
+                final String caseTitle = sectionIndex.title;
+                final List<Expense> theList =
+                    getExpenseListForSection(caseTitle);
+                Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => expenseWindow(
-                            listedExpense: the_list!,
-                          )));
+                    builder: (context) => expenseWindow(
+                      listedExpense: theList,
+                      refreshCallBack11: widget.refreshCallBack10,
+                    ),
+                  ),
+                );
+              }
             }),
         sections: [
           PieChartSectionData(
@@ -187,7 +193,7 @@ class _pieChartState extends State<pieChart> {
   }
 }
 
-List<Expense>? getExpenseListForSection(caseTitle) {
+List<Expense> getExpenseListForSection(caseTitle) {
   switch (caseTitle) {
     case 'Food':
       return catFood.expenseListItems;
@@ -204,5 +210,5 @@ List<Expense>? getExpenseListForSection(caseTitle) {
     case 'Education':
       return catEducation.expenseListItems;
   }
-  return null;
+  return [];
 }

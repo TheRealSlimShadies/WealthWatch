@@ -24,15 +24,14 @@ class _addExpenseState extends State<addExpense> {
 
   final categorySelection = TextEditingController();
 
-  final GlobalKey<FormState> formkey= GlobalKey<FormState>();
-
+  final GlobalKey<FormState> formkey = GlobalKey<FormState>();
 
   // void validateField(){
   //   if(formkey.currentState!.validate()){
-  //     {       
-  //     addOperation();        
+  //     {
+  //     addOperation();
   //     }
-            
+
   //   }
   //   else{
   //     print("enpty field...");
@@ -93,7 +92,8 @@ class _addExpenseState extends State<addExpense> {
               controller: expenseLabelController,
               decoration: InputDecoration(
                   hintText: "Enter Expense Name",
-                  contentPadding: EdgeInsets.only(left: 20, top: 15, bottom: 20),
+                  contentPadding:
+                      EdgeInsets.only(left: 20, top: 15, bottom: 20),
                   enabledBorder: OutlineInputBorder(
                       borderSide: BorderSide(color: Colors.grey))),
               validator: (value) {
@@ -143,36 +143,49 @@ class _addExpenseState extends State<addExpense> {
             .end, // Align the FloatingActionButton to the right
         children: [
           FloatingActionButton(
-            onPressed:(){
+            onPressed: () {
               String expenseLabel = expenseLabelController.text;
               String expensenumbercontroller = expenseNumberController.text;
               int expenseNumber = int.tryParse(expensenumbercontroller) ?? 0;
               switch (categorySelection.text) {
                 case 'Food':
                   catFood.addExpenseToList(Expense(
-                      name: expenseLabel, expenseAmount: expenseNumber));
+                      name: expenseLabel,
+                      expenseAmount: expenseNumber,
+                      datetime: DateTime.now()));
                 case 'Transportation':
                   catTransportation.addExpenseToList(Expense(
-                      name: expenseLabel, expenseAmount: expenseNumber));
+                      name: expenseLabel,
+                      expenseAmount: expenseNumber,
+                      datetime: DateTime.now()));
                 case 'Health':
                   catHealth.addExpenseToList(Expense(
-                      name: expenseLabel, expenseAmount: expenseNumber));
+                      name: expenseLabel,
+                      expenseAmount: expenseNumber,
+                      datetime: DateTime.now()));
                 case 'Entertainment':
                   catEntertainment.addExpenseToList(Expense(
-                      name: expenseLabel, expenseAmount: expenseNumber));
+                      name: expenseLabel,
+                      expenseAmount: expenseNumber,
+                      datetime: DateTime.now()));
                 case 'Miscellaneous':
                   catMiscellaneous.addExpenseToList(Expense(
-                      name: expenseLabel, expenseAmount: expenseNumber));
+                      name: expenseLabel,
+                      expenseAmount: expenseNumber,
+                      datetime: DateTime.now()));
                 case 'Education':
                   catEducation.addExpenseToList(Expense(
-                      name: expenseLabel, expenseAmount: expenseNumber));
+                      name: expenseLabel,
+                      expenseAmount: expenseNumber,
+                      datetime: DateTime.now()));
                 case 'Housing':
                   catHousing.addExpenseToList(Expense(
-                      name: expenseLabel, expenseAmount: expenseNumber));
+                      name: expenseLabel,
+                      expenseAmount: expenseNumber,
+                      datetime: DateTime.now()));
               }
               widget.refreshCallback!();
               Navigator.pop(context);
-
             },
             backgroundColor: Colors.red,
             shape:
