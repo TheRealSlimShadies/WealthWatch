@@ -5,13 +5,15 @@ import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:wealthwatch/Buttons/expenseButton.dart';
 import 'package:wealthwatch/Buttons/incomeButton.dart';
 import 'package:wealthwatch/Components/amountDisplayer.dart';
 import 'package:wealthwatch/Components/displaywidget.dart';
 import 'package:wealthwatch/Components/progressBar.dart';
+import 'package:wealthwatch/Data/Expense.dart';
 import 'package:wealthwatch/Graphs/pieChart.dart';
 import 'package:wealthwatch/Data/Expense.dart';
 
@@ -20,7 +22,6 @@ class Home extends StatefulWidget {
 
 
   final user = FirebaseAuth.instance.currentUser!;
-
   @override
   State<Home> createState() => _HomeState();
 }
@@ -113,6 +114,7 @@ Future<String> getFirstName() async {
                       print("SIGNING OUT...............");
                       signUserOut();
                       Navigator.pop(context);
+                      signUserOut();
                     },
                     child: Text('Yes')),
                 TextButton(
@@ -272,7 +274,13 @@ Future<String> getFirstName() async {
               )
             ],
           ),
-          Expanded(child: pieChart()),
+          Expanded(
+              child: Container(
+            decoration: BoxDecoration(),
+            child: pieChart(
+              refreshCallBack10: refresh,
+            ),
+          )),
           Padding(
               padding: EdgeInsets.all(5),
               child: amountDisplayer(

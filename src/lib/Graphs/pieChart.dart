@@ -10,7 +10,8 @@ import 'package:wealthwatch/Components/expenseWindow.dart';
 
 
 class pieChart extends StatefulWidget {
-  const pieChart({super.key});
+  final VoidCallback? refreshCallBack10;
+  const pieChart({super.key, required this.refreshCallBack10});
 
   @override
   State<pieChart> createState() => _pieChartState();
@@ -36,12 +37,7 @@ Future<double> getTotalExpenseAmountForCategory(String categoryName) async {
 
   String id= documentSnapshot.id;
 
-  CollectionReference categoryRef = FirebaseFirestore.instance
-      .collection('users')
-      .doc(id) 
-      .collection('categories')
-      .doc(categoryName)
-      .collection('expenseList');
+  CollectionReference categoryRef = FirebaseFirestore.instance.collection('users').doc(id) .collection('categories').doc(categoryName).collection('expenseList');
 
   // Query the expenseList collection to get all documents
   QuerySnapshot querySnapshot1 = await categoryRef.get();
@@ -100,7 +96,7 @@ Future<double> getTotalExpenseAmountForCategory(String categoryName) async {
               pieTouchData: PieTouchData(
                 enabled: true,
                 touchCallback: (FlTouchEvent event, PieTouchResponse? pieTouchResponse) {
-                  PieChartSectionData? sectionIndex = pieTouchResponse!.touchedSection!.touchedSection;
+                  PieChartSectionData? sectionIndex = pieTouchResponse?.touchedSection?.touchedSection;
                   String caseTitle = sectionIndex!.title;
                   List<Expense>? the_list = getExpenseListForSection(caseTitle);
 
@@ -109,6 +105,7 @@ Future<double> getTotalExpenseAmountForCategory(String categoryName) async {
                     MaterialPageRoute(
                       builder: (context) => expenseWindow(
                         listedExpense: the_list!,
+                        refreshCallBack11: widget.refreshCallBack10,
                       ),
                     ),
                   );
@@ -292,6 +289,6 @@ List<Expense>? getExpenseListForSection(String caseTitle) {
     case 'Education':
       return catEducation.expenseListItems;
   }
-  return null;
+  return [];
 }
  

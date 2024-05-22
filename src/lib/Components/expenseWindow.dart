@@ -1,13 +1,14 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:wealthwatch/Data/Expense.dart';
 
 class expenseWindow extends StatefulWidget {
   final List<Expense> listedExpense;
-
-  const expenseWindow({
-    super.key,
-    required this.listedExpense,
-  });
+  final VoidCallback? refreshCallBack11;
+  const expenseWindow(
+      {super.key,
+      required this.listedExpense,
+      required this.refreshCallBack11});
   @override
   State<expenseWindow> createState() => _expenseWindowState();
 }
@@ -27,20 +28,42 @@ class _expenseWindowState extends State<expenseWindow> {
             icon: Icon(Icons.arrow_back),
             color: Colors.white,
             onPressed: () {
-              Navigator.popAndPushNamed(context, '/homepage');
+              widget.refreshCallBack11!();
+              Navigator.pop(context);
             },
           ),
         ),
         body: ListView(
           children: widget.listedExpense.map((expense) {
-            return ListTile(
-              title: Text(expense.name),
-              trailing: Text('\$${expense.expenseAmount}'),
-              onLongPress: () {
-                setState(() {
-                  widget.listedExpense.remove(expense);
-                });
-              },
+            return Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+              child: Container(
+                height: 70,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(15),
+                    border: Border.all(width: 1)),
+                child: ListTile(
+                  title: Text(
+                    expense.name,
+                    style: TextStyle(fontSize: 16),
+                  ),
+                  trailing: Text(
+                    '\$${expense.expenseAmount}',
+                    style: TextStyle(fontSize: 16),
+                  ),
+                  subtitle: Text(
+                      '${expense.datetime.year} / ${expense.datetime.month} / ${expense.datetime.day}    ${expense.datetime.hour}: ${expense.datetime.minute}'),
+                  titleAlignment: ListTileTitleAlignment.center,
+                  contentPadding: EdgeInsets.symmetric(
+                    horizontal: 30,
+                  ),
+                  onLongPress: () {
+                    setState(() {
+                      widget.listedExpense.remove(expense);
+                    });
+                  },
+                ),
+              ),
             );
           }).toList(),
         ));

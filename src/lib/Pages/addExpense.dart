@@ -59,10 +59,10 @@ Future<void> addExpensesToCategory(String categoryName, List<Expense> expenses) 
 
   // void validateField(){
   //   if(formkey.currentState!.validate()){
-  //     {       
-  //     addOperation();        
+  //     {
+  //     addOperation();
   //     }
-            
+
   //   }
   //   else{
   //     print("enpty field...");
@@ -123,7 +123,8 @@ Future<void> addExpensesToCategory(String categoryName, List<Expense> expenses) 
               controller: expenseLabelController,
               decoration: InputDecoration(
                   hintText: "Enter Expense Name",
-                  contentPadding: EdgeInsets.only(left: 20, top: 15, bottom: 20),
+                  contentPadding:
+                      EdgeInsets.only(left: 20, top: 15, bottom: 20),
                   enabledBorder: OutlineInputBorder(
                       borderSide: BorderSide(color: Colors.grey))),
               validator: (value) {
@@ -173,50 +174,63 @@ Future<void> addExpensesToCategory(String categoryName, List<Expense> expenses) 
             .end, // Align the FloatingActionButton to the right
         children: [
           FloatingActionButton(
-            onPressed:(){
+            onPressed: () {
               String expenseLabel = expenseLabelController.text;
               String expensenumbercontroller = expenseNumberController.text;
               int expenseNumber = int.tryParse(expensenumbercontroller) ?? 0;
               switch (categorySelection.text) {
                 case 'Food':
                   catFood.addExpenseToList(Expense(
-                      name: expenseLabel, expenseAmount: expenseNumber));
+                      name: expenseLabel,
+                      expenseAmount: expenseNumber,
+                      datetime: DateTime.now()));
                       addExpensesToCategory('catFood', catFood.expenseListItems);
                       break;
                 case 'Transportation':
                   catTransportation.addExpenseToList(Expense(
-                      name: expenseLabel, expenseAmount: expenseNumber));
+                      name: expenseLabel,
+                      expenseAmount: expenseNumber,
+                      datetime: DateTime.now()));
                       addExpensesToCategory('catTransportation', catTransportation.expenseListItems);
                       break;
                 case 'Health':
                   catHealth.addExpenseToList(Expense(
-                      name: expenseLabel, expenseAmount: expenseNumber));
+                      name: expenseLabel,
+                      expenseAmount: expenseNumber,
+                      datetime: DateTime.now()));
                       addExpensesToCategory('catHealth', catHealth.expenseListItems);
                       break;
                 case 'Entertainment':
                   catEntertainment.addExpenseToList(Expense(
-                      name: expenseLabel, expenseAmount: expenseNumber));
+                      name: expenseLabel,
+                      expenseAmount: expenseNumber,
+                      datetime: DateTime.now()));
                       addExpensesToCategory('catEntertainment', catEntertainment.expenseListItems);
                       break;
                 case 'Miscellaneous':
                   catMiscellaneous.addExpenseToList(Expense(
-                      name: expenseLabel, expenseAmount: expenseNumber));
+                      name: expenseLabel,
+                      expenseAmount: expenseNumber,
+                      datetime: DateTime.now()));
                       addExpensesToCategory('catMiscellaneous', catMiscellaneous.expenseListItems);
                       break;
                 case 'Education':
                   catEducation.addExpenseToList(Expense(
-                      name: expenseLabel, expenseAmount: expenseNumber));
+                      name: expenseLabel,
+                      expenseAmount: expenseNumber,
+                      datetime: DateTime.now()));
                       addExpensesToCategory('catEducation', catEducation.expenseListItems);
                       break;
                 case 'Housing':
                   catHousing.addExpenseToList(Expense(
-                      name: expenseLabel, expenseAmount: expenseNumber));
+                      name: expenseLabel,
+                      expenseAmount: expenseNumber,
+                      datetime: DateTime.now()));
                       addExpensesToCategory('catHousing', catHousing.expenseListItems);
                       break;
               }
               widget.refreshCallback!();
               Navigator.pop(context);
-
             },
             backgroundColor: Colors.red,
             shape:
