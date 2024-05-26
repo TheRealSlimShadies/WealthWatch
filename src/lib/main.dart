@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:wealthwatch/Authentication/auth.dart';
 import 'package:wealthwatch/Authentication/forgotPassword.dart';
 import 'package:wealthwatch/Buttons/expenseButton.dart';
+import 'package:wealthwatch/Buttons/incomeButton.dart';
+import 'package:wealthwatch/Graphs/bar_chart.dart';
+import 'package:wealthwatch/Pages/addIncome.dart';
 import 'package:wealthwatch/Pages/addPeople.dart';
 import 'package:wealthwatch/Pages/calendar.dart';
 import 'package:wealthwatch/Pages/cofund.dart';
@@ -9,10 +13,8 @@ import 'package:wealthwatch/Pages/home_page.dart';
 import 'package:wealthwatch/Pages/settings.dart';
 import 'package:wealthwatch/Pages/statistics.dart';
 import 'package:wealthwatch/Pages/addExpense.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:wealthwatch/themes/theme_provider.dart';
-import 'package:provider/provider.dart';
-import 'package:wealthwatch/Graphs/bar_chart.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 
 void main() async {

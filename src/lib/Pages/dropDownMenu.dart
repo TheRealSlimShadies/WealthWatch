@@ -36,6 +36,7 @@ class _MyDropdownMenuState extends State<MyDropdownMenu> {
             children: [
               Icon(item['icon']),
               const SizedBox(width: 20), // Add some space between icon and name
+              const SizedBox(width: 20), // Add some space between icon and name
               Text(item['name']),
             ],
           ),
