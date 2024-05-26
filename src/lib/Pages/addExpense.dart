@@ -27,8 +27,7 @@ class _addExpenseState extends State<addExpense> {
 
   final categorySelection = TextEditingController();
 
-  final GlobalKey<FormState> formkey= GlobalKey<FormState>();
-
+  final GlobalKey<FormState> formkey = GlobalKey<FormState>();
 
 Future<void> addExpensesToCategory(String categoryName, Expense expense) async {
 
@@ -176,7 +175,7 @@ Future<void> addExpensesToCategory(String categoryName, Expense expense) async {
               }
               widget.refreshCallback!();
               Navigator.pop(context);
-            },
+          },
             backgroundColor: Colors.red,
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),

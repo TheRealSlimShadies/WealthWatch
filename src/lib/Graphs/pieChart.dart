@@ -12,7 +12,6 @@ import 'package:wealthwatch/Components/expenseWindow.dart';
 class pieChart extends StatefulWidget {
   final VoidCallback? refreshCallBack10;
   const pieChart({super.key, required this.refreshCallBack10});
-
   @override
   State<pieChart> createState() => _pieChartState();
 }
