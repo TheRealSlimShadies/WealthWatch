@@ -12,7 +12,7 @@ class displaywidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.fromLTRB(10, 20, 10, 0),
+      margin: const EdgeInsets.fromLTRB(10, 20, 10, 0),
       height: 50,
       width: 170,
       decoration: BoxDecoration(

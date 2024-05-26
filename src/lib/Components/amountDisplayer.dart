@@ -9,7 +9,7 @@ class amountDisplayer extends StatelessWidget {
     return Container(
       child: Text(
         'Remaining Balance: $amount1',
-        style: TextStyle(fontSize: 20, fontStyle: FontStyle.italic),
+        style: const TextStyle(fontSize: 20, fontStyle: FontStyle.italic),
         textAlign: TextAlign.center,
       ),
     );

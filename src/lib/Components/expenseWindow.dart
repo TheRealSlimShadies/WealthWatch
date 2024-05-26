@@ -17,14 +17,14 @@ class _expenseWindowState extends State<expenseWindow> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text(
+          title: const Text(
             "Expense History",
           ),
-          titleTextStyle: TextStyle(color: Colors.white, fontSize: 20),
-          backgroundColor: Color.fromARGB(255, 58, 220, 109),
+          titleTextStyle: const TextStyle(color: Colors.white, fontSize: 20),
+          backgroundColor: const Color.fromARGB(255, 58, 220, 109),
           centerTitle: true,
           leading: IconButton(
-            icon: Icon(Icons.arrow_back),
+            icon: const Icon(Icons.arrow_back),
             color: Colors.white,
             onPressed: () {
               Navigator.popAndPushNamed(context, '/homepage');

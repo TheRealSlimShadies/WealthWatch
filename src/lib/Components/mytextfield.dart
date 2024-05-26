@@ -2,7 +2,6 @@
 
 
 import "package:flutter/material.dart";
-import "package:wealthwatch/Authentication/register.dart";
 
 
 class MyTextField extends StatelessWidget {

@@ -1,4 +1,3 @@
-import 'dart:math';
 
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
@@ -18,14 +17,14 @@ class _pieChartState extends State<pieChart> {
       color: Colors.black.withOpacity(0.2),
       spreadRadius: 9,
       blurRadius: 7,
-      offset: Offset(0, 3),
+      offset: const Offset(0, 3),
     ),
   ];
 
   @override
   Widget build(BuildContext context) {
     return PieChart(
-      swapAnimationDuration: Duration(seconds: 1),
+      swapAnimationDuration: const Duration(seconds: 1),
       swapAnimationCurve: Curves.easeIn,
       PieChartData(
         pieTouchData: PieTouchData(
@@ -35,19 +34,19 @@ class _pieChartState extends State<pieChart> {
               PieChartSectionData? sectionIndex =
                   pieTouchResponse!.touchedSection!.touchedSection;
               String caseTitle = sectionIndex!.title;
-              List<Expense>? the_list = getExpenseListForSection(caseTitle);
+              List<Expense>? theList = getExpenseListForSection(caseTitle);
 
               Navigator.push(
                   context,
                   MaterialPageRoute(
                       builder: (context) => expenseWindow(
-                            listedExpense: the_list!,
+                            listedExpense: theList!,
                           )));
             }),
         sections: [
           PieChartSectionData(
               value: catFood.getTotalExpenseAmount().toDouble(),
-              color: Color(0xFF9A77CF),
+              color: const Color(0xFF9A77CF),
               radius: 180,
               showTitle: false,
               title: 'Food',
@@ -56,9 +55,9 @@ class _pieChartState extends State<pieChart> {
                 width: 60,
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(40),
-                    color: Color.fromARGB(255, 118, 69, 191),
+                    color: const Color.fromARGB(255, 118, 69, 191),
                     boxShadow: customBoxShadow),
-                child: Icon(
+                child: const Icon(
                   Icons.fastfood_outlined,
                   color: Colors.white,
                 ),
@@ -66,7 +65,7 @@ class _pieChartState extends State<pieChart> {
               badgePositionPercentageOffset: 0.96),
           PieChartSectionData(
               value: catTransportation.getTotalExpenseAmount().toDouble(),
-              color: Color(0xFF543884),
+              color: const Color(0xFF543884),
               radius: 180,
               showTitle: false,
               title: 'Transportation',
@@ -75,9 +74,9 @@ class _pieChartState extends State<pieChart> {
                 width: 60,
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(40),
-                    color: Color.fromARGB(255, 73, 36, 137),
+                    color: const Color.fromARGB(255, 73, 36, 137),
                     boxShadow: customBoxShadow),
-                child: Icon(
+                child: const Icon(
                   Icons.train_sharp,
                   color: Colors.white,
                 ),
@@ -85,7 +84,7 @@ class _pieChartState extends State<pieChart> {
               badgePositionPercentageOffset: 0.96),
           PieChartSectionData(
               value: catEntertainment.getTotalExpenseAmount().toDouble(),
-              color: Color(0xFF262254),
+              color: const Color(0xFF262254),
               radius: 180,
               showTitle: false,
               title: 'Entertainment',
@@ -94,9 +93,9 @@ class _pieChartState extends State<pieChart> {
                 width: 60,
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(40),
-                    color: Color.fromARGB(255, 28, 23, 82),
+                    color: const Color.fromARGB(255, 28, 23, 82),
                     boxShadow: customBoxShadow),
-                child: Icon(
+                child: const Icon(
                   Icons.movie_creation_rounded,
                   color: Colors.white,
                 ),
@@ -104,7 +103,7 @@ class _pieChartState extends State<pieChart> {
               badgePositionPercentageOffset: 0.96),
           PieChartSectionData(
               value: catHousing.getTotalExpenseAmount().toDouble(),
-              color: Color(0xFFA13670),
+              color: const Color(0xFFA13670),
               radius: 180,
               showTitle: false,
               title: 'Housing',
@@ -113,9 +112,9 @@ class _pieChartState extends State<pieChart> {
                 width: 60,
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(40),
-                    color: Color.fromARGB(255, 157, 29, 99),
+                    color: const Color.fromARGB(255, 157, 29, 99),
                     boxShadow: customBoxShadow),
-                child: Icon(
+                child: const Icon(
                   Icons.house_rounded,
                   color: Colors.white,
                 ),
@@ -123,7 +122,7 @@ class _pieChartState extends State<pieChart> {
               badgePositionPercentageOffset: 0.96),
           PieChartSectionData(
               value: catMiscellaneous.getTotalExpenseAmount().toDouble(),
-              color: Color(0xFFEC4176),
+              color: const Color(0xFFEC4176),
               radius: 180,
               showTitle: false,
               title: 'Miscellaneous',
@@ -132,9 +131,9 @@ class _pieChartState extends State<pieChart> {
                 width: 60,
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(40),
-                    color: Color.fromARGB(255, 249, 42, 107),
+                    color: const Color.fromARGB(255, 249, 42, 107),
                     boxShadow: customBoxShadow),
-                child: Icon(
+                child: const Icon(
                   Icons.auto_awesome_mosaic,
                   color: Colors.white,
                 ),
@@ -142,7 +141,7 @@ class _pieChartState extends State<pieChart> {
               badgePositionPercentageOffset: 0.96),
           PieChartSectionData(
               value: catHealth.getTotalExpenseAmount().toDouble(),
-              color: Color(0xFFFFA45E),
+              color: const Color(0xFFFFA45E),
               radius: 180,
               showTitle: false,
               title: 'Health',
@@ -151,9 +150,9 @@ class _pieChartState extends State<pieChart> {
                 width: 60,
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(40),
-                    color: Color.fromARGB(255, 252, 148, 69),
+                    color: const Color.fromARGB(255, 252, 148, 69),
                     boxShadow: customBoxShadow),
-                child: Icon(
+                child: const Icon(
                   Icons.local_hospital_outlined,
                   color: Colors.white,
                 ),
@@ -161,7 +160,7 @@ class _pieChartState extends State<pieChart> {
               badgePositionPercentageOffset: 0.96),
           PieChartSectionData(
               value: catEducation.getTotalExpenseAmount().toDouble(),
-              color: Color(0xFFFCE38A),
+              color: const Color(0xFFFCE38A),
               radius: 180,
               showTitle: false,
               title: 'Education',
@@ -170,10 +169,10 @@ class _pieChartState extends State<pieChart> {
                 width: 60,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(40),
-                  color: Color.fromARGB(255, 254, 217, 84),
+                  color: const Color.fromARGB(255, 254, 217, 84),
                   boxShadow: customBoxShadow,
                 ),
-                child: Icon(
+                child: const Icon(
                   Icons.school,
                   color: Colors.white,
                 ),

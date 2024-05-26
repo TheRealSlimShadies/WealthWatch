@@ -1,12 +1,12 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors, unused_local_variable
 
 import 'package:flutter/material.dart';
-import 'package:wealthwatch/data.dart/Expense.dart';
+import 'package:wealthwatch/data/Expense.dart';
 import 'dropDownMenuIncome.dart';
 
 class addIncome extends StatefulWidget {
   final VoidCallback? refreshCallBack5;
-  addIncome({super.key, required this.refreshCallBack5});
+  const addIncome({super.key, required this.refreshCallBack5});
 
   @override
   State<addIncome> createState() => _addIncomeState();

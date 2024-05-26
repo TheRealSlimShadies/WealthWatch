@@ -2,13 +2,9 @@
 
 import "package:cloud_firestore/cloud_firestore.dart";
 import "package:firebase_auth/firebase_auth.dart";
-import "package:flutter/cupertino.dart";
 import "package:flutter/material.dart";
-import "package:flutter/services.dart";
-import "package:flutter/widgets.dart";
 import "package:wealthwatch/Components/mybutton.dart";
 import "package:wealthwatch/Components/mytextfield.dart";
-import "package:wealthwatch/Data/Expense.dart";
 
   class Register extends StatefulWidget {
   final Function()? onTap;

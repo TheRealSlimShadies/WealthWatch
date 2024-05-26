@@ -1,16 +1,16 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:wealthwatch/Buttons/expenseButton.dart';
 import 'package:wealthwatch/Buttons/incomeButton.dart';
 import 'package:wealthwatch/Components/amountDisplayer.dart';
 import 'package:wealthwatch/Components/displaywidget.dart';
 import 'package:wealthwatch/Components/progressBar.dart';
 import 'package:wealthwatch/Graphs/pieChart.dart';
-import 'package:wealthwatch/data.dart/Expense.dart';
+import 'package:wealthwatch/data/Expense.dart';
+//import 'package:provider/provider.dart'
+//import 'package:wealthwatch/themes/theme_provider.dart'
 
 class Home extends StatefulWidget {
   Home({super.key});
@@ -89,7 +89,9 @@ class _HomeState extends State<Home> {
         ],
       ),
       drawer: Drawer(
-        backgroundColor: Color.fromARGB(197, 255, 255, 255),
+        //backgroundColor: Color.fromARGB(197, 255, 255, 255),
+        backgroundColor:
+            Theme.of(context).colorScheme.background.withOpacity(0.8),
         child: Center(
           child: Column(
             children: [
@@ -97,18 +99,25 @@ class _HomeState extends State<Home> {
                 child: Icon(
                   Icons.account_circle_sharp,
                   size: 70,
+                  color: Theme.of(context).iconTheme.color,
                 ),
               ),
               Text(
                 user.email!,
-                style: TextStyle(fontSize: 20, fontFamily: "Arial"),
+                style: TextStyle(
+                    fontSize: 20,
+                    fontFamily: "Arial",
+                    color: Theme.of(context).textTheme.bodyLarge!.color),
               ),
               ListTile(
                   contentPadding: EdgeInsets.only(left: 40, top: 70),
-                  leading: Icon(Icons.account_balance_wallet, size: 30),
+                  leading: Icon(Icons.account_balance_wallet,
+                      size: 30, color: Theme.of(context).iconTheme.color),
                   title: Text(
                     'Statistics',
-                    style: TextStyle(fontSize: 17),
+                    style: TextStyle(
+                        fontSize: 17,
+                        color: Theme.of(context).textTheme.bodyLarge!.color),
                   ),
                   onTap: () {
                     Navigator.pop(context);
@@ -116,10 +125,16 @@ class _HomeState extends State<Home> {
                   }),
               ListTile(
                   contentPadding: EdgeInsets.only(left: 40, top: 70),
-                  leading: Icon(Icons.account_balance_wallet, size: 30),
+                  leading: Icon(
+                    Icons.account_balance_wallet,
+                    size: 30,
+                    color: Theme.of(context).iconTheme.color,
+                  ),
                   title: Text(
                     'Co-Fund',
-                    style: TextStyle(fontSize: 17),
+                    style: TextStyle(
+                        fontSize: 17,
+                        color: Theme.of(context).textTheme.bodyLarge!.color),
                   ),
                   onTap: () {
                     Navigator.pop(context);
@@ -127,10 +142,13 @@ class _HomeState extends State<Home> {
                   }),
               ListTile(
                   contentPadding: EdgeInsets.only(left: 40, top: 70),
-                  leading: Icon(Icons.account_balance_wallet, size: 30),
+                  leading: Icon(Icons.account_balance_wallet,
+                      size: 30, color: Theme.of(context).iconTheme.color),
                   title: Text(
                     'Calendar',
-                    style: TextStyle(fontSize: 17),
+                    style: TextStyle(
+                        fontSize: 17,
+                        color: Theme.of(context).textTheme.bodyLarge!.color),
                   ),
                   onTap: () {
                     Navigator.pop(context);
@@ -138,10 +156,13 @@ class _HomeState extends State<Home> {
                   }),
               ListTile(
                   contentPadding: EdgeInsets.only(left: 40, top: 70),
-                  leading: Icon(Icons.account_balance_wallet, size: 30),
+                  leading: Icon(Icons.account_balance_wallet,
+                      size: 30, color: Theme.of(context).iconTheme.color),
                   title: Text(
                     'Settings',
-                    style: TextStyle(fontSize: 17),
+                    style: TextStyle(
+                        fontSize: 17,
+                        color: Theme.of(context).textTheme.bodyLarge!.color),
                   ),
                   onTap: () {
                     Navigator.pop(context);

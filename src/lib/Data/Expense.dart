@@ -1,10 +1,8 @@
-import 'package:flutter/material.dart';
-import 'package:wealthwatch/Pages/addExpense.dart';
-
 class Expense {
   String name;
   int expenseAmount;
-  Expense({required this.name, required this.expenseAmount});
+  DateTime date;
+  Expense({required this.name, required this.expenseAmount, required this.date});
 }
 
 class ExpenseList {
