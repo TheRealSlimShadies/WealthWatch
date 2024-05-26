@@ -99,7 +99,10 @@ class _RegisterState extends State<Register> {
         catHealth.expenseListItems,
         catEntertainment.expenseListItems,
         catHousing.expenseListItems,
-        uid);
+        catDeposit.incomeListItems,
+        catRent.incomeListItems,
+        catSalary.incomeListItems,
+        uid,);
 
  
       }
@@ -125,7 +128,7 @@ class _RegisterState extends State<Register> {
   }
 
   Future<void> addUserDetail(String firstName, String lastName, String email, List catfood, List cattransportation,
-  List cateducation, List catmiscellaneous, List cathealth, List catentertainment, List cathousing, String uid) async
+  List cateducation, List catmiscellaneous, List cathealth, List catentertainment, List cathousing, List catdeposit, List catrent, List catsalary ,String uid) async
   {
     
     DocumentReference userRef= await FirebaseFirestore.instance.collection('users').add({
@@ -136,31 +139,14 @@ class _RegisterState extends State<Register> {
     });
 
 
-  //trying to instantiate category collection with some nonempty values as firestore doesnt take nonempty fields but i think with this initialization i cant store lists. just single array or sth.
-  //   await userRef.collection('categories').doc('food');
-  //   await userRef.collection('categories').doc('food').collection('expenseList').add({'name': '', 'amount': 0});
-  //   await userRef.collection('categories').doc('transportation');
-  //   await userRef.collection('categories').doc('transportation').collection('expenseList').add({'name': '', 'amount': 0});
-  //   await userRef.collection('categories').doc('education');
-  //   await userRef.collection('categories').doc('education').collection('expenseList').add({'name': '', 'amount': 0});
-  //   await userRef.collection('categories').doc('miscellaneous');
-  //   await userRef.collection('categories').doc('miscellaneous').collection('expenseList').add({'name': '', 'amount': 0});
-  //   await userRef.collection('categories').doc('health');
-  //   await userRef.collection('categories').doc('health').collection('expenseList').add({'name': '', 'amount': 0});
-  //   await userRef.collection('categories').doc('entertainment');
-  //   await userRef.collection('categories').doc('entertainment').collection('expenseList').add({'name': '', 'amount': 0});
-  //   await userRef.collection('categories').doc('housing');
-  //   await userRef.collection('categories').doc('housing').collection('expenseList').add({'name': '', 'amount': 0});
-
-
   // adding expense categories to the user's document
-  await userRef.collection('categories').doc('catFood').set({});
-  await userRef.collection('categories').doc('catTransportation').set({});
-  await userRef.collection('categories').doc('catEducation').set({});
-  await userRef.collection('categories').doc('catMiscellaneous').set({});
-  await userRef.collection('categories').doc('catHealth').set({});
-  await userRef.collection('categories').doc('catEntertainment').set({});
-  await userRef.collection('categories').doc('catHousing').set({});
+  await userRef.collection('ExpenseCategories').doc('catFood').set({});
+  await userRef.collection('ExpenseCategories').doc('catTransportation').set({});
+  await userRef.collection('ExpenseCategories').doc('catEducation').set({});
+  await userRef.collection('ExpenseCategories').doc('catMiscellaneous').set({});
+  await userRef.collection('ExpenseCategories').doc('catHealth').set({});
+  await userRef.collection('ExpenseCategories').doc('catEntertainment').set({});
+  await userRef.collection('ExpenseCategories').doc('catHousing').set({});
 
   // trying to add expenses to each category's 'expenseList' subcollection
   await addExpensesToCategory(userRef, 'catFood', catFood.expenseListItems);
@@ -171,15 +157,38 @@ class _RegisterState extends State<Register> {
   await addExpensesToCategory(userRef, 'catEntertainment', catEntertainment.expenseListItems);
   await addExpensesToCategory(userRef, 'catHousing', catHousing.expenseListItems);
 
+
+// adding income categories to the user's document
+  await userRef.collection('IncomeCategories').doc('catDeposit').set({});
+  await userRef.collection('IncomeCategories').doc('catRent').set({});
+  await userRef.collection('IncomeCategories').doc('catSalary').set({});
+  
+
+  // trying to add incomes to each category's 'expenseList' subcollection
+  await addIncomesToCategory(userRef, 'catDeposit', catDeposit.incomeListItems);
+  await addIncomesToCategory(userRef, 'catRent', catRent.incomeListItems);
+  await addIncomesToCategory(userRef, 'catSalary', catSalary.incomeListItems);
+
+
   print("user details added successfully..........");
 }
 
 Future<void> addExpensesToCategory(DocumentReference userRef, String categoryName, List<Expense> expenses) async {
-  CollectionReference categoryRef = userRef.collection('categories').doc(categoryName).collection('expenseList');
+  CollectionReference categoryRef = userRef.collection('ExpenseCategories').doc(categoryName).collection('expenseList');
   for (var expense in expenses) {
     await categoryRef.add({
       'name': expense.name,
       'amount': expense.expenseAmount,
+      'date': expense.datetime,
+    });
+  }
+}
+
+Future<void> addIncomesToCategory(DocumentReference userRef, String categoryName, List<Income> incomes) async {
+  CollectionReference categoryRef = userRef.collection('IncomeCategories').doc(categoryName).collection('incomeList');
+  for (var income in incomes) {
+    await categoryRef.add({
+      'amount': income.incomeAmount,
     });
   }
 }

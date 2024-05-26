@@ -37,7 +37,7 @@ Future<double> getTotalExpenseAmountForCategory(String categoryName) async {
 
   String id= documentSnapshot.id;
 
-  CollectionReference categoryRef = FirebaseFirestore.instance.collection('users').doc(id) .collection('categories').doc(categoryName).collection('expenseList');
+  CollectionReference categoryRef = FirebaseFirestore.instance.collection('users').doc(id) .collection('ExpenseCategories').doc(categoryName).collection('expenseList');
 
   // Query the expenseList collection to get all documents
   QuerySnapshot querySnapshot1 = await categoryRef.get();
