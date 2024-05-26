@@ -21,9 +21,9 @@ class MyBarGraph extends StatelessWidget {
       satAmount: weeklySummary[6],
     );
     myBarData.initialBarData();
+
     return BarChart(
       BarChartData(
-        //maxY: maxY,
         minY: 0,
         gridData: const FlGridData(show: false),
         borderData: FlBorderData(show: false),
@@ -46,27 +46,16 @@ class MyBarGraph extends StatelessWidget {
                 barRods: [
                   BarChartRodData(
                     toY: data.y,
-                    //color: Colors.grey[777],
+                    //color: Colors.grey[700],
                     width: 25,
                     borderRadius: BorderRadius.circular(12),
                     backDrawRodData: BackgroundBarChartRodData(
                       show: true,
                       toY: data.y,
-
-                      //toY: 500,
-                      //color: Colors.grey,
+                      //color: Colors.grey[300],
                     ),
-                    //rodStackItems: [
-                    //BarChartRodStackItem(
-                    //0,
-                    //data.y,
-                    // Colors.lightBlue,
-                    //borderRadius: BorderRadius.circular(4),
-                    //),
-                    //],
                   ),
                 ],
-                //showingTooltipIndicators: [0],
               ),
             )
             .toList(),
