@@ -11,7 +11,7 @@ import 'dropDownMenuIncome.dart';
 class addExpense extends StatefulWidget {
   final VoidCallback? refreshCallback;
 
-  addExpense({
+  const addExpense({
     super.key,
     this.refreshCallback,
   });

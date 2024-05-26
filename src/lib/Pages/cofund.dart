@@ -7,10 +7,10 @@ class coFund extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           "CoFund",
         ),
-        titleTextStyle: TextStyle(color: Colors.white, fontSize: 20),
+        titleTextStyle: const TextStyle(color: Colors.white, fontSize: 20),
         backgroundColor: Colors.red[500],
         centerTitle: true,
         

@@ -3,6 +3,9 @@
 import 'dart:async';
 import 'dart:developer';
 
+import 'dart:async';
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -169,7 +172,9 @@ Future<String> getFirstName() async {
         ],
       ),
       drawer: Drawer(
-        backgroundColor: Color.fromARGB(197, 255, 255, 255),
+        //backgroundColor: Color.fromARGB(197, 255, 255, 255),
+        backgroundColor:
+            Theme.of(context).colorScheme.background.withOpacity(0.8),
         child: Center(
           child: Column(
             children: [
@@ -177,6 +182,7 @@ Future<String> getFirstName() async {
                 child: Icon(
                   Icons.account_circle_sharp,
                   size: 70,
+                  color: Theme.of(context).iconTheme.color,
                 ),
               ),
               FutureBuilder<String>(
@@ -208,10 +214,13 @@ Future<String> getFirstName() async {
               // ),
               ListTile(
                   contentPadding: EdgeInsets.only(left: 40, top: 70),
-                  leading: Icon(Icons.account_balance_wallet, size: 30),
+                  leading: Icon(Icons.account_balance_wallet,
+                      size: 30, color: Theme.of(context).iconTheme.color),
                   title: Text(
                     'Statistics',
-                    style: TextStyle(fontSize: 17),
+                    style: TextStyle(
+                        fontSize: 17,
+                        color: Theme.of(context).textTheme.bodyLarge!.color),
                   ),
                   onTap: () {
                     Navigator.pop(context);
@@ -219,10 +228,16 @@ Future<String> getFirstName() async {
                   }),
               ListTile(
                   contentPadding: EdgeInsets.only(left: 40, top: 70),
-                  leading: Icon(Icons.account_balance_wallet, size: 30),
+                  leading: Icon(
+                    Icons.account_balance_wallet,
+                    size: 30,
+                    color: Theme.of(context).iconTheme.color,
+                  ),
                   title: Text(
                     'Co-Fund',
-                    style: TextStyle(fontSize: 17),
+                    style: TextStyle(
+                        fontSize: 17,
+                        color: Theme.of(context).textTheme.bodyLarge!.color),
                   ),
                   onTap: () {
                     Navigator.pop(context);
@@ -230,10 +245,13 @@ Future<String> getFirstName() async {
                   }),
               ListTile(
                   contentPadding: EdgeInsets.only(left: 40, top: 70),
-                  leading: Icon(Icons.account_balance_wallet, size: 30),
+                  leading: Icon(Icons.account_balance_wallet,
+                      size: 30, color: Theme.of(context).iconTheme.color),
                   title: Text(
                     'Calendar',
-                    style: TextStyle(fontSize: 17),
+                    style: TextStyle(
+                        fontSize: 17,
+                        color: Theme.of(context).textTheme.bodyLarge!.color),
                   ),
                   onTap: () {
                     Navigator.pop(context);
@@ -241,10 +259,13 @@ Future<String> getFirstName() async {
                   }),
               ListTile(
                   contentPadding: EdgeInsets.only(left: 40, top: 70),
-                  leading: Icon(Icons.account_balance_wallet, size: 30),
+                  leading: Icon(Icons.account_balance_wallet,
+                      size: 30, color: Theme.of(context).iconTheme.color),
                   title: Text(
                     'Settings',
-                    style: TextStyle(fontSize: 17),
+                    style: TextStyle(
+                        fontSize: 17,
+                        color: Theme.of(context).textTheme.bodyLarge!.color),
                   ),
                   onTap: () {
                     Navigator.pop(context);
