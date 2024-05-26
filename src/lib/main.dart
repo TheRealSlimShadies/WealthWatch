@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:wealthwatch/Authentication/auth.dart';
 import 'package:wealthwatch/Authentication/forgotPassword.dart';
@@ -16,12 +18,15 @@ import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 import 'package:wealthwatch/Components/expenseWindow.dart';
 
-void main() async {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
   runApp(const MyApp());
+
+ 
 }
 
 
@@ -36,7 +41,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/homepage': (context) => Home(),
         '/statistic': (context) => Statistics(),
-        '/settings': (context) => Settings(),
+        '/settings': (context) => Setting(),
         '/cofund': (context) => coFund(),
         '/calendar': (context) => Calendar(),
         '/expbutton': (context) => expenseButton(),

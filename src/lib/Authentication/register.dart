@@ -47,6 +47,8 @@ class _RegisterState extends State<Register> {
     super.dispose();
   }
 
+  
+
   //validate the input field
   void validateField(){
   if(_formkey.currentState!.validate()){
@@ -82,8 +84,25 @@ class _RegisterState extends State<Register> {
       password: passwordController.text
       );
 
+      //taking the auth id for current user. using this, i query the docs and find the first name of current user
+      String uid=FirebaseAuth.instance.currentUser!.uid;
+
       //add the user details
-      addUserDetail(firstNameController.text, lastNameController.text, emailController.text,);
+      addUserDetail(
+        firstNameController.text,
+        lastNameController.text,
+        emailController.text,
+        catFood.expenseListItems,
+        catTransportation.expenseListItems,
+        catEducation.expenseListItems,
+        catMiscellaneous.expenseListItems,
+        catHealth.expenseListItems,
+        catEntertainment.expenseListItems,
+        catHousing.expenseListItems,
+        catDeposit.incomeListItems,
+        catRent.incomeListItems,
+        catSalary.incomeListItems,
+        uid,);
 
  
       }
@@ -108,14 +127,72 @@ class _RegisterState extends State<Register> {
 
   }
 
-  Future addUserDetail(String firstName, String lastName, String email) async
+  Future<void> addUserDetail(String firstName, String lastName, String email, List catfood, List cattransportation,
+  List cateducation, List catmiscellaneous, List cathealth, List catentertainment, List cathousing, List catdeposit, List catrent, List catsalary ,String uid) async
   {
-    await FirebaseFirestore.instance.collection('users').add({
-      'first name': firstName ,
-      'last name' : lastName ,
-      'email' : email
+    
+    DocumentReference userRef= await FirebaseFirestore.instance.collection('users').add({
+    'first name': firstName ,
+    'last name' : lastName ,
+    'email' : email,
+    'auth id' : uid,
+    });
+
+
+  // adding expense categories to the user's document
+  await userRef.collection('ExpenseCategories').doc('catFood').set({});
+  await userRef.collection('ExpenseCategories').doc('catTransportation').set({});
+  await userRef.collection('ExpenseCategories').doc('catEducation').set({});
+  await userRef.collection('ExpenseCategories').doc('catMiscellaneous').set({});
+  await userRef.collection('ExpenseCategories').doc('catHealth').set({});
+  await userRef.collection('ExpenseCategories').doc('catEntertainment').set({});
+  await userRef.collection('ExpenseCategories').doc('catHousing').set({});
+
+  // trying to add expenses to each category's 'expenseList' subcollection
+  await addExpensesToCategory(userRef, 'catFood', catFood.expenseListItems);
+  await addExpensesToCategory(userRef, 'catTransportation', catTransportation.expenseListItems);
+  await addExpensesToCategory(userRef, 'catEducation', catEducation.expenseListItems);
+  await addExpensesToCategory(userRef, 'catMiscellaneous', catMiscellaneous.expenseListItems);
+  await addExpensesToCategory(userRef, 'catHealth', catHealth.expenseListItems);
+  await addExpensesToCategory(userRef, 'catEntertainment', catEntertainment.expenseListItems);
+  await addExpensesToCategory(userRef, 'catHousing', catHousing.expenseListItems);
+
+
+// adding income categories to the user's document
+  await userRef.collection('IncomeCategories').doc('catDeposit').set({});
+  await userRef.collection('IncomeCategories').doc('catRent').set({});
+  await userRef.collection('IncomeCategories').doc('catSalary').set({});
+  
+
+  // trying to add incomes to each category's 'expenseList' subcollection
+  await addIncomesToCategory(userRef, 'catDeposit', catDeposit.incomeListItems);
+  await addIncomesToCategory(userRef, 'catRent', catRent.incomeListItems);
+  await addIncomesToCategory(userRef, 'catSalary', catSalary.incomeListItems);
+
+
+  print("user details added successfully..........");
+}
+
+Future<void> addExpensesToCategory(DocumentReference userRef, String categoryName, List<Expense> expenses) async {
+  CollectionReference categoryRef = userRef.collection('ExpenseCategories').doc(categoryName).collection('expenseList');
+  for (var expense in expenses) {
+    await categoryRef.add({
+      'name': expense.name,
+      'amount': expense.expenseAmount,
+      'date': expense.datetime,
     });
   }
+}
+
+Future<void> addIncomesToCategory(DocumentReference userRef, String categoryName, List<Income> incomes) async {
+  CollectionReference categoryRef = userRef.collection('IncomeCategories').doc(categoryName).collection('incomeList');
+  for (var income in incomes) {
+    await categoryRef.add({
+      'amount': income.incomeAmount,
+    });
+  }
+}
+
 
 
 // Function to show error dialog

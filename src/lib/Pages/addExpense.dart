@@ -1,9 +1,12 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:wealthwatch/Data/Expense.dart';
 import 'dropDownMenuExpense.dart';
 import 'dropDownMenuIncome.dart';
+
 
 class addExpense extends StatefulWidget {
   final VoidCallback? refreshCallback;
@@ -26,48 +29,34 @@ class _addExpenseState extends State<addExpense> {
 
   final GlobalKey<FormState> formkey = GlobalKey<FormState>();
 
-  // void validateField(){
-  //   if(formkey.currentState!.validate()){
-  //     {
-  //     addOperation();
-  //     }
+Future<void> addExpensesToCategory(String categoryName, Expense expense) async {
 
-  //   }
-  //   else{
-  //     print("enpty field...");
-  //   }
-  // }
+   // Get the current user's UID
+  String uid = FirebaseAuth.instance.currentUser!.uid;
 
-  // void addOperation(){
-  //   String expenseLabel = expenseLabelController.text;
-  //             String expensenumbercontroller = expenseNumberController.text;
-  //             int expenseNumber = int.tryParse(expensenumbercontroller) ?? 0;
-  //             switch (categorySelection.text) {
-  //               case 'Food':
-  //                 catFood.addExpenseToList(Expense(
-  //                     name: expenseLabel, expenseAmount: expenseNumber));
-  //               case 'Transportation':
-  //                 catTransportation.addExpenseToList(Expense(
-  //                     name: expenseLabel, expenseAmount: expenseNumber));
-  //               case 'Health':
-  //                 catHealth.addExpenseToList(Expense(
-  //                     name: expenseLabel, expenseAmount: expenseNumber));
-  //               case 'Entertainment':
-  //                 catEntertainment.addExpenseToList(Expense(
-  //                     name: expenseLabel, expenseAmount: expenseNumber));
-  //               case 'Miscellaneous':
-  //                 catMiscellaneous.addExpenseToList(Expense(
-  //                     name: expenseLabel, expenseAmount: expenseNumber));
-  //               case 'Education':
-  //                 catEducation.addExpenseToList(Expense(
-  //                     name: expenseLabel, expenseAmount: expenseNumber));
-  //               case 'Housing':
-  //                 catHousing.addExpenseToList(Expense(
-  //                     name: expenseLabel, expenseAmount: expenseNumber));
-  //             }
-  //             widget.refreshCallback!();
-  //             Navigator.pop(context);
-  // }
+  // Query the 'users' collection to find the document with matching UID
+  QuerySnapshot querySnapshot = await FirebaseFirestore.instance.collection('users').where('auth id', isEqualTo: uid).get();
+
+    // Get the first document from the query result
+    DocumentSnapshot documentSnapshot = querySnapshot.docs.first;
+
+    String id= documentSnapshot.id;
+
+
+
+  CollectionReference categoryRef = FirebaseFirestore.instance.collection('users').doc(id).collection('ExpenseCategories').doc(categoryName).collection('expenseList');
+  
+    await categoryRef.add({
+      'name': expense.name,
+      'amount': expense.expenseAmount,
+      'date': expense.datetime,
+    });
+  
+}
+
+
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -147,46 +136,46 @@ class _addExpenseState extends State<addExpense> {
               String expenseLabel = expenseLabelController.text;
               String expensenumbercontroller = expenseNumberController.text;
               int expenseNumber = int.tryParse(expensenumbercontroller) ?? 0;
+
+              Expense newExpense = Expense(
+              name: expenseLabel,
+              expenseAmount: expenseNumber,
+              datetime: DateTime.now(),
+            );
+
               switch (categorySelection.text) {
                 case 'Food':
-                  catFood.addExpenseToList(Expense(
-                      name: expenseLabel,
-                      expenseAmount: expenseNumber,
-                      datetime: DateTime.now()));
+                  catFood.addExpenseToList(newExpense);
+                      addExpensesToCategory('catFood', newExpense);
+                      break;
                 case 'Transportation':
-                  catTransportation.addExpenseToList(Expense(
-                      name: expenseLabel,
-                      expenseAmount: expenseNumber,
-                      datetime: DateTime.now()));
+                  catTransportation.addExpenseToList(newExpense);
+                      addExpensesToCategory('catTransportation', newExpense);
+                      break;
                 case 'Health':
-                  catHealth.addExpenseToList(Expense(
-                      name: expenseLabel,
-                      expenseAmount: expenseNumber,
-                      datetime: DateTime.now()));
+                  catHealth.addExpenseToList(newExpense);
+                      addExpensesToCategory('catHealth', newExpense);
+                      break;
                 case 'Entertainment':
-                  catEntertainment.addExpenseToList(Expense(
-                      name: expenseLabel,
-                      expenseAmount: expenseNumber,
-                      datetime: DateTime.now()));
+                  catEntertainment.addExpenseToList(newExpense);
+                      addExpensesToCategory('catEntertainment', newExpense);
+                      break;
                 case 'Miscellaneous':
-                  catMiscellaneous.addExpenseToList(Expense(
-                      name: expenseLabel,
-                      expenseAmount: expenseNumber,
-                      datetime: DateTime.now()));
+                  catMiscellaneous.addExpenseToList(newExpense);
+                      addExpensesToCategory('catMiscellaneous', newExpense);
+                      break;
                 case 'Education':
-                  catEducation.addExpenseToList(Expense(
-                      name: expenseLabel,
-                      expenseAmount: expenseNumber,
-                      datetime: DateTime.now()));
+                  catEducation.addExpenseToList(newExpense);
+                      addExpensesToCategory('catEducation', newExpense);
+                      break;
                 case 'Housing':
-                  catHousing.addExpenseToList(Expense(
-                      name: expenseLabel,
-                      expenseAmount: expenseNumber,
-                      datetime: DateTime.now()));
+                  catHousing.addExpenseToList(newExpense);
+                      addExpensesToCategory('catHousing', newExpense);
+                      break;
               }
               widget.refreshCallback!();
               Navigator.pop(context);
-            },
+          },
             backgroundColor: Colors.red,
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
