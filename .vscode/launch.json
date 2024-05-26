@@ -1,0 +1,18 @@
+{
+    "configurations": [
+        {
+            "name": "Flutter (lib\\main.dart)",
+            "type": "dart",
+            "request": "launch",
+            "cwd": "src",
+            "program": "lib\\main.dart"
+        },
+        {
+            "name": "Flutter (lib\\Pages\\settings.dart)",
+            "type": "dart",
+            "request": "launch",
+            "cwd": "src",
+            "program": "lib\\Pages\\settings.dart"
+        }
+    ]
+}
