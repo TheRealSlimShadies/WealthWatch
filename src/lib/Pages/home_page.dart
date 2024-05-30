@@ -3,6 +3,9 @@
 import 'dart:async';
 import 'dart:developer';
 
+import 'dart:async';
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -209,7 +212,9 @@ class _HomeState extends State<Home> {
         ],
       ),
       drawer: Drawer(
-        backgroundColor: Color.fromARGB(197, 255, 255, 255),
+        //backgroundColor: Color.fromARGB(197, 255, 255, 255),
+        backgroundColor:
+            Theme.of(context).colorScheme.background.withOpacity(0.8),
         child: Center(
           child: Column(
             children: [
@@ -217,6 +222,7 @@ class _HomeState extends State<Home> {
                 child: Icon(
                   Icons.account_circle_sharp,
                   size: 70,
+                  color: Theme.of(context).iconTheme.color,
                 ),
               ),
               FutureBuilder<String>(
@@ -237,10 +243,13 @@ class _HomeState extends State<Home> {
               ),
               ListTile(
                   contentPadding: EdgeInsets.only(left: 40, top: 70),
-                  leading: Icon(Icons.account_balance_wallet, size: 30),
+                  leading: Icon(Icons.account_balance_wallet,
+                      size: 30, color: Theme.of(context).iconTheme.color),
                   title: Text(
                     'Statistics',
-                    style: TextStyle(fontSize: 17),
+                    style: TextStyle(
+                        fontSize: 17,
+                        color: Theme.of(context).textTheme.bodyLarge!.color),
                   ),
                   onTap: () {
                     Navigator.pop(context);
@@ -248,10 +257,16 @@ class _HomeState extends State<Home> {
                   }),
               ListTile(
                   contentPadding: EdgeInsets.only(left: 40, top: 70),
-                  leading: Icon(Icons.account_balance_wallet, size: 30),
+                  leading: Icon(
+                    Icons.account_balance_wallet,
+                    size: 30,
+                    color: Theme.of(context).iconTheme.color,
+                  ),
                   title: Text(
                     'Co-Fund',
-                    style: TextStyle(fontSize: 17),
+                    style: TextStyle(
+                        fontSize: 17,
+                        color: Theme.of(context).textTheme.bodyLarge!.color),
                   ),
                   onTap: () {
                     Navigator.pop(context);
@@ -259,10 +274,13 @@ class _HomeState extends State<Home> {
                   }),
               ListTile(
                   contentPadding: EdgeInsets.only(left: 40, top: 70),
-                  leading: Icon(Icons.account_balance_wallet, size: 30),
+                  leading: Icon(Icons.account_balance_wallet,
+                      size: 30, color: Theme.of(context).iconTheme.color),
                   title: Text(
                     'Calendar',
-                    style: TextStyle(fontSize: 17),
+                    style: TextStyle(
+                        fontSize: 17,
+                        color: Theme.of(context).textTheme.bodyLarge!.color),
                   ),
                   onTap: () {
                     Navigator.pop(context);
@@ -270,10 +288,13 @@ class _HomeState extends State<Home> {
                   }),
               ListTile(
                   contentPadding: EdgeInsets.only(left: 40, top: 70),
-                  leading: Icon(Icons.account_balance_wallet, size: 30),
+                  leading: Icon(Icons.account_balance_wallet,
+                      size: 30, color: Theme.of(context).iconTheme.color),
                   title: Text(
                     'Settings',
-                    style: TextStyle(fontSize: 17),
+                    style: TextStyle(
+                        fontSize: 17,
+                        color: Theme.of(context).textTheme.bodyLarge!.color),
                   ),
                   onTap: () {
                     Navigator.pop(context);

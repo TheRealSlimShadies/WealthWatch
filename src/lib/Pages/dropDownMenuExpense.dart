@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class MyDropdownMenuExpense extends StatefulWidget {
   final controller;
-  MyDropdownMenuExpense({super.key, required this.controller});
+  const MyDropdownMenuExpense({super.key, required this.controller});
 
   @override
   State<MyDropdownMenuExpense> createState() => _MyDropdownMenuState();
@@ -11,6 +11,7 @@ class MyDropdownMenuExpense extends StatefulWidget {
 class _MyDropdownMenuState extends State<MyDropdownMenuExpense> {
   final categorySelection = TextEditingController();
 
+  @override
   Widget build(BuildContext context) {
     return DropdownMenu(
       label: const Text('Expense Name'),

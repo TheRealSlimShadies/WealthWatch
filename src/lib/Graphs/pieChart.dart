@@ -22,7 +22,7 @@ class _pieChartState extends State<pieChart> {
       color: Colors.black.withOpacity(0.2),
       spreadRadius: 9,
       blurRadius: 7,
-      offset: Offset(0, 3),
+      offset: const Offset(0, 3),
     ),
   ];
 
