@@ -97,13 +97,13 @@ Future<double> getTotalExpenseAmountForCategory(String categoryName) async {
                 touchCallback: (FlTouchEvent event, PieTouchResponse? pieTouchResponse) {
                   PieChartSectionData? sectionIndex = pieTouchResponse?.touchedSection?.touchedSection;
                   String caseTitle = sectionIndex!.title;
-                  List<Expense>? the_list = getExpenseListForSection(caseTitle);
+                  //List<Expense>? the_list = getExpenseListForSection(caseTitle);
 
                   Navigator.push(
                     context,
                     MaterialPageRoute(
                       builder: (context) => expenseWindow(
-                        listedExpense: the_list!,
+                        categoryName: caseTitle,
                         refreshCallBack11: widget.refreshCallBack10,
                       ),
                     ),
@@ -116,7 +116,7 @@ Future<double> getTotalExpenseAmountForCategory(String categoryName) async {
                   color: Color(0xFF9A77CF),
                   radius: 180,
                   showTitle: false,
-                  title: 'Food',
+                  title: 'catFood',
                   badgeWidget: Container(
                     height: 60,
                     width: 60,
@@ -137,7 +137,7 @@ Future<double> getTotalExpenseAmountForCategory(String categoryName) async {
                   color: Color(0xFF543884),
                   radius: 180,
                   showTitle: false,
-                  title: 'Transportation',
+                  title: 'catTransportation',
                   badgeWidget: Container(
                     height: 60,
                     width: 60,
@@ -158,7 +158,7 @@ Future<double> getTotalExpenseAmountForCategory(String categoryName) async {
                   color: Color(0xFF262254),
                   radius: 180,
                   showTitle: false,
-                  title: 'Entertainment',
+                  title: 'catEntertainment',
                   badgeWidget: Container(
                     height: 60,
                     width: 60,
@@ -179,7 +179,7 @@ Future<double> getTotalExpenseAmountForCategory(String categoryName) async {
                   color: Color(0xFFA13670),
                   radius: 180,
                   showTitle: false,
-                  title: 'Housing',
+                  title: 'catHousing',
                   badgeWidget: Container(
                     height: 60,
                     width: 60,
@@ -200,7 +200,7 @@ Future<double> getTotalExpenseAmountForCategory(String categoryName) async {
                   color: Color(0xFFEC4176),
                   radius: 180,
                   showTitle: false,
-                  title: 'Miscellaneous',
+                  title: 'catMiscellaneous',
                   badgeWidget: Container(
                     height: 60,
                     width: 60,
@@ -221,7 +221,7 @@ Future<double> getTotalExpenseAmountForCategory(String categoryName) async {
                   color: Color(0xFFFFA45E),
                   radius: 180,
                   showTitle: false,
-                  title: 'Health',
+                  title: 'catHealth',
                   badgeWidget: Container(
                     height: 60,
                     width: 60,
@@ -242,7 +242,7 @@ Future<double> getTotalExpenseAmountForCategory(String categoryName) async {
                   color: Color(0xFFFCE38A),
                   radius: 180,
                   showTitle: false,
-                  title: 'Education',
+                  title: 'catEducation',
                   badgeWidget: Container(
                     height: 60,
                     width: 60,

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:wealthwatch/Components/expenseWindow.dart';
 
 class displaywidget extends StatelessWidget {
-  final int amount;
+  final double amount;
   final String name;
   const displaywidget({
     super.key,

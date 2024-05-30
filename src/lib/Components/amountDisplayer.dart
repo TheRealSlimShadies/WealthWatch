@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class amountDisplayer extends StatelessWidget {
-  final int amount1;
+  final double amount1;
   const amountDisplayer({super.key, required this.amount1});
 
   @override
