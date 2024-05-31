@@ -4,11 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:wealthwatch/Authentication/auth.dart';
 import 'package:wealthwatch/Authentication/forgotPassword.dart';
+import 'package:wealthwatch/Authentication/login.dart';
+import 'package:wealthwatch/Authentication/register.dart';
 import 'package:wealthwatch/Buttons/expenseButton.dart';
 import 'package:wealthwatch/Buttons/incomeButton.dart';
 import 'package:wealthwatch/Graphs/bar_chart.dart';
 import 'package:wealthwatch/Pages/addIncome.dart';
-import 'package:wealthwatch/Pages/addPeople.dart';
 import 'package:wealthwatch/Pages/calendar.dart';
 import 'package:wealthwatch/Pages/cofund.dart';
 import 'package:wealthwatch/Pages/home_page.dart';
@@ -24,6 +25,7 @@ Future<void> main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
   runApp(
     ChangeNotifierProvider(
         create: (_) => ThemeProvider(),
@@ -50,9 +52,18 @@ class MyApp extends StatelessWidget {
         '/calendar': (context) => Calendar(),
         '/expbutton': (context) => expenseButton(),
         '/addExpense': (context) => addExpense(),
-        '/addPeople': (context) => addPeople(),
         '/forgotPassword': (context) => forgotPassword(),
         '/BarChart': (context) => MyBarGraph(weeklySummary: []),
+
+        '/login': (context) => Login(onTap: () {
+          // navigate to registration screen. this is used only for delete account method where i need to route out of the app to login page
+          Navigator.pushNamed(context, '/register');
+        }),
+        '/register': (context) => Register(onTap: () {
+          Navigator.pushNamed(context, '/login');
+        }),
+
+
         //'/login': (context) => Login(),
         //'/register':(context) => Register(),
       },

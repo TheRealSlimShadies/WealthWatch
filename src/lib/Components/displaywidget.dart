@@ -4,7 +4,7 @@ import 'package:wealthwatch/Data/Expense.dart';
 import 'package:wealthwatch/Components/showingWindow.dart';
 
 class displaywidget extends StatelessWidget {
-  final int amount;
+  final double amount;
   final String name;
   const displaywidget({
     super.key,

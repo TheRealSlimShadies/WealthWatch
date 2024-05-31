@@ -3,9 +3,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:wealthwatch/Data/Expense.dart';
 import 'dropDownMenuExpense.dart';
 import 'dropDownMenuIncome.dart';
+
 
 
 class addExpense extends StatefulWidget {
@@ -49,7 +51,7 @@ Future<void> addExpensesToCategory(String categoryName, Expense expense) async {
     await categoryRef.add({
       'name': expense.name,
       'amount': expense.expenseAmount,
-      'date': expense.datetime,
+      'date': DateFormat('dd-MM-yyyy').format(expense.datetime),
     });
   
 }
