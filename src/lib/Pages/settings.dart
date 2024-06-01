@@ -14,35 +14,62 @@ class Setting extends StatefulWidget {
 
 class _SettingState extends State<Setting> {
 
+  Future<void> deleteSubcollection(DocumentReference docRef, String subcollectionName) async {
+    QuerySnapshot subcollectionSnapshot = await docRef.collection(subcollectionName).get();
+    for (var doc in subcollectionSnapshot.docs) {
+      await doc.reference.delete();
+    }
+  }
 
-Future<void> deleteUserAccount(BuildContext context) async {
+  Future<void> deleteCategoryWithSubcollections(DocumentReference categoryDocRef) async {
+    
+    await deleteSubcollection(categoryDocRef, 'expenseList');
+
+    await deleteSubcollection(categoryDocRef, 'incomeList');
+
+    //delete the category document itself
+    await categoryDocRef.delete();
+  }
+
+  Future<void> deleteUserAccount(BuildContext context) async {
+
     User? user = FirebaseAuth.instance.currentUser;
     if (user != null) {
       try {
-        // deleting user from Firestore
-        QuerySnapshot querySnapshot = await FirebaseFirestore.instance
-            .collection('users')
-            .where('auth id', isEqualTo: user.uid)
+        QuerySnapshot querySnapshot = await FirebaseFirestore.instance.collection('users').where('auth id', isEqualTo: user.uid)
             .get();
+
         if (querySnapshot.docs.isNotEmpty) {
-          await querySnapshot.docs.first.reference.delete();
+          DocumentReference userDocRef = querySnapshot.docs.first.reference;
+
+          //Delete all documents within 'ExpenseCategories' subcollection
+          QuerySnapshot expenseCategoriesSnapshot = await userDocRef.collection('ExpenseCategories').get();
+          for (var categoryDoc in expenseCategoriesSnapshot.docs) {
+            await deleteCategoryWithSubcollections(categoryDoc.reference);
+          }
+
+          //Delete all documents within 'IncomeCategories' subcollection
+          QuerySnapshot incomeCategoriesSnapshot = await userDocRef.collection('IncomeCategories').get();
+          for (var categoryDoc in incomeCategoriesSnapshot.docs) {
+            await deleteCategoryWithSubcollections(categoryDoc.reference);
+          }
+
+          await userDocRef.delete();
         }
 
-        // deleting from FirebaseAuth
+        //deleting from Auth
         await user.delete();
-        
+
         await FirebaseAuth.instance.signOut();
       } catch (e) {
         print("Error: $e");
       }
-    } 
-    else 
-    {
-    print("No user currently signed in.");
+    } else {
+      print("No user currently signed in.");
     }
   }
 
-  void DeleteUserPopUpBox(BuildContext context) {
+  void deleteUserPopUpBox(BuildContext context) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -53,14 +80,15 @@ Future<void> deleteUserAccount(BuildContext context) async {
             TextButton(
               onPressed: () async {
                 Navigator.pop(context);
-                await deleteUserAccount(context);
+                
 
                 print("Navigating to login screen");
-                if(mounted)
-                {
+                if (mounted) {
                   print("working well.............");
-                Navigator.of(context).pushNamedAndRemoveUntil('/login', (route) => false); // redirecting to login screen and removing any associated routes.
+                  Navigator.of(context).pushNamedAndRemoveUntil('/login', (route) => false); // redirecting to login screen and removing any associated routes.
                 }
+
+                await deleteUserAccount(context);
               },
               child: Text('Yes'),
             ),
@@ -83,7 +111,7 @@ Future<void> deleteUserAccount(BuildContext context) async {
       appBar: AppBar(
         title: const Text("Settings"),
         backgroundColor: Colors.transparent,
-        foregroundColor:  Color.fromARGB(255, 90, 88, 88),
+        foregroundColor: Color.fromARGB(255, 90, 88, 88),
         elevation: 0,
       ),
       body: Padding(
@@ -101,18 +129,15 @@ Future<void> deleteUserAccount(BuildContext context) async {
                 children: [
                   const Text("Theme"),
                   CupertinoSwitch(
-                    value: Provider.of<ThemeProvider>(context, listen: false)
-                        .isDarkMode,
-                    onChanged: (value) => Provider.of<ThemeProvider>(context,
-                            listen: false)
-                        .toggleTheme(),
+                    value: Provider.of<ThemeProvider>(context, listen: false).isDarkMode,
+                    onChanged: (value) => Provider.of<ThemeProvider>(context, listen: false).toggleTheme(),
                   ),
                 ],
               ),
             ),
             const SizedBox(height: 25),
             GestureDetector(
-              onTap: () => DeleteUserPopUpBox(context),
+              onTap: () => deleteUserPopUpBox(context),
               child: Container(
                 decoration: BoxDecoration(
                   color: Theme.of(context).colorScheme.secondary,
