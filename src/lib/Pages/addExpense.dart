@@ -48,10 +48,16 @@ Future<void> addExpensesToCategory(String categoryName, Expense expense) async {
 
   CollectionReference categoryRef = FirebaseFirestore.instance.collection('users').doc(id).collection('ExpenseCategories').doc(categoryName).collection('expenseList');
   
+  // format the datetime before adding to Firestore
+  
+  //String formattedDate = DateFormat('dd-MM-yyyy').format(expense.datetime);
+
     await categoryRef.add({
       'name': expense.name,
       'amount': expense.expenseAmount,
-      'date': DateFormat('dd-MM-yyyy').format(expense.datetime),
+      'date': expense.datetime,
+      //formattedDate,
+      //DateFormat('dd-MM-yyyy').format(expense.datetime),
     });
   
 }
@@ -62,7 +68,7 @@ Future<void> addExpensesToCategory(String categoryName, Expense expense) async {
 
   @override
   Widget build(BuildContext context) {
-    final categorySelection = TextEditingController();
+    //final categorySelection = TextEditingController();
 
     return Scaffold(
       appBar: AppBar(
@@ -90,7 +96,8 @@ Future<void> addExpensesToCategory(String categoryName, Expense expense) async {
               validator: (value) {
                 if (value!.isEmpty) {
                   return "Enter the name of the item for better history log.";
-                } else {
+                } 
+                else {
                   return null;
                 }
               },
@@ -140,6 +147,7 @@ Future<void> addExpensesToCategory(String categoryName, Expense expense) async {
               int expenseNumber = int.tryParse(expensenumbercontroller) ?? 0;
 
               Expense newExpense = Expense(
+              id: '', //temporary id
               name: expenseLabel,
               expenseAmount: expenseNumber,
               datetime: DateTime.now(),

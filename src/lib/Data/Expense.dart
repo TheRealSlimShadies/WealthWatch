@@ -8,10 +8,12 @@ class Expense {
   String name;
   int expenseAmount;
   DateTime datetime;
+  String id;
   Expense(
       {required this.name,
       required this.expenseAmount,
-      required this.datetime});
+      required this.datetime,
+      this.id= ' '});
 }
 
 class ExpenseList {

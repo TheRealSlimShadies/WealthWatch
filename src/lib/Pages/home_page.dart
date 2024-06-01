@@ -255,23 +255,23 @@ class _HomeState extends State<Home> {
                     Navigator.pop(context);
                     Navigator.pushNamed(context, '/statistic');
                   }),
-              ListTile(
-                  contentPadding: EdgeInsets.only(left: 40, top: 70),
-                  leading: Icon(
-                    Icons.account_balance_wallet,
-                    size: 30,
-                    color: Theme.of(context).iconTheme.color,
-                  ),
-                  title: Text(
-                    'Co-Fund',
-                    style: TextStyle(
-                        fontSize: 17,
-                        color: Theme.of(context).textTheme.bodyLarge!.color),
-                  ),
-                  onTap: () {
-                    Navigator.pop(context);
-                    Navigator.pushNamed(context, '/cofund');
-                  }),
+              // ListTile(
+              //     contentPadding: EdgeInsets.only(left: 40, top: 70),
+              //     leading: Icon(
+              //       Icons.account_balance_wallet,
+              //       size: 30,
+              //       color: Theme.of(context).iconTheme.color,
+              //     ),
+              //     title: Text(
+              //       'Co-Fund',
+              //       style: TextStyle(
+              //           fontSize: 17,
+              //           color: Theme.of(context).textTheme.bodyLarge!.color),
+              //     ),
+              //     onTap: () {
+              //       Navigator.pop(context);
+              //       Navigator.pushNamed(context, '/cofund');
+              //     }),
               ListTile(
                   contentPadding: EdgeInsets.only(left: 40, top: 70),
                   leading: Icon(Icons.account_balance_wallet,
