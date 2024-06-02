@@ -3,6 +3,9 @@
 import 'dart:async';
 import 'dart:developer';
 
+import 'dart:async';
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -27,7 +30,7 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   final user = FirebaseAuth.instance.currentUser!;
 
-//method to fetch the first name and return it
+  // method to fetch the first name and return it
   Future<String> getFirstName() async {
     // Get the current user's UID
     String uid = FirebaseAuth.instance.currentUser!.uid;
@@ -57,40 +60,7 @@ class _HomeState extends State<Home> {
     }
   }
 
-// Future<String> getData() async{
-
-//   //fetch current user id
-//   String documentID= getCurrentUserId();
-
-//   //referencing the documents in collection 'users'
-//   DocumentReference userData= FirebaseFirestore.instance.collection('users').doc(documentID);
-
-//   //fetching the data
-//   DocumentSnapshot documentSnapshot= await userData.get();
-
-//   if(documentSnapshot.exists){
-//     print("doc exists.....................");
-//     return documentSnapshot['first name'];
-
-//   }
-//   else{
-//     print("doc doesnt exist....................");
-//     return user.email!;
-//   }
-// }
-
-// String getCurrentUserId() {
-//   User? user = FirebaseAuth.instance.currentUser;
-//   if (user != null) {
-//     String userId = user.uid;
-//     print("the user id is: $userId");
-//     return userId;
-//   } else {
-//     // User is not signed in
-//     return '';
-//   }
-// }
-
+  // method to sign user out
   void signUserOut() async {
     await FirebaseAuth.instance.signOut();
   }
@@ -108,8 +78,6 @@ class _HomeState extends State<Home> {
                       print("SIGNING OUT...............");
                       signUserOut();
                       Navigator.pop(context);
-                      signUserOut();
-                      signUserOut();
                     },
                     child: Text('Yes')),
                 TextButton(
@@ -117,10 +85,102 @@ class _HomeState extends State<Home> {
                       Navigator.pop(context);
                     },
                     child: Text("No")),
-              ]
-              //FirebaseAuth.instance.signOut();
-              );
+              ]);
         });
+  }
+
+  // method to get total expense amount
+  Future<double> getTotalExpenseAmount() async {
+    double totalExpenseAmount = 0.0;
+
+    // Get the current user's UID
+    String uid = FirebaseAuth.instance.currentUser!.uid;
+
+    // Query the 'users' collection to find the document with matching UID
+    QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+        .collection('users')
+        .where('auth id', isEqualTo: uid)
+        .get();
+
+    if (querySnapshot.docs.isNotEmpty) {
+      // Get the first document from the query result
+      DocumentSnapshot documentSnapshot = querySnapshot.docs.first;
+
+      String userId = documentSnapshot.id;
+
+      List<String> expenseCategories = [
+        'catEducation',
+        'catEntertainment',
+        'catFood',
+        'catHealth',
+        'catHousing',
+        'catMiscellaneous',
+        'catTransportation'
+      ];
+
+      for (String category in expenseCategories) {
+        CollectionReference expenseListRef = FirebaseFirestore.instance
+            .collection('users')
+            .doc(userId)
+            .collection('ExpenseCategories')
+            .doc(category)
+            .collection('expenseList');
+
+        QuerySnapshot expenseListSnapshot = await expenseListRef.get();
+
+        for (QueryDocumentSnapshot expense in expenseListSnapshot.docs) {
+          Map<String, dynamic> expenseData =
+              expense.data() as Map<String, dynamic>;
+          double amount = (expenseData['amount'] ?? 0.0).toDouble();
+          totalExpenseAmount += amount;
+        }
+      }
+    }
+
+    return totalExpenseAmount;
+  }
+
+  // method to get total income amount
+  Future<double> getTotalIncomeAmount() async {
+    double totalIncomeAmount = 0.0;
+
+    // Get the current user's UID
+    String uid = FirebaseAuth.instance.currentUser!.uid;
+
+    // Query the 'users' collection to find the document with matching UID
+    QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+        .collection('users')
+        .where('auth id', isEqualTo: uid)
+        .get();
+
+    if (querySnapshot.docs.isNotEmpty) {
+      // Get the first document from the query result
+      DocumentSnapshot documentSnapshot = querySnapshot.docs.first;
+
+      String userId = documentSnapshot.id;
+
+      List<String> incomeCategories = ['catRent', 'catSalary', 'catDeposit'];
+
+      for (String category in incomeCategories) {
+        CollectionReference incomeListRef = FirebaseFirestore.instance
+            .collection('users')
+            .doc(userId)
+            .collection('IncomeCategories')
+            .doc(category)
+            .collection('incomeList');
+
+        QuerySnapshot incomeListSnapshot = await incomeListRef.get();
+
+        for (QueryDocumentSnapshot income in incomeListSnapshot.docs) {
+          Map<String, dynamic> incomeData =
+              income.data() as Map<String, dynamic>;
+          double amount = (incomeData['amount'] ?? 0.0).toDouble();
+          totalIncomeAmount += amount;
+        }
+      }
+    }
+
+    return totalIncomeAmount;
   }
 
   @override
@@ -187,10 +247,6 @@ class _HomeState extends State<Home> {
                   }
                 },
               ),
-              // Text(
-              //   user.email!,
-              //   style: TextStyle(fontSize: 20, fontFamily: "Arial"),
-              // ),
               ListTile(
                   contentPadding: EdgeInsets.only(left: 40, top: 70),
                   leading: Icon(Icons.account_balance_wallet,
@@ -205,23 +261,23 @@ class _HomeState extends State<Home> {
                     Navigator.pop(context);
                     Navigator.pushNamed(context, '/statistic');
                   }),
-              ListTile(
-                  contentPadding: EdgeInsets.only(left: 40, top: 70),
-                  leading: Icon(
-                    Icons.account_balance_wallet,
-                    size: 30,
-                    color: Theme.of(context).iconTheme.color,
-                  ),
-                  title: Text(
-                    'Co-Fund',
-                    style: TextStyle(
-                        fontSize: 17,
-                        color: Theme.of(context).textTheme.bodyLarge!.color),
-                  ),
-                  onTap: () {
-                    Navigator.pop(context);
-                    Navigator.pushNamed(context, '/cofund');
-                  }),
+              // ListTile(
+              //     contentPadding: EdgeInsets.only(left: 40, top: 70),
+              //     leading: Icon(
+              //       Icons.account_balance_wallet,
+              //       size: 30,
+              //       color: Theme.of(context).iconTheme.color,
+              //     ),
+              //     title: Text(
+              //       'Co-Fund',
+              //       style: TextStyle(
+              //           fontSize: 17,
+              //           color: Theme.of(context).textTheme.bodyLarge!.color),
+              //     ),
+              //     onTap: () {
+              //       Navigator.pop(context);
+              //       Navigator.pushNamed(context, '/cofund');
+              //     }),
               ListTile(
                   contentPadding: EdgeInsets.only(left: 40, top: 70),
                   leading: Icon(Icons.account_balance_wallet,
@@ -259,22 +315,38 @@ class _HomeState extends State<Home> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              displaywidget(
-                amount: catEducation.getTotalExpenseAmount() +
-                    catEntertainment.getTotalExpenseAmount() +
-                    catFood.getTotalExpenseAmount() +
-                    catHealth.getTotalExpenseAmount() +
-                    catHousing.getTotalExpenseAmount() +
-                    catMiscellaneous.getTotalExpenseAmount() +
-                    catTransportation.getTotalExpenseAmount(),
-                name: 'Expense',
+              FutureBuilder<double>(
+                future: getTotalExpenseAmount(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return CircularProgressIndicator();
+                  } else if (snapshot.hasError) {
+                    return Text("Error: ${snapshot.error}");
+                  } else {
+                    double totalExpense = snapshot.data ?? 0.0;
+                    return displaywidget(
+                      amount: totalExpense,
+                      name: 'Expense',
+                    );
+                  }
+                },
               ),
-              displaywidget(
-                amount: catRent.getTotalIncomeAmount() +
-                    catSalary.getTotalIncomeAmount() +
-                    catDeposit.getTotalIncomeAmount(),
-                name: 'Income',
-              )
+              FutureBuilder<double>(
+                future: getTotalIncomeAmount(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return CircularProgressIndicator();
+                  } else if (snapshot.hasError) {
+                    return Text("Error: ${snapshot.error}");
+                  } else {
+                    double totalIncome = snapshot.data ?? 0.0;
+                    return displaywidget(
+                      amount: totalIncome,
+                      name: 'Income',
+                    );
+                  }
+                },
+              ),
             ],
           ),
           Expanded(
@@ -286,30 +358,68 @@ class _HomeState extends State<Home> {
           )),
           Padding(
               padding: EdgeInsets.all(5),
-              child: amountDisplayer(
-                  amount1: (catRent.getTotalIncomeAmount() +
-                          catSalary.getTotalIncomeAmount() +
-                          catDeposit.getTotalIncomeAmount()) -
-                      (catEducation.getTotalExpenseAmount() +
-                          catEntertainment.getTotalExpenseAmount() +
-                          catFood.getTotalExpenseAmount() +
-                          catHealth.getTotalExpenseAmount() +
-                          catHousing.getTotalExpenseAmount() +
-                          catMiscellaneous.getTotalExpenseAmount() +
-                          catTransportation.getTotalExpenseAmount()))),
+              child: FutureBuilder<double>(
+                future: getTotalExpenseAmount(),
+                builder: (context, expenseSnapshot) {
+                  if (expenseSnapshot.connectionState ==
+                      ConnectionState.waiting) {
+                    return CircularProgressIndicator();
+                  } else if (expenseSnapshot.hasError) {
+                    return Text("Error: ${expenseSnapshot.error}");
+                  } else {
+                    double totalExpense = expenseSnapshot.data ?? 0.0;
+                    return FutureBuilder<double>(
+                      future: getTotalIncomeAmount(),
+                      builder: (context, incomeSnapshot) {
+                        if (incomeSnapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return CircularProgressIndicator();
+                        } else if (incomeSnapshot.hasError) {
+                          return Text("Error: ${incomeSnapshot.error}");
+                        } else {
+                          double totalIncome = incomeSnapshot.data ?? 0.0;
+                          return amountDisplayer(
+                            amount1: totalIncome - totalExpense,
+                          );
+                        }
+                      },
+                    );
+                  }
+                },
+              )),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10),
-            child: progressBar(
-              totalExpense: catEducation.getTotalExpenseAmount() +
-                  catEntertainment.getTotalExpenseAmount() +
-                  catFood.getTotalExpenseAmount() +
-                  catHealth.getTotalExpenseAmount() +
-                  catHousing.getTotalExpenseAmount() +
-                  catMiscellaneous.getTotalExpenseAmount() +
-                  catTransportation.getTotalExpenseAmount(),
-              totalIncome: catRent.getTotalIncomeAmount() +
-                  catSalary.getTotalIncomeAmount() +
-                  catDeposit.getTotalIncomeAmount(),
+            child: FutureBuilder<double>(
+              future: getTotalExpenseAmount(),
+              builder: (context, expenseSnapshot) {
+                if (expenseSnapshot.connectionState ==
+                    ConnectionState.waiting) {
+                  return CircularProgressIndicator();
+                } else if (expenseSnapshot.hasError) {
+                  return Text("Error: ${expenseSnapshot.error}");
+                } else {
+                  double totalExpense = expenseSnapshot.data ?? 0.0;
+                  return FutureBuilder<double>(
+                    future: getTotalIncomeAmount(),
+                    builder: (context, incomeSnapshot) {
+                      if (incomeSnapshot.connectionState ==
+                          ConnectionState.waiting) {
+                        return CircularProgressIndicator();
+                      } else if (incomeSnapshot.hasError) {
+                        return Text("Error: ${incomeSnapshot.error}");
+                      } else {
+                        double totalIncome = incomeSnapshot.data ?? 0.0;
+                        print("Total Expense: $totalExpense");
+                        print("Total Income: $totalIncome");
+                        return progressBar(
+                          totalExpense: totalExpense,
+                          totalIncome: totalIncome,
+                        );
+                      }
+                    },
+                  );
+                }
+              },
             ),
           ),
           Row(
@@ -323,8 +433,10 @@ class _HomeState extends State<Home> {
               ),
               Padding(
                 padding: EdgeInsets.all(30),
-                child: incomeButton(refreshCallback4: refresh),
-              )
+                child: incomeButton(
+                  refreshCallback4: refresh,
+                ),
+              ),
             ],
           ),
         ],

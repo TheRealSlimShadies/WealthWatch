@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:wealthwatch/Components/expenseWindow.dart';
+import 'package:wealthwatch/Data/Expense.dart';
+import 'package:wealthwatch/Components/showingWindow.dart';
 
 class displaywidget extends StatelessWidget {
-  final int amount;
+  final double amount;
   final String name;
   const displaywidget({
     super.key,
@@ -13,6 +15,14 @@ class displaywidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => categoryWindow(name: name),
+          ),
+        );
+      },
       child: Container(
           margin: EdgeInsets.fromLTRB(10, 20, 10, 20),
           height: 50,

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 class progressBar extends StatefulWidget {
-  final totalExpense;
-  final totalIncome;
+  final double totalExpense;
+  final double totalIncome;
   const progressBar({
     super.key,
     required this.totalExpense,
