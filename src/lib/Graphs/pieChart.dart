@@ -8,7 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:wealthwatch/Data/Expense.dart';
 import 'package:wealthwatch/Components/expenseWindow.dart';
 
-
 class pieChart extends StatefulWidget {
   final VoidCallback? refreshCallBack10;
   const pieChart({super.key, required this.refreshCallBack10});
@@ -26,43 +25,48 @@ class _pieChartState extends State<pieChart> {
     ),
   ];
 
-Future<double> getTotalExpenseAmountForCategory(String categoryName) async {
+  Future<double> getTotalExpenseAmountForCategory(String categoryName) async {
+    String uid = FirebaseAuth.instance.currentUser!.uid;
 
-  String uid = FirebaseAuth.instance.currentUser!.uid;
+    QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+        .collection('users')
+        .where('auth id', isEqualTo: uid)
+        .get();
 
-  QuerySnapshot querySnapshot = await FirebaseFirestore.instance.collection('users').where('auth id', isEqualTo: uid).get();
+    DocumentSnapshot documentSnapshot = querySnapshot.docs.first;
 
-  DocumentSnapshot documentSnapshot = querySnapshot.docs.first;
+    String id = documentSnapshot.id;
 
-  String id= documentSnapshot.id;
+    CollectionReference categoryRef = FirebaseFirestore.instance
+        .collection('users')
+        .doc(id)
+        .collection('ExpenseCategories')
+        .doc(categoryName)
+        .collection('expenseList');
 
-  CollectionReference categoryRef = FirebaseFirestore.instance.collection('users').doc(id) .collection('ExpenseCategories').doc(categoryName).collection('expenseList');
+    // Query the expenseList collection to get all documents
+    QuerySnapshot querySnapshot1 = await categoryRef.get();
 
-  // Query the expenseList collection to get all documents
-  QuerySnapshot querySnapshot1 = await categoryRef.get();
+    double totalAmount = 0;
 
-  double totalAmount = 0;
+    // Loop through each document in the query result
+    for (QueryDocumentSnapshot documentSnapshot in querySnapshot1.docs) {
+      // Get the data map from the document
+      Map<String, dynamic>? data =
+          documentSnapshot.data() as Map<String, dynamic>;
 
- // Loop through each document in the query result
-  for (QueryDocumentSnapshot documentSnapshot in querySnapshot1.docs) {
-    // Get the data map from the document
-    Map<String, dynamic>? data = documentSnapshot.data() as Map<String,dynamic>;
-
-    // Check if the data map is not null and contains the "amount" field
-    if (data != null && data.containsKey('amount')) {
-      var amount = data['amount'];
-      if (amount is int) {
-        totalAmount += amount.toDouble();
-      }
-      else if(amount is double)
-      {
-        totalAmount += amount;
+      // Check if the data map is not null and contains the "amount" field
+      if (data != null && data.containsKey('amount')) {
+        var amount = data['amount'];
+        if (amount is int) {
+          totalAmount += amount.toDouble();
+        } else if (amount is double) {
+          totalAmount += amount;
+        }
       }
     }
+    return totalAmount;
   }
-  return totalAmount;
-}
-
 
   @override
   Widget build(BuildContext context) {
@@ -76,26 +80,27 @@ Future<double> getTotalExpenseAmountForCategory(String categoryName) async {
         getTotalExpenseAmountForCategory('catHealth'),
         getTotalExpenseAmountForCategory('catEducation'),
       ]),
-      builder: (context,snapshot){
-        if (snapshot.connectionState== ConnectionState.waiting)
-        {
-          return Center(child: CircularProgressIndicator(),);
-        }
-        else if (snapshot.hasError)
-        {
-          return Center(child: Text("Error: ${snapshot.error}"),);
-        }
-        else if (snapshot.hasData)
-        {
-          List<double> totals= snapshot.data!;
-           return PieChart(
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        } else if (snapshot.hasError) {
+          return Center(
+            child: Text("Error: ${snapshot.error}"),
+          );
+        } else if (snapshot.hasData) {
+          List<double> totals = snapshot.data!;
+          return PieChart(
             swapAnimationDuration: Duration(seconds: 1),
             swapAnimationCurve: Curves.easeIn,
             PieChartData(
               pieTouchData: PieTouchData(
                 enabled: true,
-                touchCallback: (FlTouchEvent event, PieTouchResponse? pieTouchResponse) {
-                  PieChartSectionData? sectionIndex = pieTouchResponse?.touchedSection?.touchedSection;
+                touchCallback:
+                    (FlTouchEvent event, PieTouchResponse? pieTouchResponse) {
+                  PieChartSectionData? sectionIndex =
+                      pieTouchResponse?.touchedSection?.touchedSection;
                   String caseTitle = sectionIndex!.title;
                   List<Expense>? the_list = getExpenseListForSection(caseTitle);
 
@@ -290,4 +295,3 @@ List<Expense>? getExpenseListForSection(String caseTitle) {
   }
   return [];
 }
- 

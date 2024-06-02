@@ -3,13 +3,8 @@
 import 'dart:async';
 import 'dart:developer';
 
-import 'dart:async';
-import 'dart:developer';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:fl_chart/fl_chart.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
@@ -19,12 +14,10 @@ import 'package:wealthwatch/Components/amountDisplayer.dart';
 import 'package:wealthwatch/Components/displaywidget.dart';
 import 'package:wealthwatch/Components/progressBar.dart';
 import 'package:wealthwatch/Data/Expense.dart';
-import 'package:wealthwatch/Data/Expense.dart';
 import 'package:wealthwatch/Graphs/pieChart.dart';
 
 class Home extends StatefulWidget {
   Home({super.key});
-
 
   final user = FirebaseAuth.instance.currentUser!;
   @override
@@ -32,37 +25,37 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-
-final user = FirebaseAuth.instance.currentUser!;
-
+  final user = FirebaseAuth.instance.currentUser!;
 
 //method to fetch the first name and return it
-Future<String> getFirstName() async {
-  // Get the current user's UID
-  String uid = FirebaseAuth.instance.currentUser!.uid;
+  Future<String> getFirstName() async {
+    // Get the current user's UID
+    String uid = FirebaseAuth.instance.currentUser!.uid;
 
-  // Query the 'users' collection to find the document with matching UID
-  QuerySnapshot querySnapshot = await FirebaseFirestore.instance.collection('users').where('auth id', isEqualTo: uid).get();
+    // Query the 'users' collection to find the document with matching UID
+    QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+        .collection('users')
+        .where('auth id', isEqualTo: uid)
+        .get();
 
-  if (querySnapshot.docs.isNotEmpty) {
-    // Get the first document from the query result
-    DocumentSnapshot documentSnapshot = querySnapshot.docs.first;
+    if (querySnapshot.docs.isNotEmpty) {
+      // Get the first document from the query result
+      DocumentSnapshot documentSnapshot = querySnapshot.docs.first;
 
-    // Get the data from the document
-    Map<String, dynamic> userData = documentSnapshot.data() as Map<String, dynamic>;
+      // Get the data from the document
+      Map<String, dynamic> userData =
+          documentSnapshot.data() as Map<String, dynamic>;
 
-    // Extract the first name
-    String firstName = userData['first name'] ?? '';
+      // Extract the first name
+      String firstName = userData['first name'] ?? '';
 
-    // Return the first name
-    return firstName;
-  } else {
-    // No matching document found
-    return '';
+      // Return the first name
+      return firstName;
+    } else {
+      // No matching document found
+      return '';
+    }
   }
-}
-
-
 
 // Future<String> getData() async{
 
@@ -78,7 +71,6 @@ Future<String> getFirstName() async {
 //   if(documentSnapshot.exists){
 //     print("doc exists.....................");
 //     return documentSnapshot['first name'];
-
 
 //   }
 //   else{
@@ -98,9 +90,6 @@ Future<String> getFirstName() async {
 //     return '';
 //   }
 // }
-
-
-
 
   void signUserOut() async {
     await FirebaseAuth.instance.signOut();
@@ -136,9 +125,6 @@ Future<String> getFirstName() async {
 
   @override
   Widget build(BuildContext context) {
-    
-
-    
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -187,29 +173,22 @@ Future<String> getFirstName() async {
               ),
               FutureBuilder<String>(
                 future: getFirstName(),
-                builder: (context, snapshot){
-                  if (snapshot.connectionState== ConnectionState.waiting)
-                  {
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
                     return CircularProgressIndicator();
-                  }
-                  else if(snapshot.hasError)
-                  {
+                  } else if (snapshot.hasError) {
                     return Text("error: ${snapshot.error}");
-                  }
-                  else
-                  {
-                    String username= snapshot.data?? '';
+                  } else {
+                    String username = snapshot.data ?? '';
                     return Text(
                       "Hi, $username",
                       style: TextStyle(fontSize: 20, fontFamily: "Arial"),
-                      
-                      );
+                    );
                   }
-                  
                 },
-                ),
+              ),
               // Text(
-              //   user.email!,  
+              //   user.email!,
               //   style: TextStyle(fontSize: 20, fontFamily: "Arial"),
               // ),
               ListTile(
