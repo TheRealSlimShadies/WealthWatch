@@ -44,7 +44,8 @@ class _CalendarState extends State<Calendar> {
 
     List<Expense> expenses = [];
     for (var categoryDoc in expenseSnapshot.docs) {
-      CollectionReference expenseListRef = categoryDoc.reference.collection('expenseList');
+      CollectionReference expenseListRef =
+          categoryDoc.reference.collection('expenseList');
       QuerySnapshot expenseListSnapshot = await expenseListRef
           .where('date', isGreaterThanOrEqualTo: Timestamp.fromDate(start))
           .where('date', isLessThanOrEqualTo: Timestamp.fromDate(end))
@@ -62,6 +63,8 @@ class _CalendarState extends State<Calendar> {
         }
       }
     }
+    //sort the expenses by date
+    expenses.sort(((a, b) => b.datetime.compareTo(a.datetime)));
 
     setState(() {
       _expenses = expenses;
@@ -127,7 +130,8 @@ class _CalendarState extends State<Calendar> {
                     final expense = _expenses[index];
                     return ListTile(
                       title: Text(expense.name),
-                      subtitle: Text('${expense.datetime.day} / ${expense.datetime.month} / ${expense.datetime.year}'),
+                      subtitle: Text(
+                          '${expense.datetime.day} / ${expense.datetime.month} / ${expense.datetime.year}'),
                       trailing: Text('\$${expense.expenseAmount}'),
                     );
                   },
