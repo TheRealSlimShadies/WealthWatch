@@ -1,8 +1,11 @@
+import 'dart:math';
+import 'package:provider/provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:wealthwatch/Data/Expense.dart'; // Import your Expense model
+import 'package:wealthwatch/themes/theme_provider.dart';
 
 class Calendar extends StatefulWidget {
   const Calendar({super.key});
@@ -83,11 +86,24 @@ class _CalendarState extends State<Calendar> {
     });
   }
 
+  Color getRandomColor() {
+    Random random = Random();
+    return Color.fromARGB(
+      255,
+      random.nextInt(256),
+      random.nextInt(256),
+      random.nextInt(256),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
+    final themeData = themeProvider.themeData;
+
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
+        backgroundColor: themeData.colorScheme.background,
       ),
       body: content(),
     );
@@ -96,35 +112,35 @@ class _CalendarState extends State<Calendar> {
   Widget content() {
     return Column(
       children: [
-        Container(
-          child: TableCalendar(
-            focusedDay: DateTime.now(),
-            firstDay: DateTime.utc(1875, 01, 01),
-            lastDay: DateTime.utc(3040, 01, 31),
-            selectedDayPredicate: (day) => isSameDay(startSelectedDay, day),
-            rangeStartDay: startSelectedDay,
-            rangeEndDay: endSelectedDay,
-            onDaySelected: (selectedDay, focusedDay) {
-              setState(() {
-                startSelectedDay = selectedDay;
-                endSelectedDay = null;
-              });
-            },
-            rangeSelectionMode: RangeSelectionMode.toggledOn,
-            // availableCalendarFormats: const {
-            //  CalendarFormat.month: 'Month',
-            // },
-            onRangeSelected: (start, end, focusedDay) {
-              setState(() {
-                startSelectedDay = start;
-                endSelectedDay = end;
-              });
-            },
-            availableCalendarFormats: const {
-              CalendarFormat.month: 'Month',
-            },
-          ),
+        //Container(
+        TableCalendar(
+          focusedDay: DateTime.now(),
+          firstDay: DateTime.utc(1875, 01, 01),
+          lastDay: DateTime.utc(3040, 01, 31),
+          selectedDayPredicate: (day) => isSameDay(startSelectedDay, day),
+          rangeStartDay: startSelectedDay,
+          rangeEndDay: endSelectedDay,
+          onDaySelected: (selectedDay, focusedDay) {
+            setState(() {
+              startSelectedDay = selectedDay;
+              endSelectedDay = null;
+            });
+          },
+          rangeSelectionMode: RangeSelectionMode.toggledOn,
+          // availableCalendarFormats: const {
+          //  CalendarFormat.month: 'Month',
+          // },
+          onRangeSelected: (start, end, focusedDay) {
+            setState(() {
+              startSelectedDay = start;
+              endSelectedDay = end;
+            });
+          },
+          availableCalendarFormats: const {
+            CalendarFormat.month: 'Month',
+          },
         ),
+        //),
         const SizedBox(height: 20),
         ElevatedButton(
           onPressed: () async {
@@ -146,19 +162,54 @@ class _CalendarState extends State<Calendar> {
         const SizedBox(height: 20),
         Expanded(
           child: _expenses.isNotEmpty
-              ? ListView.builder(
-                  itemCount: _expenses.length,
-                  itemBuilder: (context, index) {
-                    final expense = _expenses[index];
-                    return ListTile(
-                      title: Text(expense.name),
-                      subtitle: Text(
-                          '${expense.datetime.day} / ${expense.datetime.month} / ${expense.datetime.year}'),
-                      trailing: Text('\$${expense.expenseAmount}'),
-                    );
-                  },
+              ? Scrollbar(
+                  thumbVisibility: true,
+                  child: ListView.builder(
+                    itemCount: _expenses.length,
+                    itemBuilder: (context, index) {
+                      final expense = _expenses[index];
+                      final isSameDayAsPrevious = index > 0 &&
+                          _expenses[index - 1].datetime.day ==
+                              expense.datetime.day &&
+                          _expenses[index - 1].datetime.month ==
+                              expense.datetime.month &&
+                          _expenses[index - 1].datetime.year ==
+                              expense.datetime.year;
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          if (!isSameDayAsPrevious)
+                            Column(
+                              children: [
+                                const Padding(
+                                  padding: EdgeInsets.symmetric(vertical: 8.0),
+                                  //child: Text(
+                                  //'${expense.datetime.day} / ${expense.datetime.month} / ${expense.datetime.year}',
+                                  //style: TextStyle(
+                                  //fontSize: 18,
+                                  //fontWeight: FontWeight.bold,
+                                  //),
+                                  //),
+                                ),
+                                Container(
+                                  height: 4.0,
+                                  color: getRandomColor(),
+                                ),
+                              ],
+                            ),
+                          ListTile(
+                            title: Text(expense.name),
+                            subtitle: Text(
+                                '${expense.datetime.day}/ ${expense.datetime.month} / ${expense.datetime.year}'),
+                            trailing: Text('\$${expense.expenseAmount}'),
+                          ),
+                        ],
+                      );
+                    },
+                  ),
                 )
-              : Center(child: Text('No expenses for the selected date range')),
+              : const Center(
+                  child: Text('No expenses for the selected date range')),
         ),
       ],
     );
