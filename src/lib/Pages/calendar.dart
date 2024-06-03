@@ -24,7 +24,18 @@ class _CalendarState extends State<Calendar> {
   }
 
   Future<void> fetchExpenses(DateTime? start, DateTime? end) async {
-    if (start == null || end == null) return;
+    if (start == null) return;
+
+    //for singleday selection, set end to the same as start
+    DateTime adjustedEnd = end ?? start;
+
+    //ensure the start date begins at 00:00:00
+    DateTime adjustedStart =
+        DateTime(start.year, start.month, start.day, 0, 0, 0);
+
+    //ensure the end date ends at 23:59:59
+    adjustedEnd = DateTime(
+        adjustedEnd.year, adjustedEnd.month, adjustedEnd.day, 23, 59, 59);
 
     String uid = FirebaseAuth.instance.currentUser!.uid;
 
@@ -47,8 +58,9 @@ class _CalendarState extends State<Calendar> {
       CollectionReference expenseListRef =
           categoryDoc.reference.collection('expenseList');
       QuerySnapshot expenseListSnapshot = await expenseListRef
-          .where('date', isGreaterThanOrEqualTo: Timestamp.fromDate(start))
-          .where('date', isLessThanOrEqualTo: Timestamp.fromDate(end))
+          .where('date',
+              isGreaterThanOrEqualTo: Timestamp.fromDate(adjustedStart))
+          .where('date', isLessThanOrEqualTo: Timestamp.fromDate(adjustedEnd))
           .get();
 
       for (var doc in expenseListSnapshot.docs) {
@@ -89,17 +101,27 @@ class _CalendarState extends State<Calendar> {
             focusedDay: DateTime.now(),
             firstDay: DateTime.utc(1875, 01, 01),
             lastDay: DateTime.utc(3040, 01, 31),
+            selectedDayPredicate: (day) => isSameDay(startSelectedDay, day),
             rangeStartDay: startSelectedDay,
             rangeEndDay: endSelectedDay,
-            rangeSelectionMode: RangeSelectionMode.enforced,
-            availableCalendarFormats: const {
-              CalendarFormat.month: 'Month',
+            onDaySelected: (selectedDay, focusedDay) {
+              setState(() {
+                startSelectedDay = selectedDay;
+                endSelectedDay = null;
+              });
             },
+            rangeSelectionMode: RangeSelectionMode.toggledOn,
+            // availableCalendarFormats: const {
+            //  CalendarFormat.month: 'Month',
+            // },
             onRangeSelected: (start, end, focusedDay) {
               setState(() {
                 startSelectedDay = start;
                 endSelectedDay = end;
               });
+            },
+            availableCalendarFormats: const {
+              CalendarFormat.month: 'Month',
             },
           ),
         ),
