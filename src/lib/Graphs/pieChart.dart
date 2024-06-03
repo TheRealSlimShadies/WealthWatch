@@ -92,7 +92,7 @@ class _pieChartState extends State<pieChart> {
         } else if (snapshot.hasData) {
           List<double> totals = snapshot.data!;
           return PieChart(
-            swapAnimationDuration: Duration(seconds: 1),
+            swapAnimationDuration: Duration(seconds: 5),
             swapAnimationCurve: Curves.easeIn,
             PieChartData(
               pieTouchData: PieTouchData(
