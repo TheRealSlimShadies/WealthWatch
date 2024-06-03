@@ -1,24 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wealthwatch/themes/dark_mode.dart';
 import 'package:wealthwatch/themes/light_mode.dart';
 
-class ThemeProvider extends ChangeNotifier {
-  ThemeData _themeData = lightMode;
+class ThemeProvider with ChangeNotifier {
+  late ThemeData _themeData;
+
+  ThemeProvider({bool isDarkMode = false}) {
+    _themeData = isDarkMode ? darkMode : lightMode;
+  }
 
   ThemeData get themeData => _themeData;
 
   bool get isDarkMode => _themeData == darkMode;
 
-  set themeData(ThemeData themeData) {
-    _themeData = themeData;
+  Future<void> toggleTheme() async {
+    _themeData = _themeData == lightMode ? darkMode : lightMode;
     notifyListeners();
-  }
-
-  void toggleTheme() {
-    if (_themeData == lightMode) {
-      themeData = darkMode;
-    } else {
-      themeData = lightMode;
-    }
+    // Save the theme preference
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('isDarkMode', _themeData == darkMode);
   }
 }

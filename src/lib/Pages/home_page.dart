@@ -36,15 +36,18 @@ class _HomeState extends State<Home> {
     String uid = FirebaseAuth.instance.currentUser!.uid;
 
     // Query the 'users' collection to find the document with matching UID
-    QuerySnapshot querySnapshot =
-        await FirebaseFirestore.instance.collection('users').where('auth id', isEqualTo: uid).get();
+    QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+        .collection('users')
+        .where('auth id', isEqualTo: uid)
+        .get();
 
     if (querySnapshot.docs.isNotEmpty) {
       // Get the first document from the query result
       DocumentSnapshot documentSnapshot = querySnapshot.docs.first;
 
       // Get the data from the document
-      Map<String, dynamic> userData = documentSnapshot.data() as Map<String, dynamic>;
+      Map<String, dynamic> userData =
+          documentSnapshot.data() as Map<String, dynamic>;
 
       // Extract the first name
       String firstName = userData['first name'] ?? '';
@@ -82,8 +85,7 @@ class _HomeState extends State<Home> {
                       Navigator.pop(context);
                     },
                     child: Text("No")),
-              ]
-          );
+              ]);
         });
   }
 
@@ -95,7 +97,10 @@ class _HomeState extends State<Home> {
     String uid = FirebaseAuth.instance.currentUser!.uid;
 
     // Query the 'users' collection to find the document with matching UID
-    QuerySnapshot querySnapshot = await FirebaseFirestore.instance.collection('users').where('auth id', isEqualTo: uid).get();
+    QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+        .collection('users')
+        .where('auth id', isEqualTo: uid)
+        .get();
 
     if (querySnapshot.docs.isNotEmpty) {
       // Get the first document from the query result
@@ -124,7 +129,8 @@ class _HomeState extends State<Home> {
         QuerySnapshot expenseListSnapshot = await expenseListRef.get();
 
         for (QueryDocumentSnapshot expense in expenseListSnapshot.docs) {
-          Map<String, dynamic> expenseData = expense.data() as Map<String, dynamic>;
+          Map<String, dynamic> expenseData =
+              expense.data() as Map<String, dynamic>;
           double amount = (expenseData['amount'] ?? 0.0).toDouble();
           totalExpenseAmount += amount;
         }
@@ -142,7 +148,10 @@ class _HomeState extends State<Home> {
     String uid = FirebaseAuth.instance.currentUser!.uid;
 
     // Query the 'users' collection to find the document with matching UID
-    QuerySnapshot querySnapshot = await FirebaseFirestore.instance.collection('users').where('auth id', isEqualTo: uid).get();
+    QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+        .collection('users')
+        .where('auth id', isEqualTo: uid)
+        .get();
 
     if (querySnapshot.docs.isNotEmpty) {
       // Get the first document from the query result
@@ -150,11 +159,7 @@ class _HomeState extends State<Home> {
 
       String userId = documentSnapshot.id;
 
-      List<String> incomeCategories = [
-        'catRent',
-        'catSalary',
-        'catDeposit'
-      ];
+      List<String> incomeCategories = ['catRent', 'catSalary', 'catDeposit'];
 
       for (String category in incomeCategories) {
         CollectionReference incomeListRef = FirebaseFirestore.instance
@@ -167,7 +172,8 @@ class _HomeState extends State<Home> {
         QuerySnapshot incomeListSnapshot = await incomeListRef.get();
 
         for (QueryDocumentSnapshot income in incomeListSnapshot.docs) {
-          Map<String, dynamic> incomeData = income.data() as Map<String, dynamic>;
+          Map<String, dynamic> incomeData =
+              income.data() as Map<String, dynamic>;
           double amount = (incomeData['amount'] ?? 0.0).toDouble();
           totalIncomeAmount += amount;
         }
@@ -355,7 +361,8 @@ class _HomeState extends State<Home> {
               child: FutureBuilder<double>(
                 future: getTotalExpenseAmount(),
                 builder: (context, expenseSnapshot) {
-                  if (expenseSnapshot.connectionState == ConnectionState.waiting) {
+                  if (expenseSnapshot.connectionState ==
+                      ConnectionState.waiting) {
                     return CircularProgressIndicator();
                   } else if (expenseSnapshot.hasError) {
                     return Text("Error: ${expenseSnapshot.error}");
@@ -364,7 +371,8 @@ class _HomeState extends State<Home> {
                     return FutureBuilder<double>(
                       future: getTotalIncomeAmount(),
                       builder: (context, incomeSnapshot) {
-                        if (incomeSnapshot.connectionState == ConnectionState.waiting) {
+                        if (incomeSnapshot.connectionState ==
+                            ConnectionState.waiting) {
                           return CircularProgressIndicator();
                         } else if (incomeSnapshot.hasError) {
                           return Text("Error: ${incomeSnapshot.error}");
@@ -384,7 +392,8 @@ class _HomeState extends State<Home> {
             child: FutureBuilder<double>(
               future: getTotalExpenseAmount(),
               builder: (context, expenseSnapshot) {
-                if (expenseSnapshot.connectionState == ConnectionState.waiting) {
+                if (expenseSnapshot.connectionState ==
+                    ConnectionState.waiting) {
                   return CircularProgressIndicator();
                 } else if (expenseSnapshot.hasError) {
                   return Text("Error: ${expenseSnapshot.error}");
@@ -393,7 +402,8 @@ class _HomeState extends State<Home> {
                   return FutureBuilder<double>(
                     future: getTotalIncomeAmount(),
                     builder: (context, incomeSnapshot) {
-                      if (incomeSnapshot.connectionState == ConnectionState.waiting) {
+                      if (incomeSnapshot.connectionState ==
+                          ConnectionState.waiting) {
                         return CircularProgressIndicator();
                       } else if (incomeSnapshot.hasError) {
                         return Text("Error: ${incomeSnapshot.error}");
