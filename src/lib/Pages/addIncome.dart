@@ -43,15 +43,28 @@ class _addIncomeState extends State<addIncome> {
 
   void _showSnackBar(String message) {
     final snackBar = SnackBar(
-      content: Opacity(
-          opacity: 0.9,
-          child: Text(
-            message,
-            selectionColor: Colors.black,
-          )),
-      backgroundColor: Colors.green,
+      content: Container(
+        padding: EdgeInsets.all(16),
+        height: 60,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.all(Radius.circular(15)),
+          color: Colors.green,
+        ),
+        child: Column(
+          children: [
+            Text(message,
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.tertiary,
+                  fontSize: 19,
+                  fontStyle: FontStyle.normal,
+                )),
+          ],
+        ),
+      ),
       behavior: SnackBarBehavior.floating,
-      //duration: Duration(seconds: 1.5),
+      duration: Duration(seconds: 2),
+      backgroundColor: Colors.transparent,
+      elevation: 0,
     );
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
@@ -135,7 +148,7 @@ class _addIncomeState extends State<addIncome> {
                   break;
               }
 
-              _showSnackBar("Income of \$${incomeNumber} added");
+              _showSnackBar(" \$${incomeNumber} added ");
 
               widget.refreshCallBack5!();
               Navigator.pop(context);

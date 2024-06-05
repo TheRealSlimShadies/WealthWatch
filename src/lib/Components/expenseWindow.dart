@@ -60,6 +60,7 @@ class _expenseWindowState extends State<expenseWindow> {
         );
         expenses.add(expense);
       }
+      expenses.sort(((a, b) => b.datetime.compareTo(a.datetime)));
     }
     return expenses;
   }
@@ -85,7 +86,30 @@ class _expenseWindowState extends State<expenseWindow> {
   }
 
   void _showSnackBar(String message) {
-    final snackBar = SnackBar(content: Text(message));
+    final snackBar = SnackBar(
+      content: Container(
+        padding: EdgeInsets.all(16),
+        height: 55,
+        decoration: const BoxDecoration(
+          borderRadius: BorderRadius.all(Radius.circular(15)),
+          color: Colors.amber,
+        ),
+        child: Column(
+          children: [
+            Text(message,
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.inversePrimary,
+                  fontSize: 19,
+                  fontStyle: FontStyle.normal,
+                )),
+          ],
+        ),
+      ),
+      behavior: SnackBarBehavior.floating,
+      duration: Duration(seconds: 2),
+      backgroundColor: Colors.transparent,
+      elevation: 0,
+    );
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
@@ -148,8 +172,7 @@ class _expenseWindowState extends State<expenseWindow> {
                           expenses.removeAt(index);
                         });
 
-                        _showSnackBar(
-                            "Expense of \$${expense.expenseAmount} removed");
+                        _showSnackBar(" \$${expense.expenseAmount} removed");
                         //_showSnackBar("Expense of \$${expenseNumber} deducted");
                       },
                     ),

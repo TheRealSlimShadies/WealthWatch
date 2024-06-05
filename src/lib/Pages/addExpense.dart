@@ -67,7 +67,30 @@ class _addExpenseState extends State<addExpense> {
   }
 
   void _showSnackBar(String message) {
-    final snackBar = SnackBar(content: Text(message));
+    final snackBar = SnackBar(
+      content: Container(
+        padding: EdgeInsets.all(16),
+        height: 60,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.all(Radius.circular(15)),
+          color: Colors.red,
+        ),
+        child: Column(
+          children: [
+            Text(message,
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.tertiary,
+                  fontSize: 19,
+                  fontStyle: FontStyle.normal,
+                )),
+          ],
+        ),
+      ),
+      behavior: SnackBarBehavior.floating,
+      duration: Duration(seconds: 2),
+      backgroundColor: Colors.transparent,
+      elevation: 0,
+    );
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
@@ -188,7 +211,7 @@ class _addExpenseState extends State<addExpense> {
                   break;
               }
 
-              _showSnackBar("Expense of \$${expenseNumber} deducted");
+              _showSnackBar(" \$${expenseNumber} deducted ");
 
               if (widget.refreshCallback != null) {
                 widget.refreshCallback!();
