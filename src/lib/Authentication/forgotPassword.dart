@@ -13,8 +13,7 @@ class forgotPassword extends StatefulWidget {
 }
 
 class _forgotPasswordState extends State<forgotPassword> {
-
-  final emailController= TextEditingController();
+  final emailController = TextEditingController();
 
   @override
   void dispose() {
@@ -23,61 +22,58 @@ class _forgotPasswordState extends State<forgotPassword> {
     super.dispose();
   }
 
-
-
-  Future resetPassword () async
-  {
-    try{
-      await FirebaseAuth.instance.sendPasswordResetEmail(email: emailController.text);
+  Future resetPassword() async {
+    try {
+      await FirebaseAuth.instance
+          .sendPasswordResetEmail(email: emailController.text);
       showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          content: Text("Password reset link sent! Check your email."),
-        );
-      },
-    );
-    } on FirebaseAuthException catch (e)
-    {
-    print(e);
-    
-    showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          content: Text(e.message.toString()),
-        );
-      },
-    );
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            content: Text("Password reset link sent! Check your email."),
+          );
+        },
+      );
+    } on FirebaseAuthException catch (e) {
+      print(e);
+
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            content: Text(e.message.toString()),
+          );
+        },
+      );
+    }
   }
-}
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
       appBar: AppBar(
         backgroundColor: Color.fromARGB(255, 150, 104, 158),
         elevation: 0,
       ),
-
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
-        
         children: [
-      
-          Padding(padding: EdgeInsets.symmetric(horizontal:20),
-          child: Text("Enter your email and we'll send your password reset link.",
-            textAlign: TextAlign.center,) 
-            ),
-          
-          SizedBox(height:20),
-      
-          MyTextField(controller:emailController,hintText: "Email", obscureText: false),
-      
+          Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20),
+              child: Text(
+                "Enter your email and we'll send your password reset link.",
+                textAlign: TextAlign.center,
+              )),
+          SizedBox(height: 20),
+          MyTextField(
+            controller: emailController,
+            hintText: "Email",
+            obscureText: false,
+            textStyle:
+                TextStyle(color: Theme.of(context).colorScheme.inversePrimary),
+          ),
           SizedBox(height: 30),
-
-          MyButton(onTap: resetPassword , word: 'Reset Password'),
+          MyButton(onTap: resetPassword, word: 'Reset Password'),
         ],
       ),
     );
