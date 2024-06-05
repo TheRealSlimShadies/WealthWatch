@@ -3,12 +3,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+//import 'package:intl/intl.dart';
 import 'package:wealthwatch/Data/Expense.dart';
 import 'dropDownMenuExpense.dart';
-import 'dropDownMenuIncome.dart';
-
-
+//import 'dropDownMenuIncome.dart';
 
 class addExpense extends StatefulWidget {
   final VoidCallback? refreshCallback;
@@ -31,40 +29,47 @@ class _addExpenseState extends State<addExpense> {
 
   final GlobalKey<FormState> formkey = GlobalKey<FormState>();
 
-Future<void> addExpensesToCategory(String categoryName, Expense expense) async {
+  Future<void> addExpensesToCategory(
+      String categoryName, Expense expense) async {
+    // Get the current user's UID
+    String uid = FirebaseAuth.instance.currentUser!.uid;
 
-   // Get the current user's UID
-  String uid = FirebaseAuth.instance.currentUser!.uid;
-
-  // Query the 'users' collection to find the document with matching UID
-  QuerySnapshot querySnapshot = await FirebaseFirestore.instance.collection('users').where('auth id', isEqualTo: uid).get();
+    // Query the 'users' collection to find the document with matching UID
+    QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+        .collection('users')
+        .where('auth id', isEqualTo: uid)
+        .get();
 
     // Get the first document from the query result
-    DocumentSnapshot documentSnapshot = querySnapshot.docs.first;
+    if (querySnapshot.docs.isNotEmpty) {
+      DocumentSnapshot documentSnapshot = querySnapshot.docs.first;
+      String id = documentSnapshot.id;
 
-    String id= documentSnapshot.id;
+      CollectionReference categoryRef = FirebaseFirestore.instance
+          .collection('users')
+          .doc(id)
+          .collection('ExpenseCategories')
+          .doc(categoryName)
+          .collection('expenseList');
 
+      // format the datetime before adding to Firestore
 
+      //String formattedDate = DateFormat('dd-MM-yyyy').format(expense.datetime);
 
-  CollectionReference categoryRef = FirebaseFirestore.instance.collection('users').doc(id).collection('ExpenseCategories').doc(categoryName).collection('expenseList');
-  
-  // format the datetime before adding to Firestore
-  
-  //String formattedDate = DateFormat('dd-MM-yyyy').format(expense.datetime);
+      await categoryRef.add({
+        'name': expense.name,
+        'amount': expense.expenseAmount,
+        'date': expense.datetime,
+        //formattedDate,
+        //DateFormat('dd-MM-yyyy').format(expense.datetime),
+      });
+    }
+  }
 
-    await categoryRef.add({
-      'name': expense.name,
-      'amount': expense.expenseAmount,
-      'date': expense.datetime,
-      //formattedDate,
-      //DateFormat('dd-MM-yyyy').format(expense.datetime),
-    });
-  
-}
-
-
-
-
+  void _showSnackBar(String message) {
+    final snackBar = SnackBar(content: Text(message));
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -96,8 +101,7 @@ Future<void> addExpensesToCategory(String categoryName, Expense expense) async {
               validator: (value) {
                 if (value!.isEmpty) {
                   return "Enter the name of the item for better history log.";
-                } 
-                else {
+                } else {
                   return null;
                 }
               },
@@ -147,45 +151,53 @@ Future<void> addExpensesToCategory(String categoryName, Expense expense) async {
               int expenseNumber = int.tryParse(expensenumbercontroller) ?? 0;
 
               Expense newExpense = Expense(
-              id: '', //temporary id
-              name: expenseLabel,
-              expenseAmount: expenseNumber,
-              datetime: DateTime.now(),
-            );
+                id: '', //temporary id
+                name: expenseLabel,
+                expenseAmount: expenseNumber,
+                datetime: DateTime.now(),
+              );
 
               switch (categorySelection.text) {
                 case 'Food':
                   catFood.addExpenseToList(newExpense);
-                      addExpensesToCategory('catFood', newExpense);
-                      break;
+                  addExpensesToCategory('catFood', newExpense);
+                  break;
                 case 'Transportation':
                   catTransportation.addExpenseToList(newExpense);
-                      addExpensesToCategory('catTransportation', newExpense);
-                      break;
+                  addExpensesToCategory('catTransportation', newExpense);
+                  break;
                 case 'Health':
                   catHealth.addExpenseToList(newExpense);
-                      addExpensesToCategory('catHealth', newExpense);
-                      break;
+                  addExpensesToCategory('catHealth', newExpense);
+                  break;
                 case 'Entertainment':
                   catEntertainment.addExpenseToList(newExpense);
-                      addExpensesToCategory('catEntertainment', newExpense);
-                      break;
+                  addExpensesToCategory('catEntertainment', newExpense);
+                  break;
                 case 'Miscellaneous':
                   catMiscellaneous.addExpenseToList(newExpense);
-                      addExpensesToCategory('catMiscellaneous', newExpense);
-                      break;
+                  addExpensesToCategory('catMiscellaneous', newExpense);
+                  break;
                 case 'Education':
                   catEducation.addExpenseToList(newExpense);
-                      addExpensesToCategory('catEducation', newExpense);
-                      break;
+                  addExpensesToCategory('catEducation', newExpense);
+                  break;
                 case 'Housing':
                   catHousing.addExpenseToList(newExpense);
-                      addExpensesToCategory('catHousing', newExpense);
-                      break;
+                  addExpensesToCategory('catHousing', newExpense);
+                  break;
               }
-              widget.refreshCallback!();
-              Navigator.pop(context);
-          },
+
+              _showSnackBar("Expense of \$${expenseNumber} deducted");
+
+              if (widget.refreshCallback != null) {
+                widget.refreshCallback!();
+              }
+              Navigator.pop(context, {
+                'amount': expenseNumber,
+                'category': categorySelection.text,
+              });
+            },
             backgroundColor: Colors.red,
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
