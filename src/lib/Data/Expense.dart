@@ -1,8 +1,7 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
-import 'package:wealthwatch/Authentication/register.dart';
-import 'package:wealthwatch/Pages/addExpense.dart';
-
+// import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:flutter/material.dart';
+// import 'package:wealthwatch/Authentication/register.dart';
+// import 'package:wealthwatch/Pages/addExpense.dart';
 
 class Expense {
   String name;
@@ -13,15 +12,13 @@ class Expense {
       {required this.name,
       required this.expenseAmount,
       required this.datetime,
-      this.id= ' '});
+      this.id = ' '});
 }
 
 class ExpenseList {
-
- //final test1 = Expense(name: '', expenseAmount: 0);
+  //final test1 = Expense(name: '', expenseAmount: 0);
 
   List<Expense> expenseListItems = [];
-
 
   addExpenseToList(Expense expense) {
     expenseListItems.add(expense);
@@ -80,4 +77,3 @@ class IncomeList {
 final catDeposit = IncomeList();
 final catRent = IncomeList();
 final catSalary = IncomeList();
-

@@ -7,16 +7,16 @@ class addPeopleButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FloatingActionButton(
-      
       onPressed: () {
         Navigator.pushNamed(context, '/addPeople');
-        
       },
       backgroundColor: Colors.green[600],
-      child: const Icon(Icons.add,color: Colors.white,),
+      child: const Icon(
+        Icons.add,
+        color: Colors.white,
+      ),
       heroTag: null,
       shape: const CircleBorder(),
     );
-
   }
 }

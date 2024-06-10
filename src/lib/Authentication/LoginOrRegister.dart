@@ -1,6 +1,7 @@
 import "package:flutter/material.dart";
 import "package:wealthwatch/Authentication/login.dart";
 import "package:wealthwatch/Authentication/register.dart";
+
 class LoginOrRegister extends StatefulWidget {
   const LoginOrRegister({super.key});
 
@@ -9,25 +10,26 @@ class LoginOrRegister extends StatefulWidget {
 }
 
 class _LoginOrRegisterState extends State<LoginOrRegister> {
-
   //initially show login page
-  bool showLoginPage =true;
+  bool showLoginPage = true;
 
   //toggle betn login & register
-  void togglePages(){
+  void togglePages() {
     setState(() {
-      showLoginPage= !showLoginPage;
+      showLoginPage = !showLoginPage;
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    if (showLoginPage){
-      return Login(onTap: togglePages,);
-    }
-    else
-    {
-      return Register(onTap: togglePages,);
+    if (showLoginPage) {
+      return Login(
+        onTap: togglePages,
+      );
+    } else {
+      return Register(
+        onTap: togglePages,
+      );
     }
   }
 }

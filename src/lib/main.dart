@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+//import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wealthwatch/Authentication/auth.dart';
@@ -7,11 +7,10 @@ import 'package:wealthwatch/Authentication/forgotPassword.dart';
 import 'package:wealthwatch/Authentication/login.dart';
 import 'package:wealthwatch/Authentication/register.dart';
 import 'package:wealthwatch/Buttons/expenseButton.dart';
-import 'package:wealthwatch/Buttons/incomeButton.dart';
+//import 'package:wealthwatch/Buttons/incomeButton.dart';
 import 'package:wealthwatch/Graphs/bar_chart.dart';
-import 'package:wealthwatch/Pages/addIncome.dart';
+//import 'package:wealthwatch/Pages/addIncome.dart';
 import 'package:wealthwatch/Pages/calendar.dart';
-import 'package:wealthwatch/Pages/cofund.dart';
 import 'package:wealthwatch/Pages/home_page.dart';
 import 'package:wealthwatch/Pages/settings.dart';
 import 'package:wealthwatch/Pages/statistics.dart';
@@ -19,7 +18,7 @@ import 'package:wealthwatch/Pages/addExpense.dart';
 import 'package:wealthwatch/themes/theme_provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
-import 'package:wealthwatch/Components/expenseWindow.dart';
+//import 'package:wealthwatch/Components/expenseWindow.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -56,7 +55,6 @@ class MyApp extends StatelessWidget {
         '/homepage': (context) => Home(),
         '/statistic': (context) => const Statistics(),
         '/settings': (context) => const Setting(),
-        '/cofund': (context) => const coFund(),
         '/calendar': (context) => const Calendar(),
         '/expbutton': (context) => const expenseButton(),
         '/addExpense': (context) => const addExpense(),
