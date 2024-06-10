@@ -22,8 +22,9 @@ class _StatisticsState extends State<Statistics> {
   @override
   void initState() {
     super.initState();
-    _futureExpenses = fetchExpensesFromFirebase();
-    _loadLastResetDate();
+    _loadLastResetDate().then((_) {
+      _futureExpenses = fetchExpensesFromFirebase();
+    });
   }
 
   Future<void> _loadLastResetDate() async {
@@ -58,7 +59,7 @@ class _StatisticsState extends State<Statistics> {
     // Check if the current date is the start of a new week (e.g., Sunday)
     DateTime now = DateTime.now();
     if (now.weekday == DateTime.sunday &&
-        (lastResetDate == null || now.isAfter(lastResetDate!))) {
+        (lastResetDate == null || now.difference(lastResetDate!).inDays >= 7)) {
       // Reset expenses for the new week
       setState(() {
         weeklyExpenses = List.filled(7, 0);
@@ -136,11 +137,12 @@ class _StatisticsState extends State<Statistics> {
                 future: _futureExpenses,
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
-                    return Center(child: CircularProgressIndicator());
+                    return const Center(child: CircularProgressIndicator());
                   } else if (snapshot.hasError) {
                     return Center(child: Text('Error: ${snapshot.error}'));
                   } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                    return Center(child: Text('No expense data available'));
+                    return const Center(
+                        child: Text('No expense data available'));
                   } else {
                     // Aggregate all expenses
                     aggregateCategoryExpenses(snapshot.data!);

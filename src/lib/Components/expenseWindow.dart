@@ -89,7 +89,7 @@ class _expenseWindowState extends State<expenseWindow> {
     final snackBar = SnackBar(
       content: Container(
         padding: EdgeInsets.all(16),
-        height: 55,
+        height: 60,
         decoration: const BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(15)),
           color: Colors.amber,
@@ -99,7 +99,7 @@ class _expenseWindowState extends State<expenseWindow> {
             Text(message,
                 style: TextStyle(
                   color: Theme.of(context).colorScheme.inversePrimary,
-                  fontSize: 19,
+                  fontSize: 18,
                   fontStyle: FontStyle.normal,
                 )),
           ],

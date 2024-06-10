@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:wealthwatch/Components/expenseWindow.dart';
-import 'package:wealthwatch/Data/Expense.dart';
+//import 'package:wealthwatch/Components/expenseWindow.dart';
+//import 'package:wealthwatch/Data/Expense.dart';
 import 'package:wealthwatch/Components/showingWindow.dart';
 
 class displaywidget extends StatelessWidget {

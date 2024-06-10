@@ -146,7 +146,10 @@ class _CalendarState extends State<Calendar> {
           onPressed: () async {
             await fetchExpenses(startSelectedDay, endSelectedDay);
           },
-          child: const Text('Fetch Expenses'),
+          child: Text(
+            'Fetch Expenses',
+            style: TextStyle(color: Theme.of(context).colorScheme.tertiary),
+          ),
         ),
         const SizedBox(height: 20),
         ElevatedButton(
@@ -157,7 +160,10 @@ class _CalendarState extends State<Calendar> {
               _expenses = [];
             });
           },
-          child: const Text('Clear Selection'),
+          child: Text(
+            'Clear Selection',
+            style: TextStyle(color: Theme.of(context).colorScheme.tertiary),
+          ),
         ),
         const SizedBox(height: 20),
         Expanded(
