@@ -169,6 +169,7 @@ class _CalendarState extends State<Calendar> {
         Expanded(
           child: _expenses.isNotEmpty
               ? Scrollbar(
+                  thickness: 10,
                   thumbVisibility: true,
                   child: ListView.builder(
                     itemCount: _expenses.length,

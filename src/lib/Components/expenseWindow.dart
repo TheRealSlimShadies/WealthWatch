@@ -2,16 +2,18 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:wealthwatch/Data/Expense.dart';
+import 'package:wealthwatch/Pages/home_page.dart';
 
 class expenseWindow extends StatefulWidget {
   final String categoryName; //to get the category name
   final VoidCallback? refreshCallBack11;
+  final VoidCallback? refresh;
 
-  const expenseWindow({
-    super.key,
-    required this.categoryName,
-    required this.refreshCallBack11,
-  });
+  const expenseWindow(
+      {super.key,
+      required this.categoryName,
+      required this.refreshCallBack11,
+      required this.refresh});
 
   @override
   State<expenseWindow> createState() => _expenseWindowState();
@@ -60,13 +62,58 @@ class _expenseWindowState extends State<expenseWindow> {
         );
         expenses.add(expense);
       }
+
       expenses.sort(((a, b) => b.datetime.compareTo(a.datetime)));
+
     }
     return expenses;
   }
 
   Future<void> deleteExpense(String categoryName, String expenseId) async {
     String uid = FirebaseAuth.instance.currentUser!.uid;
+
+
+    QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+        .collection('users')
+        .where('auth id', isEqualTo: uid)
+        .get();
+    DocumentSnapshot documentSnapshot = querySnapshot.docs.first;
+    String userId = documentSnapshot.id;
+
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(userId)
+        .collection('ExpenseCategories')
+        .doc(categoryName)
+        .collection('expenseList')
+        .doc(expenseId)
+        .delete();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Expense History"),
+        titleTextStyle: TextStyle(color: Colors.white, fontSize: 20),
+        backgroundColor: Color.fromARGB(255, 58, 220, 109),
+        centerTitle: true,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          color: Colors.white,
+          onPressed: () {
+            widget.refresh!();
+            widget.refreshCallBack11!();
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => (Home()),
+              ),
+            );
+          },
+        ),
+      ),
+
 
     QuerySnapshot querySnapshot = await FirebaseFirestore.instance
         .collection('users')
@@ -130,6 +177,7 @@ class _expenseWindowState extends State<expenseWindow> {
           },
         ),
       ),
+
       body: FutureBuilder<List<Expense>>(
         future: _expenseListFuture,
         builder: (context, snapshot) {
@@ -172,8 +220,10 @@ class _expenseWindowState extends State<expenseWindow> {
                           expenses.removeAt(index);
                         });
 
+
                         _showSnackBar(" \$${expense.expenseAmount} removed");
                         //_showSnackBar("Expense of \$${expenseNumber} deducted");
+
                       },
                     ),
                   ),

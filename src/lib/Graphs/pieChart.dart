@@ -8,6 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:wealthwatch/Data/Expense.dart';
 import 'package:wealthwatch/Components/expenseWindow.dart';
 
+List<double>? allData;
+
 class pieChart extends StatefulWidget {
   final VoidCallback? refreshCallBack10;
   const pieChart({super.key, required this.refreshCallBack10});
@@ -91,6 +93,7 @@ class _pieChartState extends State<pieChart> {
           );
         } else if (snapshot.hasData) {
           List<double> totals = snapshot.data!;
+          allData = totals;
           return PieChart(
             swapAnimationDuration: Duration(seconds: 5),
             swapAnimationCurve: Curves.easeIn,
@@ -110,6 +113,7 @@ class _pieChartState extends State<pieChart> {
                       builder: (context) => expenseWindow(
                         categoryName: caseTitle,
                         refreshCallBack11: widget.refreshCallBack10,
+                        refresh: () {},
                       ),
                     ),
                   );
