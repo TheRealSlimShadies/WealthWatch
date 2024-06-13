@@ -62,12 +62,16 @@ class _expenseWindowState extends State<expenseWindow> {
         );
         expenses.add(expense);
       }
+
+      expenses.sort(((a, b) => b.datetime.compareTo(a.datetime)));
+
     }
     return expenses;
   }
 
   Future<void> deleteExpense(String categoryName, String expenseId) async {
     String uid = FirebaseAuth.instance.currentUser!.uid;
+
 
     QuerySnapshot querySnapshot = await FirebaseFirestore.instance
         .collection('users')
@@ -109,6 +113,71 @@ class _expenseWindowState extends State<expenseWindow> {
           },
         ),
       ),
+
+
+    QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+        .collection('users')
+        .where('auth id', isEqualTo: uid)
+        .get();
+    DocumentSnapshot documentSnapshot = querySnapshot.docs.first;
+    String userId = documentSnapshot.id;
+
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(userId)
+        .collection('ExpenseCategories')
+        .doc(categoryName)
+        .collection('expenseList')
+        .doc(expenseId)
+        .delete();
+  }
+
+  void _showSnackBar(String message) {
+    final snackBar = SnackBar(
+      content: Container(
+        padding: EdgeInsets.all(16),
+        height: 60,
+        decoration: const BoxDecoration(
+          borderRadius: BorderRadius.all(Radius.circular(15)),
+          color: Colors.amber,
+        ),
+        child: Column(
+          children: [
+            Text(message,
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.inversePrimary,
+                  fontSize: 18,
+                  fontStyle: FontStyle.normal,
+                )),
+          ],
+        ),
+      ),
+      behavior: SnackBarBehavior.floating,
+      duration: Duration(seconds: 2),
+      backgroundColor: Colors.transparent,
+      elevation: 0,
+    );
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Expense History"),
+        titleTextStyle: TextStyle(color: Colors.white, fontSize: 20),
+        backgroundColor: Color.fromARGB(255, 58, 220, 109),
+        centerTitle: true,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          color: Colors.white,
+          onPressed: () {
+            widget.refreshCallBack11!();
+            Navigator.pop(context);
+          },
+        ),
+      ),
+
       body: FutureBuilder<List<Expense>>(
         future: _expenseListFuture,
         builder: (context, snapshot) {
@@ -150,6 +219,11 @@ class _expenseWindowState extends State<expenseWindow> {
                         setState(() {
                           expenses.removeAt(index);
                         });
+
+
+                        _showSnackBar(" \$${expense.expenseAmount} removed");
+                        //_showSnackBar("Expense of \$${expenseNumber} deducted");
+
                       },
                     ),
                   ),

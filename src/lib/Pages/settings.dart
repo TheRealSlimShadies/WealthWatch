@@ -13,16 +13,17 @@ class Setting extends StatefulWidget {
 }
 
 class _SettingState extends State<Setting> {
-
-  Future<void> deleteSubcollection(DocumentReference docRef, String subcollectionName) async {
-    QuerySnapshot subcollectionSnapshot = await docRef.collection(subcollectionName).get();
+  Future<void> deleteSubcollection(
+      DocumentReference docRef, String subcollectionName) async {
+    QuerySnapshot subcollectionSnapshot =
+        await docRef.collection(subcollectionName).get();
     for (var doc in subcollectionSnapshot.docs) {
       await doc.reference.delete();
     }
   }
 
-  Future<void> deleteCategoryWithSubcollections(DocumentReference categoryDocRef) async {
-    
+  Future<void> deleteCategoryWithSubcollections(
+      DocumentReference categoryDocRef) async {
     await deleteSubcollection(categoryDocRef, 'expenseList');
 
     await deleteSubcollection(categoryDocRef, 'incomeList');
@@ -32,24 +33,27 @@ class _SettingState extends State<Setting> {
   }
 
   Future<void> deleteUserAccount(BuildContext context) async {
-
     User? user = FirebaseAuth.instance.currentUser;
     if (user != null) {
       try {
-        QuerySnapshot querySnapshot = await FirebaseFirestore.instance.collection('users').where('auth id', isEqualTo: user.uid)
+        QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+            .collection('users')
+            .where('auth id', isEqualTo: user.uid)
             .get();
 
         if (querySnapshot.docs.isNotEmpty) {
           DocumentReference userDocRef = querySnapshot.docs.first.reference;
 
           //Delete all documents within 'ExpenseCategories' subcollection
-          QuerySnapshot expenseCategoriesSnapshot = await userDocRef.collection('ExpenseCategories').get();
+          QuerySnapshot expenseCategoriesSnapshot =
+              await userDocRef.collection('ExpenseCategories').get();
           for (var categoryDoc in expenseCategoriesSnapshot.docs) {
             await deleteCategoryWithSubcollections(categoryDoc.reference);
           }
 
           //Delete all documents within 'IncomeCategories' subcollection
-          QuerySnapshot incomeCategoriesSnapshot = await userDocRef.collection('IncomeCategories').get();
+          QuerySnapshot incomeCategoriesSnapshot =
+              await userDocRef.collection('IncomeCategories').get();
           for (var categoryDoc in incomeCategoriesSnapshot.docs) {
             await deleteCategoryWithSubcollections(categoryDoc.reference);
           }
@@ -80,12 +84,14 @@ class _SettingState extends State<Setting> {
             TextButton(
               onPressed: () async {
                 Navigator.pop(context);
-                
 
                 print("Navigating to login screen");
                 if (mounted) {
                   print("working well.............");
-                  Navigator.of(context).pushNamedAndRemoveUntil('/login', (route) => false); // redirecting to login screen and removing any associated routes.
+                  Navigator.of(context).pushNamedAndRemoveUntil(
+                      '/login',
+                      (route) =>
+                          false); // redirecting to login screen and removing any associated routes.
                 }
 
                 await deleteUserAccount(context);
@@ -94,7 +100,7 @@ class _SettingState extends State<Setting> {
             ),
             TextButton(
               onPressed: () {
-                Navigator.pop(context); 
+                Navigator.pop(context);
               },
               child: Text('No'),
             ),
@@ -127,10 +133,13 @@ class _SettingState extends State<Setting> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text("Theme"),
+                  const Text("Dark Theme"),
                   CupertinoSwitch(
-                    value: Provider.of<ThemeProvider>(context, listen: false).isDarkMode,
-                    onChanged: (value) => Provider.of<ThemeProvider>(context, listen: false).toggleTheme(),
+                    value: Provider.of<ThemeProvider>(context, listen: false)
+                        .isDarkMode,
+                    onChanged: (value) =>
+                        Provider.of<ThemeProvider>(context, listen: false)
+                            .toggleTheme(),
                   ),
                 ],
               ),

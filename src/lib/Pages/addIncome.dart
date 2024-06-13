@@ -17,25 +17,57 @@ class addIncome extends StatefulWidget {
 class _addIncomeState extends State<addIncome> {
   final categorySelection1 = TextEditingController();
 
-
   Future<void> addIncomesToCategory(String categoryName, Income income) async {
-  String uid = FirebaseAuth.instance.currentUser!.uid;
+    String uid = FirebaseAuth.instance.currentUser!.uid;
 
-  QuerySnapshot querySnapshot= await FirebaseFirestore.instance.collection('users').where('auth id', isEqualTo: uid).get();
+    QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+        .collection('users')
+        .where('auth id', isEqualTo: uid)
+        .get();
 
-  DocumentSnapshot documentSnapshot= querySnapshot.docs.first;
+    DocumentSnapshot documentSnapshot = querySnapshot.docs.first;
 
-  String id= documentSnapshot.id;
+    String id = documentSnapshot.id;
 
-  CollectionReference categoryRef = FirebaseFirestore.instance.collection('users').doc(id).collection('IncomeCategories').doc(categoryName).collection('incomeList');
-  
+    CollectionReference categoryRef = FirebaseFirestore.instance
+        .collection('users')
+        .doc(id)
+        .collection('IncomeCategories')
+        .doc(categoryName)
+        .collection('incomeList');
+
     await categoryRef.add({
       'amount': income.incomeAmount,
     });
+  }
 
-
-}
-
+  void _showSnackBar(String message) {
+    final snackBar = SnackBar(
+      content: Container(
+        padding: EdgeInsets.all(16),
+        height: 60,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.all(Radius.circular(15)),
+          color: Colors.green,
+        ),
+        child: Column(
+          children: [
+            Text(message,
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.tertiary,
+                  fontSize: 19,
+                  fontStyle: FontStyle.normal,
+                )),
+          ],
+        ),
+      ),
+      behavior: SnackBarBehavior.floating,
+      duration: Duration(seconds: 2),
+      backgroundColor: Colors.transparent,
+      elevation: 0,
+    );
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -97,8 +129,8 @@ class _addIncomeState extends State<addIncome> {
               int incomeNumber = int.tryParse(incomeNumbercontroller) ?? 0;
 
               Income newIncome = Income(
-              incomeAmount: incomeNumber,
-              ); 
+                incomeAmount: incomeNumber,
+              );
 
               switch (categorySelection1.text) {
                 case 'Rent':
@@ -106,7 +138,8 @@ class _addIncomeState extends State<addIncome> {
                   addIncomesToCategory('catRent', newIncome);
                   break;
                 case 'Deposit':
-                  catDeposit.addIncomeToList(Income(incomeAmount: incomeNumber));
+                  catDeposit
+                      .addIncomeToList(Income(incomeAmount: incomeNumber));
                   addIncomesToCategory('catDeposit', newIncome);
                   break;
                 case 'Salary':
@@ -114,6 +147,9 @@ class _addIncomeState extends State<addIncome> {
                   addIncomesToCategory('catSalary', newIncome);
                   break;
               }
+
+              _showSnackBar(" \$${incomeNumber} added ");
+
               widget.refreshCallBack5!();
               Navigator.pop(context);
             },
