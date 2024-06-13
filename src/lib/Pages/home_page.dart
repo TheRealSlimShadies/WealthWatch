@@ -327,6 +327,7 @@ class _HomeState extends State<Home> {
                     return displaywidget(
                       amount: totalExpense,
                       name: 'Expense',
+                      refreshCallBack14: refresh,
                     );
                   }
                 },
@@ -343,6 +344,7 @@ class _HomeState extends State<Home> {
                     return displaywidget(
                       amount: totalIncome,
                       name: 'Income',
+                      refreshCallBack14: refresh,
                     );
                   }
                 },

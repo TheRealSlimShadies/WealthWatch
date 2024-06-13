@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:wealthwatch/Components/expenseWindow.dart';
 import 'package:wealthwatch/Data/Expense.dart';
-import 'package:wealthwatch/Components/showingWindow.dart';
+import 'package:wealthwatch/Components/categoryWindow.dart';
 
 class displaywidget extends StatelessWidget {
   final double amount;
   final String name;
-  const displaywidget({
-    super.key,
-    required this.amount,
-    required this.name,
-  });
+  final VoidCallback? refreshCallBack14;
+  const displaywidget(
+      {super.key,
+      required this.amount,
+      required this.name,
+      required this.refreshCallBack14});
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +20,10 @@ class displaywidget extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => categoryWindow(name: name),
+            builder: (context) => categoryWindow(
+              name: name,
+              refreshCallBack13: refreshCallBack14,
+            ),
           ),
         );
       },
