@@ -1,8 +1,5 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
-
 import 'package:flutter/material.dart';
 import 'package:wealthwatch/Components/expenseWindow.dart';
-import 'package:wealthwatch/Data/Expense.dart';
 import 'package:wealthwatch/Graphs/pieChart.dart';
 
 class categoryWindow extends StatefulWidget {
@@ -47,7 +44,7 @@ class categoryWindowState extends State<categoryWindow> {
               child: Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(15),
-                  color: Color(0xFF9A77CF),
+                  color: Color.fromARGB(255, 242, 93, 95),
                 ),
                 child: ListTile(
                   title: Text('Food'),
@@ -75,7 +72,7 @@ class categoryWindowState extends State<categoryWindow> {
               child: Container(
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(15),
-                    color: Color(0xFFFCE38A)),
+                    color: Color.fromARGB(255, 33, 122, 201),),
                 child: ListTile(
                   title: Text('Education'),
                   trailing: Text('${allData?[6]}'),
@@ -97,7 +94,7 @@ class categoryWindowState extends State<categoryWindow> {
               child: Container(
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(15),
-                    color: Color(0xFF262254)),
+                    color: Color.fromARGB(255, 251, 131, 66)),
                 child: ListTile(
                   title: Text(
                     'Entertainment',
@@ -125,7 +122,7 @@ class categoryWindowState extends State<categoryWindow> {
               child: Container(
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(15),
-                    color: Color(0xFFFFA45E)),
+                    color: Color.fromARGB(255, 1, 218, 152)),
                 child: ListTile(
                   title: Text('Health'),
                   trailing: Text('${allData?[5]}'),
@@ -147,7 +144,7 @@ class categoryWindowState extends State<categoryWindow> {
               child: Container(
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(15),
-                    color: Color(0xFFA13670)),
+                    color: Color.fromARGB(255, 246, 124, 158)),
                 child: ListTile(
                   title: Text('Housing'),
                   trailing: Text('${allData?[3]}'),
@@ -169,7 +166,7 @@ class categoryWindowState extends State<categoryWindow> {
               child: Container(
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(15),
-                    color: Color(0xFF543884)),
+                    color: Color.fromARGB(255, 82, 186, 211),),
                 child: ListTile(
                   title: Text('Transportation',
                       style: TextStyle(color: Colors.white)),
@@ -195,7 +192,7 @@ class categoryWindowState extends State<categoryWindow> {
               child: Container(
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(15),
-                    color: Color(0xFFEC4176)),
+                    color: Color.fromARGB(255, 250, 200, 84)),
                 child: ListTile(
                   title: Text('Miscellaneous'),
                   trailing: Text('${allData?[4]}'),
@@ -216,6 +213,7 @@ class categoryWindowState extends State<categoryWindow> {
         ),
       );
     } else if (widget.name == 'Income') {
+      print('Displaying Income Data: $allIncomeData');
       return Scaffold(
         appBar: AppBar(
             backgroundColor: Colors.black54,
@@ -243,7 +241,7 @@ class categoryWindowState extends State<categoryWindow> {
                   child: ListTile(
                     tileColor: Colors.greenAccent,
                     title: Text("Deposit"),
-                    trailing: Text('${catDeposit.getTotalIncomeAmount()}'),
+                    trailing: Text('${allIncomeData?[0]}'),
                   ),
                 ),
               ),
@@ -257,7 +255,7 @@ class categoryWindowState extends State<categoryWindow> {
                   child: ListTile(
                     tileColor: Colors.greenAccent,
                     title: Text("Salary"),
-                    trailing: Text('${catSalary.getTotalIncomeAmount()}'),
+                    trailing: Text('${allIncomeData?[2]}'),
                   ),
                 ),
               ),
@@ -271,7 +269,7 @@ class categoryWindowState extends State<categoryWindow> {
                   child: ListTile(
                     tileColor: Colors.greenAccent,
                     title: Text("Rent"),
-                    trailing: Text('${catRent.getTotalIncomeAmount()}'),
+                    trailing: Text('${allIncomeData?[1]}'),
                   ),
                 ),
               )

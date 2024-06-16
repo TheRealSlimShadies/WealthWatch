@@ -51,11 +51,13 @@ class _forgotPasswordState extends State<forgotPassword> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color.fromARGB(255, 131, 90, 138),
       appBar: AppBar(
-        backgroundColor: Color.fromARGB(255, 150, 104, 158),
+        backgroundColor: Color.fromARGB(255, 131, 90, 138),
         elevation: 0,
       ),
       body: Column(
+        
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Padding(

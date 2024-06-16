@@ -9,6 +9,7 @@ import 'package:wealthwatch/Data/Expense.dart';
 import 'package:wealthwatch/Components/expenseWindow.dart';
 
 List<double>? allData;
+List<double>? allIncomeData;
 
 class pieChart extends StatefulWidget {
   final VoidCallback? refreshCallBack10;
@@ -27,7 +28,7 @@ class _pieChartState extends State<pieChart> {
     ),
   ];
 
-  Future<double> getTotalExpenseAmountForCategory(String categoryName) async {
+  Future<double> getTotalAmountForCategory(String categoryName, String collectionName) async {
     String uid = FirebaseAuth.instance.currentUser!.uid;
 
     QuerySnapshot querySnapshot = await FirebaseFirestore.instance
@@ -42,14 +43,16 @@ class _pieChartState extends State<pieChart> {
     CollectionReference categoryRef = FirebaseFirestore.instance
         .collection('users')
         .doc(id)
-        .collection('ExpenseCategories')
+        .collection(collectionName)
         .doc(categoryName)
-        .collection('expenseList');
+        .collection(collectionName == 'ExpenseCategories'? 'expenseList' : 'incomeList');
 
     // Query the expenseList collection to get all documents
     QuerySnapshot querySnapshot1 = await categoryRef.get();
 
     double totalAmount = 0;
+
+    print('Fetching data for $categoryName in $collectionName');
 
     // Loop through each document in the query result
     for (QueryDocumentSnapshot documentSnapshot in querySnapshot1.docs) {
@@ -68,19 +71,29 @@ class _pieChartState extends State<pieChart> {
       }
     }
     return totalAmount;
+
   }
+
+ 
+
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
       future: Future.wait([
-        getTotalExpenseAmountForCategory('catFood'),
-        getTotalExpenseAmountForCategory('catTransportation'),
-        getTotalExpenseAmountForCategory('catEntertainment'),
-        getTotalExpenseAmountForCategory('catHousing'),
-        getTotalExpenseAmountForCategory('catMiscellaneous'),
-        getTotalExpenseAmountForCategory('catHealth'),
-        getTotalExpenseAmountForCategory('catEducation'),
+        getTotalAmountForCategory('catFood','ExpenseCategories'),
+        getTotalAmountForCategory('catTransportation','ExpenseCategories'),
+        getTotalAmountForCategory('catEntertainment','ExpenseCategories'),
+        getTotalAmountForCategory('catHousing','ExpenseCategories'),
+        getTotalAmountForCategory('catMiscellaneous','ExpenseCategories'),
+        getTotalAmountForCategory('catHealth','ExpenseCategories'),
+        getTotalAmountForCategory('catEducation','ExpenseCategories'),
+                
+        getTotalAmountForCategory('catDeposit', 'IncomeCategories'),
+        getTotalAmountForCategory('catRent', 'IncomeCategories'),
+        getTotalAmountForCategory('catSalary', 'IncomeCategories')
+
+
       ]),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
@@ -92,10 +105,19 @@ class _pieChartState extends State<pieChart> {
             child: Text("Error: ${snapshot.error}"),
           );
         } else if (snapshot.hasData) {
-          List<double> totals = snapshot.data!;
-          allData = totals;
+
+          List<double> allTotals = snapshot.data!;
+          allData = allTotals.sublist(0,7); //expense amts
+          allIncomeData= allTotals.sublist(7); //income amts
+
+          print('Expense Data: $allData');
+          print('Income Data: $allIncomeData');
+
+
+
+
           return PieChart(
-            swapAnimationDuration: Duration(seconds: 5),
+            swapAnimationDuration: Duration(seconds: 10),
             swapAnimationCurve: Curves.easeIn,
             PieChartData(
               pieTouchData: PieTouchData(
@@ -121,8 +143,8 @@ class _pieChartState extends State<pieChart> {
               ),
               sections: [
                 PieChartSectionData(
-                  value: totals[0],
-                  color: Color(0xFF9A77CF),
+                  value: allData![0],
+                  color: Color.fromARGB(255, 242, 93, 95),
                   radius: 180,
                   showTitle: false,
                   title: 'catFood',
@@ -131,7 +153,7 @@ class _pieChartState extends State<pieChart> {
                     width: 60,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(40),
-                      color: Color.fromARGB(255, 118, 69, 191),
+                      color: Color.fromARGB(255, 242, 93, 95),
                       boxShadow: customBoxShadow,
                     ),
                     child: Icon(
@@ -142,8 +164,8 @@ class _pieChartState extends State<pieChart> {
                   badgePositionPercentageOffset: 0.96,
                 ),
                 PieChartSectionData(
-                  value: totals[1],
-                  color: Color(0xFF543884),
+                  value: allData![1],
+                  color: Color.fromARGB(255, 82, 186, 211),
                   radius: 180,
                   showTitle: false,
                   title: 'catTransportation',
@@ -152,7 +174,7 @@ class _pieChartState extends State<pieChart> {
                     width: 60,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(40),
-                      color: Color.fromARGB(255, 73, 36, 137),
+                      color: Color.fromARGB(255, 82, 186, 211),
                       boxShadow: customBoxShadow,
                     ),
                     child: Icon(
@@ -163,8 +185,8 @@ class _pieChartState extends State<pieChart> {
                   badgePositionPercentageOffset: 0.96,
                 ),
                 PieChartSectionData(
-                  value: totals[2],
-                  color: Color(0xFF262254),
+                  value: allData![2],
+                  color: Color.fromARGB(255, 251, 131, 66),
                   radius: 180,
                   showTitle: false,
                   title: 'catEntertainment',
@@ -173,7 +195,7 @@ class _pieChartState extends State<pieChart> {
                     width: 60,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(40),
-                      color: Color.fromARGB(255, 28, 23, 82),
+                      color: Color.fromARGB(255, 251, 131, 66),
                       boxShadow: customBoxShadow,
                     ),
                     child: Icon(
@@ -184,8 +206,8 @@ class _pieChartState extends State<pieChart> {
                   badgePositionPercentageOffset: 0.96,
                 ),
                 PieChartSectionData(
-                  value: totals[3],
-                  color: Color(0xFFA13670),
+                  value: allData![3],
+                  color: Color.fromARGB(255, 246, 124, 158),
                   radius: 180,
                   showTitle: false,
                   title: 'catHousing',
@@ -194,7 +216,7 @@ class _pieChartState extends State<pieChart> {
                     width: 60,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(40),
-                      color: Color.fromARGB(255, 157, 29, 99),
+                      color: Color.fromARGB(255, 246, 124, 158),
                       boxShadow: customBoxShadow,
                     ),
                     child: Icon(
@@ -205,8 +227,8 @@ class _pieChartState extends State<pieChart> {
                   badgePositionPercentageOffset: 0.96,
                 ),
                 PieChartSectionData(
-                  value: totals[4],
-                  color: Color(0xFFEC4176),
+                  value: allData![4],
+                  color: Color.fromARGB(255, 250, 200, 84),
                   radius: 180,
                   showTitle: false,
                   title: 'catMiscellaneous',
@@ -215,7 +237,7 @@ class _pieChartState extends State<pieChart> {
                     width: 60,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(40),
-                      color: Color.fromARGB(255, 249, 42, 107),
+                      color: Color.fromARGB(255, 250, 200, 84),
                       boxShadow: customBoxShadow,
                     ),
                     child: Icon(
@@ -226,8 +248,8 @@ class _pieChartState extends State<pieChart> {
                   badgePositionPercentageOffset: 0.96,
                 ),
                 PieChartSectionData(
-                  value: totals[5],
-                  color: Color(0xFFFFA45E),
+                  value: allData![5],
+                  color: Color.fromARGB(255, 1, 218, 152),
                   radius: 180,
                   showTitle: false,
                   title: 'catHealth',
@@ -236,7 +258,7 @@ class _pieChartState extends State<pieChart> {
                     width: 60,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(40),
-                      color: Color.fromARGB(255, 252, 148, 69),
+                      color: Color.fromARGB(255, 1, 218, 152),
                       boxShadow: customBoxShadow,
                     ),
                     child: Icon(
@@ -247,8 +269,8 @@ class _pieChartState extends State<pieChart> {
                   badgePositionPercentageOffset: 0.96,
                 ),
                 PieChartSectionData(
-                  value: totals[6],
-                  color: Color(0xFFFCE38A),
+                  value: allData![6],
+                  color: Color.fromARGB(255, 33, 122, 201),
                   radius: 180,
                   showTitle: false,
                   title: 'catEducation',
@@ -257,7 +279,7 @@ class _pieChartState extends State<pieChart> {
                     width: 60,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(40),
-                      color: Color.fromARGB(255, 254, 217, 84),
+                      color: Color.fromARGB(255, 33, 122, 201),
                       boxShadow: customBoxShadow,
                     ),
                     child: Icon(

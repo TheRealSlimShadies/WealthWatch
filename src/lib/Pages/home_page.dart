@@ -206,7 +206,7 @@ class _HomeState extends State<Home> {
                 bottomRight: Radius.circular(15),
               ),
               gradient: LinearGradient(
-                colors: [Color(0xFF4CA9DF), Color(0xFF292E91)],
+                colors: [Color.fromARGB(255, 27, 181, 198), Color.fromARGB(255, 41, 62, 145)],
                 begin: Alignment.bottomCenter,
                 end: Alignment.topCenter,
               )),
