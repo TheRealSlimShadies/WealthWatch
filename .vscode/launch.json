@@ -13,6 +13,13 @@
             "request": "launch",
             "cwd": "src",
             "program": "lib\\Pages\\settings.dart"
+        },
+        {
+            "name": "Flutter (lib\\main.dart)",
+            "type": "dart",
+            "request": "launch",
+            "cwd": "src",
+            "program": "lib\\main.dart"
         }
     ]
 }

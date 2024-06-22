@@ -64,56 +64,12 @@ class _expenseWindowState extends State<expenseWindow> {
       }
 
       expenses.sort(((a, b) => b.datetime.compareTo(a.datetime)));
-
     }
     return expenses;
   }
 
   Future<void> deleteExpense(String categoryName, String expenseId) async {
     String uid = FirebaseAuth.instance.currentUser!.uid;
-
-
-    QuerySnapshot querySnapshot = await FirebaseFirestore.instance
-        .collection('users')
-        .where('auth id', isEqualTo: uid)
-        .get();
-    DocumentSnapshot documentSnapshot = querySnapshot.docs.first;
-    String userId = documentSnapshot.id;
-
-    await FirebaseFirestore.instance
-        .collection('users')
-        .doc(userId)
-        .collection('ExpenseCategories')
-        .doc(categoryName)
-        .collection('expenseList')
-        .doc(expenseId)
-        .delete();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Expense History"),
-        titleTextStyle: TextStyle(color: Colors.white, fontSize: 20),
-        backgroundColor: Color.fromARGB(255, 58, 220, 109),
-        centerTitle: true,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          color: Colors.white,
-          onPressed: () {
-            widget.refresh!();
-            widget.refreshCallBack11!();
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => (Home()),
-              ),
-            );
-          },
-        ),
-      ),
-
 
     QuerySnapshot querySnapshot = await FirebaseFirestore.instance
         .collection('users')
@@ -166,8 +122,8 @@ class _expenseWindowState extends State<expenseWindow> {
       appBar: AppBar(
         title: Text("Expense History"),
         titleTextStyle: TextStyle(color: Colors.white, fontSize: 20),
-        backgroundColor: Color.fromARGB(255, 58, 220, 109),
         centerTitle: true,
+        backgroundColor: Colors.red,
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           color: Colors.white,
@@ -177,7 +133,6 @@ class _expenseWindowState extends State<expenseWindow> {
           },
         ),
       ),
-
       body: FutureBuilder<List<Expense>>(
         future: _expenseListFuture,
         builder: (context, snapshot) {
@@ -220,10 +175,8 @@ class _expenseWindowState extends State<expenseWindow> {
                           expenses.removeAt(index);
                         });
 
-
                         _showSnackBar(" \$${expense.expenseAmount} removed");
                         //_showSnackBar("Expense of \$${expenseNumber} deducted");
-
                       },
                     ),
                   ),

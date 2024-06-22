@@ -206,7 +206,10 @@ class _HomeState extends State<Home> {
                 bottomRight: Radius.circular(15),
               ),
               gradient: LinearGradient(
-                colors: [Color(0xFF4CA9DF), Color(0xFF292E91)],
+                colors: [
+                  Color.fromARGB(255, 27, 181, 198),
+                  Color.fromARGB(255, 41, 62, 145)
+                ],
                 begin: Alignment.bottomCenter,
                 end: Alignment.topCenter,
               )),
@@ -249,7 +252,7 @@ class _HomeState extends State<Home> {
               ),
               ListTile(
                   contentPadding: EdgeInsets.only(left: 40, top: 70),
-                  leading: Icon(Icons.account_balance_wallet,
+                  leading: Icon(Icons.bar_chart,
                       size: 30, color: Theme.of(context).iconTheme.color),
                   title: Text(
                     'Statistics',
@@ -261,26 +264,9 @@ class _HomeState extends State<Home> {
                     Navigator.pop(context);
                     Navigator.pushNamed(context, '/statistic');
                   }),
-              // ListTile(
-              //     contentPadding: EdgeInsets.only(left: 40, top: 70),
-              //     leading: Icon(
-              //       Icons.account_balance_wallet,
-              //       size: 30,
-              //       color: Theme.of(context).iconTheme.color,
-              //     ),
-              //     title: Text(
-              //       'Co-Fund',
-              //       style: TextStyle(
-              //           fontSize: 17,
-              //           color: Theme.of(context).textTheme.bodyLarge!.color),
-              //     ),
-              //     onTap: () {
-              //       Navigator.pop(context);
-              //       Navigator.pushNamed(context, '/cofund');
-              //     }),
               ListTile(
                   contentPadding: EdgeInsets.only(left: 40, top: 70),
-                  leading: Icon(Icons.account_balance_wallet,
+                  leading: Icon(Icons.date_range_rounded,
                       size: 30, color: Theme.of(context).iconTheme.color),
                   title: Text(
                     'Calendar',
@@ -294,7 +280,7 @@ class _HomeState extends State<Home> {
                   }),
               ListTile(
                   contentPadding: EdgeInsets.only(left: 40, top: 70),
-                  leading: Icon(Icons.account_balance_wallet,
+                  leading: Icon(Icons.settings,
                       size: 30, color: Theme.of(context).iconTheme.color),
                   title: Text(
                     'Settings',

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -18,12 +20,16 @@ class _StatisticsState extends State<Statistics> {
   late Future<List<Expense>> _futureExpenses;
   List<double> weeklyExpenses = List.filled(7, 0);
   DateTime? lastResetDate;
+  final Completer<List<Expense>> _completer = Completer<List<Expense>>();
 
   @override
   void initState() {
     super.initState();
+    _futureExpenses = _completer.future;
     _loadLastResetDate().then((_) {
-      _futureExpenses = fetchExpensesFromFirebase();
+      fetchExpensesFromFirebase().then((expenses) {
+        _completer.complete(expenses);
+      });
     });
   }
 

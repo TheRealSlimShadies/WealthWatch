@@ -86,7 +86,7 @@ class _LoginState extends State<Login> {
     //final themeProvider = Provider.of<ThemeProvider>(context);
     //final themeData = themeProvider.themeData;
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 137, 178, 178),
+      backgroundColor: Color.fromARGB(255, 93, 171, 171),
       body: SafeArea(
           child: Center(
         child: SingleChildScrollView(

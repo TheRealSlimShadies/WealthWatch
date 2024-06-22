@@ -220,7 +220,7 @@ class _RegisterState extends State<Register> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 137, 178, 178),
+      backgroundColor: Color.fromARGB(255, 92, 165, 164),
       body: SafeArea(
           child: Center(
         child: SingleChildScrollView(

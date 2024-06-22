@@ -133,7 +133,7 @@ class _SettingState extends State<Setting> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text("Dark Theme"),
+                  const Text("Theme"),
                   CupertinoSwitch(
                     value: Provider.of<ThemeProvider>(context, listen: false)
                         .isDarkMode,
@@ -148,13 +148,17 @@ class _SettingState extends State<Setting> {
             GestureDetector(
               onTap: () => deleteUserPopUpBox(context),
               child: Container(
+                //color: Colors.red,
                 decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.secondary,
+                  color:Color.fromARGB(255, 255, 110, 99), 
+                  //Theme.of(context).colorScheme.secondary,
                   borderRadius: BorderRadius.circular(12),
+                  
                 ),
                 padding: const EdgeInsets.symmetric(vertical: 23),
                 child: Center(
                   child: Text("Delete Account"),
+                  
                 ),
               ),
             ),
