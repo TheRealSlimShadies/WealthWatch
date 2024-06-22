@@ -104,6 +104,8 @@ class _CalendarState extends State<Calendar> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: themeData.colorScheme.background,
+        title: Text('Calendar'),
+        centerTitle: true,
       ),
       body: content(),
     );

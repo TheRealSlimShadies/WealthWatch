@@ -103,8 +103,17 @@ class _addExpenseState extends State<addExpense> {
         title: Text(
           "Add an Expense",
         ),
+        toolbarHeight: 60,
         titleTextStyle: TextStyle(color: Colors.white, fontSize: 20),
-        backgroundColor: Colors.red[500],
+        flexibleSpace: Container(
+          decoration: BoxDecoration(
+              gradient: LinearGradient(
+            colors: [Color(0xF0500b28), Color(0xF0e21c34)],
+            begin: Alignment.bottomCenter,
+            end: Alignment.topCenter,
+          )),
+        ),
+        iconTheme: IconThemeData(color: Colors.white),
         centerTitle: true,
       ),
       body: Form(
@@ -113,39 +122,45 @@ class _addExpenseState extends State<addExpense> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            TextFormField(
-              controller: expenseLabelController,
-              decoration: InputDecoration(
-                  hintText: "Enter Expense Name",
-                  contentPadding:
-                      EdgeInsets.only(left: 20, top: 15, bottom: 20),
-                  enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.grey))),
-              validator: (value) {
-                if (value!.isEmpty) {
-                  return "Enter the name of the item for better history log.";
-                } else {
-                  return null;
-                }
-              },
+            SizedBox(
+              height: 25,
+            ),
+            Container(
+              margin: EdgeInsets.symmetric(horizontal: 10),
+              child: TextFormField(
+                maxLength: 20,
+                controller: expenseLabelController,
+                decoration: InputDecoration(
+                    hintText: "Enter Expense Name",
+                    contentPadding:
+                        EdgeInsets.only(left: 20, top: 15, bottom: 20),
+                    enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.grey),
+                        borderRadius: BorderRadius.circular(10))),
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return "Enter the name of the item for better history log.";
+                  } else {
+                    return null;
+                  }
+                },
+              ),
             ),
             SizedBox(
-              height: 50,
+              height: 25,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Container(
+                  margin: EdgeInsets.symmetric(horizontal: 10),
                   child: MyDropdownMenuExpense(
                     controller: categorySelection,
                   ),
                 ),
                 Container(
-                  margin: EdgeInsets.only(left: 40),
-                  width: 150,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                  ),
+                  margin: EdgeInsets.symmetric(horizontal: 10),
+                  width: 180,
                   child: TextFormField(
                     controller: expenseNumberController,
                     keyboardType: TextInputType.number,
@@ -153,7 +168,8 @@ class _addExpenseState extends State<addExpense> {
                       labelText: "Enter Expense Number",
                       labelStyle: TextStyle(fontSize: 14),
                       enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.grey)),
+                          borderSide: BorderSide(color: Colors.grey),
+                          borderRadius: BorderRadius.circular(20)),
                       prefixIcon: Icon(Icons.attach_money),
                     ),
                   ),
@@ -167,7 +183,7 @@ class _addExpenseState extends State<addExpense> {
         mainAxisAlignment: MainAxisAlignment
             .end, // Align the FloatingActionButton to the right
         children: [
-          FloatingActionButton(
+          MaterialButton(
             onPressed: () {
               String expenseLabel = expenseLabelController.text;
               String expensenumbercontroller = expenseNumberController.text;
@@ -221,7 +237,9 @@ class _addExpenseState extends State<addExpense> {
                 'category': categorySelection.text,
               });
             },
-            backgroundColor: Colors.red,
+            color: Colors.red,
+            minWidth: 90,
+            height: 70,
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
             child: Icon(

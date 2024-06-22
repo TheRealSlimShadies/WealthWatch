@@ -75,11 +75,20 @@ class _addIncomeState extends State<addIncome> {
         TextEditingController();
     return Scaffold(
       appBar: AppBar(
+        toolbarHeight: 70,
         title: Text(
           "Add an Income",
         ),
+        flexibleSpace: Container(
+          decoration: BoxDecoration(
+              gradient: LinearGradient(
+            colors: [Color(0xFF159947), Color(0xFF1f5f5b)],
+            begin: Alignment.bottomCenter,
+            end: Alignment.topCenter,
+          )),
+        ),
+        iconTheme: IconThemeData(color: Colors.white),
         titleTextStyle: TextStyle(color: Colors.white, fontSize: 20),
-        backgroundColor: Color.fromARGB(255, 58, 220, 109),
         centerTitle: true,
       ),
       body: Column(
@@ -90,14 +99,14 @@ class _addIncomeState extends State<addIncome> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Container(
-                margin: EdgeInsets.only(left: 20),
+                margin: EdgeInsets.symmetric(horizontal: 10),
                 child: MyDropdownMenuIncome(
                   controller: categorySelection1,
                 ),
               ),
               Expanded(
                 child: Container(
-                  margin: EdgeInsets.only(left: 40),
+                  margin: EdgeInsets.only(left: 10, right: 10),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
                   ),
@@ -109,7 +118,9 @@ class _addIncomeState extends State<addIncome> {
                       labelStyle: TextStyle(fontSize: 14),
                       contentPadding:
                           EdgeInsets.only(left: 20, top: 15, bottom: 20),
-                      border: InputBorder.none,
+                      border: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.grey),
+                          borderRadius: BorderRadius.circular(20)),
                       prefixIcon: Icon(Icons.attach_money),
                     ),
                   ),
@@ -123,7 +134,7 @@ class _addIncomeState extends State<addIncome> {
         mainAxisAlignment: MainAxisAlignment
             .end, // Align the FloatingActionButton to the right
         children: [
-          FloatingActionButton(
+          MaterialButton(
             onPressed: () {
               String incomeNumbercontroller = incomeNumberController.text;
               int incomeNumber = int.tryParse(incomeNumbercontroller) ?? 0;
@@ -153,7 +164,9 @@ class _addIncomeState extends State<addIncome> {
               widget.refreshCallBack5!();
               Navigator.pop(context);
             },
-            backgroundColor: Color.fromARGB(255, 78, 246, 80),
+            color: Colors.green,
+            height: 70,
+            minWidth: 90,
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
             child: Icon(

@@ -25,8 +25,22 @@ class categoryWindowState extends State<categoryWindow> {
     if (widget.name == "Expense") {
       return Scaffold(
         appBar: AppBar(
-            backgroundColor: Colors.black54,
             toolbarHeight: 60,
+            flexibleSpace: Container(
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(15),
+                    bottomRight: Radius.circular(15),
+                  ),
+                  gradient: LinearGradient(
+                    colors: [
+                      Color.fromARGB(255, 27, 181, 198),
+                      Color.fromARGB(255, 41, 62, 145)
+                    ],
+                    begin: Alignment.bottomCenter,
+                    end: Alignment.topCenter,
+                  )),
+            ),
             title: Text(
               "My Wallet",
               style: TextStyle(
@@ -71,8 +85,9 @@ class categoryWindowState extends State<categoryWindow> {
               padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
               child: Container(
                 decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(15),
-                    color: Color.fromARGB(255, 33, 122, 201),),
+                  borderRadius: BorderRadius.circular(15),
+                  color: Color.fromARGB(255, 33, 122, 201),
+                ),
                 child: ListTile(
                   title: Text('Education'),
                   trailing: Text('${allData?[6]}'),
@@ -98,11 +113,9 @@ class categoryWindowState extends State<categoryWindow> {
                 child: ListTile(
                   title: Text(
                     'Entertainment',
-                    style: TextStyle(color: Colors.white),
                   ),
                   trailing: Text(
                     '${allData?[2]}',
-                    style: TextStyle(color: Colors.white),
                   ),
                   onTap: () => {
                     Navigator.push(
@@ -165,14 +178,15 @@ class categoryWindowState extends State<categoryWindow> {
               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
               child: Container(
                 decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(15),
-                    color: Color.fromARGB(255, 82, 186, 211),),
+                  borderRadius: BorderRadius.circular(15),
+                  color: Color.fromARGB(255, 82, 186, 211),
+                ),
                 child: ListTile(
-                  title: Text('Transportation',
-                      style: TextStyle(color: Colors.white)),
+                  title: Text(
+                    'Transportation',
+                  ),
                   trailing: Text(
                     '${allData?[1]}',
-                    style: TextStyle(color: Colors.white),
                   ),
                   onTap: () => {
                     Navigator.push(
@@ -216,7 +230,18 @@ class categoryWindowState extends State<categoryWindow> {
       print('Displaying Income Data: $allIncomeData');
       return Scaffold(
         appBar: AppBar(
-            backgroundColor: Colors.black54,
+            flexibleSpace: Container(
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(15),
+                    bottomRight: Radius.circular(15),
+                  ),
+                  gradient: LinearGradient(
+                    colors: [Color(0xFFCCFFAA), Color(0xFF1e5b53)],
+                    begin: Alignment.bottomCenter,
+                    end: Alignment.topCenter,
+                  )),
+            ),
             toolbarHeight: 60,
             title: Text(
               "My Wallet",
@@ -239,7 +264,6 @@ class categoryWindowState extends State<categoryWindow> {
                       color: Colors.green[300],
                       borderRadius: BorderRadius.circular(15)),
                   child: ListTile(
-                    tileColor: Colors.greenAccent,
                     title: Text("Deposit"),
                     trailing: Text('${allIncomeData?[0]}'),
                   ),
@@ -253,7 +277,6 @@ class categoryWindowState extends State<categoryWindow> {
                       color: Colors.green[300],
                       borderRadius: BorderRadius.circular(15)),
                   child: ListTile(
-                    tileColor: Colors.greenAccent,
                     title: Text("Salary"),
                     trailing: Text('${allIncomeData?[2]}'),
                   ),
@@ -267,7 +290,6 @@ class categoryWindowState extends State<categoryWindow> {
                       color: Colors.green[300],
                       borderRadius: BorderRadius.circular(15)),
                   child: ListTile(
-                    tileColor: Colors.greenAccent,
                     title: Text("Rent"),
                     trailing: Text('${allIncomeData?[1]}'),
                   ),
